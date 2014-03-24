@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trackers : Intraway</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-square.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/styles.css" rel="stylesheet" media="screen">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-square" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Intraway Trackers</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Panel</a></li>
+                <li><a href="users.html">Usuarios</a></li>
+                <li class="active"><a href="trackers.html">Trackers</a></li>
+                <li><a href="reports.html">Reportes</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Configuraci&oacute;n 1</a></li>
+                    <li><a href="#">Configuraci&oacute;n 2</a></li>
+                    <li><a href="#">Configuraci&oacute;n 3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Otras opciones</a></li>
+                  </ul>
+                </li>
+                <li><a href="#"><span class="fa fa-sign-out"></span> Logout</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container trackersContainer">
+              <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                 <span class="fa fa-mobile-phone" style="margin-right: 1em;"></span>
+                 Listado de Trackers
+                  <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#modalTrackers" style="margin-right: 1em;"></span>
+            </div>
+            <div class="panel-body bodyUsersList">
+              <table class="table table-hover">
+               <thead>
+                 <tr>
+                  <th>#</th>
+                  <th>IMEI</th>
+                  <th>Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td>1</td>
+                <td>356938035643809</td>
+                <td><span class="label label-info">F&iacute;sico</span></td>
+              </tr>
+               <tr>
+                <td>2</td>
+                <td>356938035643809</td>
+                <td><span class="label label-default">Celular</span></td>
+              </tr>
+               <tr>
+                <td>3</td>
+                <td>356938035643809</td>
+                <td><span class="label label-info">F&iacute;sico</span></td>
+              </tr>
+               <tr>
+                <td>4</td>
+                <td>356938035643809</td>
+                <td><span class="label label-default">Celular</span></td>
+              </tr>
+               <tr>
+                <td>5</td>
+                <td>356938035643809</td>
+                <td><span class="label label-warning">Tablet</span></td>
+              </tr>
+               <tr>
+                <td>6</td>
+                <td>356938035643809</td>
+                <td><span class="label label-warning">Tablet</span></td>
+              </tr>
+               <tr>
+                <td>7</td>
+                <td>356938035643809</td>
+                <td><span class="label label-default">Celular</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- <ul class="media-list">
+  <li class="media">
+    <a class="pull-left" href="#">
+      <img class="media-object" src="http://placehold.it/50x50" alt="...">
+    </a>
+    <div class="media-body">
+      <h4 class="media-heading">Juan Ortiz</h4>
+      <span class=>Identificador: ortiz-tracker</span>
+    </div>
+  </li>
+</ul> -->
+</div>
+<div class="panel-footer">
+  12 usuarios registrados
+</div>
+</div>
+</div>
+    <div class="col-md-6 col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Alta de Trackers</h3>
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="input1" class="col-sm-2 control-label">IMEI</label>
+              <div class="col-sm-10">
+                <input type="number" class="form-control" id="inputEmail3" placeholder="IMEI">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="input2" class="col-sm-2 control-label">Tipo de dispositivo</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="" id="">
+                  <option value="">Celular</option>
+                  <option value="">Tablet</option>
+                  <option value="">Fisico</option>
+                  <option value="">Otro</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
+                    <button type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="footer navbar-fixed-bottom">
+    <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+  </div>
+<!-- Ventana Modal Upload -->
+
+<div class="modal fade" id="modalTrackers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Importar Trackers</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputNotes" class="col-sm-2 control-label">Importar CSV</label>
+          <div class="col-sm-10">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <div class="input-group">
+                <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="..."></span>
+                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
+              </div>
+              <span class="help-block">Formato permitido: .csv</span>
+            </div>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-sm-2 control-label">Importar API</label>
+          <div class=" col-sm-10">
+            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Importar</button>
+          </div>
+        </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script>
+  if (!window.jQuery) {
+    document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+  }
+  </script>
+  <script src="//code.jquery.com/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="js/libs/jasny-bootstrap.min.js"></script>
+</body>
+</html>
+

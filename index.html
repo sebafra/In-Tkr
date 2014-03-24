@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trackers : Intraway</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-square.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/styles.css" rel="stylesheet" media="screen">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="js/libs/html5shiv.js"></script>
+        <script src="js/libs/respond.min.js"></script>
+        <![endif]-->
+      </head>
+      <body>
+        <nav class="navbar navbar-default navbar-square" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Intraway Trackers</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Panel</a></li>
+                <li><a href="users.html">Usuarios</a></li>
+                <li><a href="trackers.html">Trackers</a></li>
+                <li><a href="reports.html">Reportes</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Configuraci&oacute;n 1</a></li>
+                    <li><a href="#">Configuraci&oacute;n 2</a></li>
+                    <li><a href="#">Configuraci&oacute;n 3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Otras opciones</a></li>
+                  </ul>
+                </li>
+                <li><a href="login.html"><span class="fa fa-sign-out"></span> Logout</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container-fluid homeContainer">
+          <div class="row">
+            <div class="col-lg-4 col-md-4">
+              <div class="panel panel-danger">
+                <div class="panel-heading"><span class="fa fa-bell"></span> 10:25 | <span class="fa fa-user"> </span> lara-tracker <span class="pull-right"><span class="label label-danger">Emergencia</span></span></div>
+                <div class="panel-body">
+                  <div class="row">
+                  <div class="col-lg-4 col-md-4">
+                      <img src="img/face.jpg" class="img-responsive img-circle">
+                      <p class="text-center">Lara Sanchez</p>
+                  </div>
+                  <div class="col-lg-8 col-md-8">
+                    <address>
+                      <strong>Datos personales</strong><br>
+                      larasanchez@gmail.com<br>
+                      Alta el 15/2/2014<br>
+                      <abbr title="Teléfono de Contacto">Te:</abbr> (011) 456-7890
+                    </address>
+
+                    <address>
+                      <strong>Datos del terminal</strong><br>
+                      <abbr title="Nro de ANI de la SIMCard asociada al IMEI">ANI:</abbr> 55658<br>
+
+                      <abbr title="Nro de IMEI del dispositivo">IMEI:</abbr> 356938035643809
+                    </address>
+                  </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                        <img src="img/map_small.png" class="img-responsive img-rounded mapSmall">
+                        <span class="small"><span class="fa fa-map-marker"></span> Lat: 34.599722 Long: 58.381944</span>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-8">
+          <div class="panel panel-default">
+            <div class="panel-body homeMapContainer">
+             <img src="img/mapa.jpg">
+           </div>
+         </div>
+         </div>
+         </div>
+         <div class="row">
+            <div class="col-lg-4 col-md-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading">&Uacute;ltimas 10 alertas reportadas</div>
+                <div class="panel-body bodyTop10">
+                 <table class="table table-hover">
+                   <thead>
+                     <tr>
+                      <th>#</th>
+                      <th>Hora</th>
+                      <th>Usuario</th>
+                      <th>Tipo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   <tr class="danger">
+                    <td>1</td>
+                    <td>25-12 10:25</td>
+                    <td>lara-tracker</td>
+                    <td>Caida libre</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>P&aacute;nico</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>25-12 10:25</td>
+                    <td>Juan Acosta</td>
+                    <td>Emergencia</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Top 10 trackers sin reportar</div>
+            <div class="panel-body bodyTop10">
+             <table class="table table-hover">
+               <thead>
+                 <tr>
+                  <th>#</th>
+                  <th>Hora</th>
+                  <th>Usuario</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td>1</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>25-12 10:25</td>
+                <td>Juan Acosta</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
+            <div class="panel panel-default homeReportingTrackersPanel">
+              <div class="panel-body">
+                <div class="col-lg-6 col-md-6">
+                  <span class="reportIcon"><span class="fa fa-link"></span>25</span>
+                  <hr>
+                  <h3 class="reporting">Reportando</h3>
+
+                </div>
+                <div class="col-lg-6 col-md-6">
+                  <span class="reportIcon"><span class="fa fa-chain-broken"></span>25</span>
+                  <hr>
+                  <h3 class="noReporting">No Reportando</h3>
+                </div>
+                </div>
+              </div>
+            </div>
+  </div>
+</div>
+<div class="footer">
+      <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+    </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="//code.jquery.com/jquery.js"></script>
+<script>
+if (!window.jQuery) {
+    document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+}
+</script>
+<script src="//code.jquery.com/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/jasny-bootstrap.min.js"></script>
+
+</body>
+</html>

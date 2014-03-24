@@ -1,0 +1,132 @@
+/**
+* Trackers
+* @author diproach.com
+* @version 0.1
+*/
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+.footer{
+	background:#cccccc;
+	height:50px;
+	text-align:center;
+	padding-top:1em;
+}
+.checkbox{
+	padding-left: 20px;
+}
+
+/**
+* Login
+*/
+
+.loginBody{
+	background: url(../img/bg_login.png) no-repeat center bottom #e5e5e5;
+}
+.form-signin {
+	max-width: 400px;
+	padding: 30px;
+	margin: 40px auto;
+	background-color: #eee;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+.form-signin .checkbox {
+	font-weight: normal;
+}
+.form-signin .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+.form-signin input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/**
+* Home
+*/
+
+.homeContainer .homeReportingTrackersPanel{
+	text-align: center;
+}
+.homeContainer .reportIcon{
+	font-size: 5em;
+	font-weight: lighter;
+	display: block;
+	color: #555;
+}
+.reporting {
+	color: green;
+}
+.noReporting {
+	color: red;
+}
+.homeContainer .map{
+
+}
+.homeContainer .mapSmall{
+	height: 150px;
+	overflow: hidden;
+}
+.homeContainer .homeMapContainer {
+	overflow: hidden;
+	height: 420px;
+	padding: 0;
+}
+.bodyTop10 {
+	max-height: 160px;
+	overflow-y: auto;
+}
+.bodyUsersList {
+	max-height: 610px;
+	overflow-y: auto;
+}
+
+/**
+* User
+*/
+.usersContainer{
+	margin-top: 1em;
+}
+
+/**
+* Reports
+*/
+
+.reportsContainer{
+	margin-top: 1em;
+}
+.reportsNav {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+.reportsContainer .panel-heading .fa{
+	margin-left: .7em;
+}
+.bodyReportTrackerList {
+	max-height: 610px;
+	overflow-y: scroll;
+}

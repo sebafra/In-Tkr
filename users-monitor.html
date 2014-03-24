@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trackers : Intraway</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-square.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/styles.css" rel="stylesheet" media="screen">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+      </head>
+      <body>
+        <nav class="navbar navbar-default navbar-square" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Intraway Trackers</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Panel</a></li>
+                <li class="active"><a href="users.html">Usuarios</a></li>
+                <li><a href="trackers.html">Trackers</a></li>
+                <li><a href="reports.html">Reportes</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Configuraci&oacute;n 1</a></li>
+                    <li><a href="#">Configuraci&oacute;n 2</a></li>
+                    <li><a href="#">Configuraci&oacute;n 3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Otras opciones</a></li>
+                  </ul>
+                </li>
+                <li><a href="#"><span class="fa fa-sign-out"></span> Logout</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container">
+    <div class="row">
+      <ul class="nav nav-pills reportsNav">
+        <li><a href="users.html">Usuarios</a></li>
+        <li class="active"><a href="#">Usuarios Monitoreo</a></li>
+      </ul>
+    </div>
+  </div>
+        <div class="container usersContainer">
+          <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <form class="form-inline" role="form">
+                 <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Usuarios
+              </form>
+            </div>
+            <div class="panel-body bodyUsersList">
+              <table class="table table-hover">
+               <thead>
+                 <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Usuario</th>
+
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td>1</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>user-demo</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>user-demo</td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+<div class="panel-footer">
+  12 usuarios registrados
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-6">
+ <form class="form-horizontal" role="form">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="fa fa-edit" style="margin-right: 1em;"></span>Datos del usuario</div>
+      <div class="panel-body">
+        <div class="">
+          <div class="form-group">
+            <label for="inputIdentifier" class="col-sm-2 control-label">Id</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputIdentifier" placeholder="Ingrese el texto identificador del Tracker">
+            </div>
+          </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+          <label for="inputUserName" class="col-sm-2 control-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputUserName" placeholder="Ingrese el nombre">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputUserLastName" class="col-sm-2 control-label">Apellido</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputUserLastName" placeholder="Ingrese el apellido">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
+            <button type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div class="footer">
+  <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+</div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script>
+  if (!window.jQuery) {
+    document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+  }
+  </script>
+  <script src="//code.jquery.com/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="js/libs/jasny-bootstrap.min.js"></script>
+</body>
+</html>
+

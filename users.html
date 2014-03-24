@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trackers : Intraway</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
+  <link href="css/bootflat-square.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/styles.css" rel="stylesheet" media="screen">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+      </head>
+      <body>
+        <nav class="navbar navbar-default navbar-square" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Intraway Trackers</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Panel</a></li>
+                <li class="active"><a href="users.html">Usuarios</a></li>
+                <li><a href="trackers.html">Trackers</a></li>
+                <li><a href="reports.html">Reportes</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Configuraci&oacute;n 1</a></li>
+                    <li><a href="#">Configuraci&oacute;n 2</a></li>
+                    <li><a href="#">Configuraci&oacute;n 3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Otras opciones</a></li>
+                  </ul>
+                </li>
+                <li><a href="#"><span class="fa fa-sign-out"></span> Logout</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container">
+    <div class="row">
+      <ul class="nav nav-pills reportsNav">
+        <li class="active"><a href="#">Usuarios</a></li>
+        <li><a href="users-monitor.html">Usuarios Monitoreo</a></li>
+      </ul>
+    </div>
+  </div>
+        <div class="container usersContainer">
+          <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <form class="form-inline" role="form">
+                 <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Usuarios
+                  <!-- <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail2">buscar</label>
+                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Buscar&hellip;">
+                  </div>
+                  <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button> -->
+
+                  <!-- <button type="button" class="btn btn-default btn-sm pull-right"><span class="fa fa-search"></span></button> -->
+                  <span class="fa fa-search pull-right text-primary"></span>
+                  <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#myModal" style="margin-right: 1em;"></span>
+                  <!-- <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-filter"></span> Filtrar <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li> -->
+              </form>
+            </div>
+            <div class="panel-body bodyUsersList">
+              <div class="row" style="padding-left: 15px; padding-right: 15px">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Usuario</a></li>
+                      <li><a href="#">Apellido</a></li>
+                      <li><a href="#">IMEI</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Todos</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control">
+                </div><!-- /input-group -->
+              </div>
+              <hr>
+              <table class="table table-hover">
+               <thead>
+                 <tr>
+                  <th>Identificador</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>IMEI</th>
+
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td>jorge-tracker</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>juan-tracker</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>rita-tracker</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>jorge-tracker</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>juan-tracker</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>rita-tracker</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>jorge-tracker</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>juan-tracker</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>rita-tracker</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>jorge-tracker</td>
+                <td>Jorge</td>
+                <td>Bustos</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>juan-tracker</td>
+                <td>Juan</td>
+                <td>Martinez</td>
+                <td>356938035643809</td>
+              </tr>
+              <tr>
+                <td>rita-tracker</td>
+                <td>Rita</td>
+                <td>Lee</td>
+                <td>356938035643809</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- <ul class="media-list">
+  <li class="media">
+    <a class="pull-left" href="#">
+      <img class="media-object" src="http://placehold.it/50x50" alt="...">
+    </a>
+    <div class="media-body">
+      <h4 class="media-heading">Juan Ortiz</h4>
+      <span class=>Identificador: ortiz-tracker</span>
+    </div>
+  </li>
+</ul> -->
+</div>
+<div class="panel-footer">
+  12 usuarios registrados
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-6">
+ <form class="form-horizontal" role="form">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="fa fa-edit" style="margin-right: 1em;"></span>Datos del usuario</div>
+      <div class="panel-body">
+        <div class="col-md-3 col-lg-3">
+          <img src="img/face.jpg" class="img-responsive img-circle">
+        </div>
+        <div class="col-md-9 col-lg-9">
+          <div class="form-group">
+            <label for="inputIdentifier" class="col-sm-2 control-label">Id</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputIdentifier" placeholder="Ingrese el texto identificador del Tracker">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputDateTime" class="col-sm-2 control-label">Fecha</label>
+            <div class="col-sm-10">
+              <input type="datetime-local" class="form-control" id="inputDateTime" placeholder="Ingrese la fecha de alta del Tracker">
+              <span class="help-block">Ingrese la fecha y hora de alta</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+          <label for="inputUserName" class="col-sm-2 control-label">Nombre</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputUserName" placeholder="Ingrese el nombre">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputUserLastName" class="col-sm-2 control-label">Apellido</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputUserLastName" placeholder="Ingrese el apellido">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail" placeholder="Ingrese la casilla de  correo del usuario">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputIMEI" class="col-sm-2 control-label">IMEI</label>
+          <div class="col-sm-10">
+            <select class="form-control">
+              <option>356938035643809</option>
+              <option>356938035643809</option>
+              <option>356938035643809</option>
+              <option>356938035643809</option>
+              <option>356938035643809</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputNotes" class="col-sm-2 control-label">Notas</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" id="inputNotes" rows="2" placeholder="Observaciones"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputNotes" class="col-sm-2 control-label">Foto</label>
+          <div class="col-sm-10">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <div class="input-group">
+                <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="..."></span>
+                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
+              </div>
+              <span class="help-block">Formatos de im&aacute;gen permitidos: jpg png y gif</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPhones" class="col-sm-2 control-label">Tel&eacute;fonos</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputPhones" placeholder="Tel&eacute;fono de contacto">
+            <span class="help-block">Nro de tel&eacute;fono de contacto ante una alerta</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
+            <button type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div class="footer">
+  <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+</div>
+
+<!-- Ventana Modal Upload -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Importar Usuarios</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputNotes" class="col-sm-2 control-label">Importar CSV</label>
+          <div class="col-sm-10">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <div class="input-group">
+                <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="..."></span>
+                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
+              </div>
+              <span class="help-block">Formato permitido: .csv</span>
+            </div>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-sm-2 control-label">Importar API</label>
+          <div class=" col-sm-10">
+            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Importar</button>
+          </div>
+        </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script>
+  if (!window.jQuery) {
+    document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+  }
+  </script>
+  <script src="//code.jquery.com/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="js/libs/jasny-bootstrap.min.js"></script>
+</body>
+</html>
+

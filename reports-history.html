@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trackers : Intraway</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <!-- Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet" media="all">
+  <link href="css/font-awesome.min.css" rel="stylesheet" media="all">
+  <link href="css/bootflat.css" rel="stylesheet" media="all">
+  <link href="css/bootflat-extensions.css" rel="stylesheet" media="all">
+  <link href="css/bootflat-square.css" rel="stylesheet" media="all">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css' media="all">
+  <link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="all">
+  <link href="css/styles.css" rel="stylesheet" media="all">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-square hidden-print" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Intraway Trackers</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Panel</a></li>
+          <li><a href="users.html">Usuarios</a></li>
+          <li><a href="trackers.html">Trackers</a></li>
+          <li class="active"><a href="reports.html">Reportes</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Configuraci&oacute;n 1</a></li>
+              <li><a href="#">Configuraci&oacute;n 2</a></li>
+              <li><a href="#">Configuraci&oacute;n 3</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Otras opciones</a></li>
+            </ul>
+          </li>
+          <li><a href="#"><span class="fa fa-sign-out"></span> Logout</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container hidden-print">
+    <div class="row">
+      <ul class="nav nav-pills reportsNav">
+        <li><a href="reports.html">Parque de trackers</a></li>
+        <li class="active"><a href="#">Seguimiento de trackers</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container reportsContainer">
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <span class="panel-title">Reporte historico de alertas</span>
+              <div class="pull-right" style="display:inline;font-size: 1.3em">
+            <span class="fa fa-print" onclick="window.print()"></span>
+            <span class="fa fa-download" onclick="window.location='file.csv'" ></span>
+              </div>
+          </div>
+          <div class="panel-body bodyReportTrackerList">
+            <div class="row hidden-print" style="padding-left: 15px; padding-right: 15px">
+              <div class="col-md-5 col-lg-5">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Id</a></li>
+                      <li><a href="#">Apellido</a></li>
+                      <li><a href="#">IMEI</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Tipo</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control">
+                </div><!-- /input-group -->
+              </div>
+              <div class="col-md-7 col-lg-7" style="text-align: right">
+              <form class="form-inline" role="form">
+                <div class="form-group">
+                  <label class="sr-only" for="dateFrom">Desde</label>
+                  <input type="date" class="form-control" id="dateFrom" placeholder="Desde">
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" for="dateFrom">Hasta</label>
+                  <input type="date" class="form-control" id="dateSince" placeholder="Hasta">
+                </div>
+                 <label class="sr-only" for="dateFrom">Tipo</label>
+                  <select name="" id="input" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="">Emergencia</option>
+                    <option value="">Panico</option>
+                    <option value="">Caida Libre</option>
+                  </select>
+                <button type="button" class="btn btn-default">Buscar</button>
+              </form>
+              </div>
+            </div>
+            <hr>
+            <table class="table table-hover">
+             <thead>
+               <tr>
+                <th>Fecha <a href=""><span class="caret"></span></a></th>
+                <th>Identificador <a href=""><span class="caret"></span></a></th>
+                <th>Nombre <a href=""><span class="caret"></span></a></th>
+                <th>Apellido <a href=""><span class="caret"></span></a></th>
+                <th>IMEI <a href=""><span class="caret"></span></a></th>
+                <th>Tipo <a href=""><span class="caret"></span></a></th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr>
+               <td><a href="reports.html">12/03/2014 10:25</a></td>
+               <td>jorge-tracker</td>
+               <td>Jorge</td>
+               <td>Bustos</td>
+               <td>356938035643809</td>
+               <td><span class="label">Track</span></td>
+             </tr>
+             <tr>
+              <td>12/03/2014 10:25</td>
+              <td>juan-tracker</td>
+              <td>Juan</td>
+              <td>Martinez</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>rita-tracker</td>
+              <td>Rita</td>
+              <td>Lee</td>
+              <td>356938035643809</td>
+              <td><span class="label label-danger">Emergencia</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>jorge-tracker</td>
+              <td>Jorge</td>
+              <td>Bustos</td>
+              <td>356938035643809</td>
+              <td><span class="label label-warning">P&aacute;nico</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>juan-tracker</td>
+              <td>Juan</td>
+              <td>Martinez</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>rita-tracker</td>
+              <td>Rita</td>
+              <td>Lee</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>jorge-tracker</td>
+              <td>Jorge</td>
+              <td>Bustos</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>juan-tracker</td>
+              <td>Juan</td>
+              <td>Martinez</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>rita-tracker</td>
+              <td>Rita</td>
+              <td>Lee</td>
+              <td>356938035643809</td>
+              <td><span class="label label-info">Ca&iacute;da Libre</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>jorge-tracker</td>
+              <td>Jorge</td>
+              <td>Bustos</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>juan-tracker</td>
+              <td>Juan</td>
+              <td>Martinez</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>rita-tracker</td>
+              <td>Rita</td>
+              <td>Lee</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>jorge-tracker</td>
+              <td>Jorge</td>
+              <td>Bustos</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>juan-tracker</td>
+              <td>Juan</td>
+              <td>Martinez</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+            <tr>
+              <td>12/03/2014 10:25</td>
+              <td>rita-tracker</td>
+              <td>Rita</td>
+              <td>Lee</td>
+              <td>356938035643809</td>
+              <td><span class="label">Track</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel-footer">
+        12 usuarios registrados</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="footer">
+  <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="//code.jquery.com/jquery.js"></script>
+<script>
+if (!window.jQuery) {
+  document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+}
+</script>
+<script src="//code.jquery.com/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/jasny-bootstrap.min.js"></script>
+</body>
+</html>
+
