@@ -12,6 +12,9 @@ html, body {
 body {
 	font-family: 'Open Sans', sans-serif;
 }
+address{
+	margin-bottom: 0;
+}
 .footer{
 	background:#cccccc;
 	height:50px;
@@ -64,6 +67,10 @@ body {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
+#msg{
+	margin-top: 10px;
+	display: hidden;
+}
 
 /**
 * Home
@@ -93,16 +100,39 @@ body {
 }
 .homeContainer .homeMapContainer {
 	overflow: hidden;
-	height: 420px;
+	height: 480px;
 	padding: 0;
 }
-.bodyTop10 {
+.bodyTop10Alerts {
+	max-height: 660px;
+	overflow-y: auto;
+}
+.bodyTop10Trackers {
 	max-height: 160px;
 	overflow-y: auto;
 }
 .bodyUsersList {
 	max-height: 610px;
 	overflow-y: auto;
+}
+.homeAlertRow {
+
+}
+.alertWell{
+	margin-bottom: 0;
+	margin-left: 15px;
+	color: #555
+}
+.alertFace {
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	max-height: 140px;
+}
+.alertFaceContainer {
+	max-width: 180px;
+}
+.alertBell {
+	font-size: 4em;
 }
 
 /**

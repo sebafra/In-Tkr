@@ -38,7 +38,6 @@
               <ul class="nav navbar-nav">
                 <li><a href="index.html">Panel</a></li>
                 <li class="active"><a href="users.html">Usuarios</a></li>
-                <li><a href="trackers.html">Trackers</a></li>
                 <li><a href="reports.html">Reportes</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -62,7 +61,7 @@
     <div class="row">
       <ul class="nav nav-pills reportsNav">
         <li><a href="users.html">Usuarios</a></li>
-        <li class="active"><a href="#">Usuarios Monitoreo</a></li>
+        <li class="active"><a href="#">Operadores</a></li>
       </ul>
     </div>
   </div>
@@ -71,7 +70,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <form class="form-inline" role="form">
-                 <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Usuarios
+                 <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Operadores
               </form>
             </div>
             <div class="panel-body bodyUsersList">
@@ -162,7 +161,7 @@
           </table>
 </div>
 <div class="panel-footer">
-  12 usuarios registrados
+  12 operadores registrados
 </div>
 </div>
 </div>
@@ -170,12 +169,12 @@
  <form class="form-horizontal" role="form">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <span class="fa fa-edit" style="margin-right: 1em;"></span>Datos del usuario</div>
+      <span class="fa fa-edit" style="margin-right: 1em;"></span>Datos del operador</div>
       <div class="panel-body">
         <div class="">
           <div class="form-group">
-            <label for="inputIdentifier" class="col-sm-2 control-label">Id</label>
-            <div class="col-sm-10">
+            <label for="inputIdentifier" class="col-sm-3 control-label">Id</label>
+            <div class="col-sm-9">
               <input type="text" class="form-control" id="inputIdentifier" placeholder="Ingrese el texto identificador del Tracker">
             </div>
           </div>
@@ -183,19 +182,31 @@
         </div>
         <div class="clearfix"></div>
         <div class="form-group">
-          <label for="inputUserName" class="col-sm-2 control-label">Nombre</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputUserName" placeholder="Ingrese el nombre">
+          <label for="inputOperatorName" class="col-sm-3 control-label">Nombre</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputOperatorName" placeholder="Ingrese el nombre">
           </div>
         </div>
         <div class="form-group">
-          <label for="inputUserLastName" class="col-sm-2 control-label">Apellido</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputUserLastName" placeholder="Ingrese el apellido">
+          <label for="inputOperatorLastName" class="col-sm-3 control-label">Apellido</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputOperatorLastName" placeholder="Ingrese el apellido">
           </div>
         </div>
         <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
+          <label for="inputOperatorUsername" class="col-sm-3 control-label">Usuario</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputOperatorUsername" placeholder="Ingrese el usuario">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputOperatorPassword" class="col-sm-3 control-label">Contrase&ntilde;a</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="inputOperatorPassword" placeholder="Ingrese la Contrase&ntilde;a">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
             <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
             <button type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
           </div>

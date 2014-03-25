@@ -38,7 +38,6 @@
               <ul class="nav navbar-nav">
                 <li><a href="index.html">Panel</a></li>
                 <li class="active"><a href="users.html">Usuarios</a></li>
-                <li><a href="trackers.html">Trackers</a></li>
                 <li><a href="reports.html">Reportes</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -62,7 +61,7 @@
     <div class="row">
       <ul class="nav nav-pills reportsNav">
         <li class="active"><a href="#">Usuarios</a></li>
-        <li><a href="users-monitor.html">Usuarios Monitoreo</a></li>
+        <li><a href="users-monitor.html">Operadores</a></li>
       </ul>
     </div>
   </div>
@@ -72,25 +71,8 @@
               <div class="panel-heading">
                 <form class="form-inline" role="form">
                  <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Usuarios
-                  <!-- <div class="form-group">
-                    <label class="sr-only" for="exampleInputEmail2">buscar</label>
-                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Buscar&hellip;">
-                  </div>
-                  <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button> -->
-
-                  <!-- <button type="button" class="btn btn-default btn-sm pull-right"><span class="fa fa-search"></span></button> -->
                   <span class="fa fa-search pull-right text-primary"></span>
                   <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#myModal" style="margin-right: 1em;"></span>
-                  <!-- <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-filter"></span> Filtrar <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                  </ul>
-                </li> -->
               </form>
             </div>
             <div class="panel-body bodyUsersList">
@@ -113,7 +95,7 @@
               <table class="table table-hover">
                <thead>
                  <tr>
-                  <th>Identificador</th>
+                  <th>DNI</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>IMEI</th>
@@ -122,73 +104,73 @@
               </thead>
               <tbody>
                <tr>
-                <td>jorge-tracker</td>
+                <td>21.034.922</td>
                 <td>Jorge</td>
                 <td>Bustos</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>juan-tracker</td>
+                <td>21.034.922</td>
                 <td>Juan</td>
                 <td>Martinez</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>rita-tracker</td>
+                <td>21.034.922</td>
                 <td>Rita</td>
                 <td>Lee</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>jorge-tracker</td>
+                <td>21.034.922</td>
                 <td>Jorge</td>
                 <td>Bustos</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>juan-tracker</td>
+                <td>21.034.922</td>
                 <td>Juan</td>
                 <td>Martinez</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>rita-tracker</td>
+                <td>21.034.922</td>
                 <td>Rita</td>
                 <td>Lee</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>jorge-tracker</td>
+                <td>21.034.922</td>
                 <td>Jorge</td>
                 <td>Bustos</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>juan-tracker</td>
+                <td>21.034.922</td>
                 <td>Juan</td>
                 <td>Martinez</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>rita-tracker</td>
+                <td>21.034.922</td>
                 <td>Rita</td>
                 <td>Lee</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>jorge-tracker</td>
+                <td>21.034.922</td>
                 <td>Jorge</td>
                 <td>Bustos</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>juan-tracker</td>
+                <td>21.034.922</td>
                 <td>Juan</td>
                 <td>Martinez</td>
                 <td>356938035643809</td>
               </tr>
               <tr>
-                <td>rita-tracker</td>
+                <td>21.034.922</td>
                 <td>Rita</td>
                 <td>Lee</td>
                 <td>356938035643809</td>
@@ -226,7 +208,7 @@
           <div class="form-group">
             <label for="inputIdentifier" class="col-sm-2 control-label">Id</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputIdentifier" placeholder="Ingrese el texto identificador del Tracker">
+              <input type="text" class="form-control" id="inputIdentifier" placeholder="4285685478">
             </div>
           </div>
           <div class="form-group">
@@ -239,6 +221,12 @@
 
         </div>
         <div class="clearfix"></div>
+        <div class="form-group">
+          <label for="inputDNI" class="col-sm-2 control-label">DNI</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputDNI" placeholder="Ingrese su DNI">
+          </div>
+        </div>
         <div class="form-group">
           <label for="inputUserName" class="col-sm-2 control-label">Nombre</label>
           <div class="col-sm-10">

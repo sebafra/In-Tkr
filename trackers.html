@@ -64,7 +64,6 @@
               <div class="panel-heading">
                  <span class="fa fa-mobile-phone" style="margin-right: 1em;"></span>
                  Listado de Trackers
-                  <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#modalTrackers" style="margin-right: 1em;"></span>
             </div>
             <div class="panel-body bodyUsersList">
               <table class="table table-hover">
@@ -72,44 +71,44 @@
                  <tr>
                   <th>#</th>
                   <th>IMEI</th>
-                  <th>Tipo</th>
+                  <th>Reportando</th>
                 </tr>
               </thead>
               <tbody>
                <tr>
                 <td>1</td>
                 <td>356938035643809</td>
-                <td><span class="label label-info">F&iacute;sico</span></td>
+                <td><span class="label label-success">Reporta</span></td>
               </tr>
                <tr>
                 <td>2</td>
                 <td>356938035643809</td>
-                <td><span class="label label-default">Celular</span></td>
+                <td><span class="label label-danger">No Reporta</span></td>
               </tr>
                <tr>
                 <td>3</td>
                 <td>356938035643809</td>
-                <td><span class="label label-info">F&iacute;sico</span></td>
+               <td><span class="label label-success">Reporta</span></td>
               </tr>
                <tr>
                 <td>4</td>
                 <td>356938035643809</td>
-                <td><span class="label label-default">Celular</span></td>
+               <td><span class="label label-success">Reporta</span></td>
               </tr>
                <tr>
                 <td>5</td>
                 <td>356938035643809</td>
-                <td><span class="label label-warning">Tablet</span></td>
+                <td><span class="label label-success">Reporta</span></td>
               </tr>
                <tr>
                 <td>6</td>
                 <td>356938035643809</td>
-                <td><span class="label label-warning">Tablet</span></td>
+                 <td><span class="label label-danger">No Reporta</span></td>
               </tr>
                <tr>
                 <td>7</td>
                 <td>356938035643809</td>
-                <td><span class="label label-default">Celular</span></td>
+                 <td><span class="label label-danger">No Reporta</span></td>
               </tr>
             </tbody>
           </table>
@@ -127,7 +126,7 @@
 </ul> -->
 </div>
 <div class="panel-footer">
-  12 usuarios registrados
+  12 trackers registrados
 </div>
 </div>
 </div>
@@ -145,17 +144,6 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="input2" class="col-sm-2 control-label">Tipo de dispositivo</label>
-              <div class="col-sm-10">
-                <select class="form-control" name="" id="">
-                  <option value="">Celular</option>
-                  <option value="">Tablet</option>
-                  <option value="">Fisico</option>
-                  <option value="">Otro</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
                     <button type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
@@ -170,43 +158,6 @@
   <div class="footer navbar-fixed-bottom">
     <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
   </div>
-<!-- Ventana Modal Upload -->
-
-<div class="modal fade" id="modalTrackers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Importar Trackers</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="inputNotes" class="col-sm-2 control-label">Importar CSV</label>
-          <div class="col-sm-10">
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-              <div class="input-group">
-                <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="..."></span>
-                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
-              </div>
-              <span class="help-block">Formato permitido: .csv</span>
-            </div>
-          </div>
-        </div>
-         <div class="form-group">
-          <label class="col-sm-2 control-label">Importar API</label>
-          <div class=" col-sm-10">
-            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Importar</button>
-          </div>
-        </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="//code.jquery.com/jquery.js"></script>
