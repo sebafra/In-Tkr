@@ -14,11 +14,16 @@ $.getJSON(alertsFile, function(msg) {
 /*      
 userId=msg.data.trackers[1].id;
       alert(userId);
-      for (var i = 0, len = msg.length; i < len; i++) {
+      //for (var i = 0, len = msg.length; i < len; i++) {
         //$("#lastAlerts").html("<tr><td>"+ msg.data.trackers[i].number +"</td><td>25-12 10:25</td><td>Juan Acosta</td></tr>");
         //alert("Hola");
-        alert(userId);
-}
+        //alert(userId);
+//}
+//   var myStr = "";
+// $.each(msg.data.trackers, function (i,trackers) {
+//     myStr += "<tr><td>" + msg.data.trackers.number + "</td></tr>";
+// });
+// $("#lastAlerts").append(myStr);
                 } else {
                   alert (msg.error.message);
                 }*/
