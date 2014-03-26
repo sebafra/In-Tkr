@@ -21,8 +21,8 @@ $(document).ready(function () {
 //authenticate function to make ajax call
 function authenticate(userName, password) {
 
-  // var loginFile = "http://comovil.cloudapp.net/trackers/api/user/login?json={name:%22jmoreno%22,password:%22jmoreno%22,type:%221%22}";
-  var loginFile = "json/login.jsp?json={name:"+ userName +",password:"+ password +",type:%221%22}";
+   var loginFile = "http://comovil.cloudapp.net/trackers/api/user/login?json={name:%22jmoreno%22,password:%22jmoreno%22,type:%221%22}";
+  //var loginFile = "json/login.jsp?json={name:"+ userName +",password:"+ password +",type:%221%22}";
   $.getJSON(loginFile, function(msg) {
     if(msg.status=="ok"){
       userId=msg.data.id;
