@@ -41,7 +41,7 @@
                 <li><a href="reports.html">Reportes</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
+                <li><a href="#"><span class="fa fa-user"></span><span id="userNameNav"></span>|<span id="userRoleNav">Entidad</span></a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
                   <ul class="dropdown-menu">
@@ -52,7 +52,7 @@
                     <li><a href="#">Otras opciones</a></li>
                   </ul>
                 </li>
-                <li><a href="login.html"><span class="fa fa-sign-out"></span> Logout</a></li>
+                <li><a href="#" id="btnLogout"><span class="fa fa-sign-out"></span> Logout</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
@@ -240,57 +240,8 @@
                   <th>Usuario</th>
                 </tr>
               </thead>
-              <tbody>
-               <tr>
-                <td>1</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>9</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
-              <tr>
-                <td>10</td>
-                <td>25-12 10:25</td>
-                <td>Juan Acosta</td>
-              </tr>
+              <tbody id="lastAlerts">
+
             </tbody>
           </table>
         </div>
@@ -334,6 +285,8 @@ if (!window.jQuery) {
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/jasny-bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
 
 </body>
 </html>

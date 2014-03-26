@@ -76,6 +76,12 @@ address{
 * Home
 */
 
+.nav .fa-user,#userNameNav {
+	margin-right: .5em;
+}
+#userRoleNav {
+	margin-left: .5em;
+}
 .homeContainer .homeReportingTrackersPanel{
 	text-align: center;
 }

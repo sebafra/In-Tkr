@@ -1,43 +1,26 @@
 $(document).ready(function () {
-        //event handler for submit button
-        $("#btnLoginSubmit").click(function () {
-            //collect userName and password entered by users
-            var userName = $("#username").val();
-            var password = $("#password").val();
+  checkId();
+  initializeNav();
+});
 
-            //call the authenticate function
-            if (userName !== "" && password !== "") {
-              authenticate(userName, password);
-            } else {
-              $('#msg').addClass("alert alert-danger");
-              $('#msg').html("Complete los campos");
-              $('#msg').slideDown("fast");
-            };
-
-          });
-        resetMsg();
-      });
-
-//authenticate function to make ajax call
-function authenticate(userName, password) {
-
-  // var loginFile = "http://comovil.cloudapp.net/trackers/api/user/login?json={name:%22jmoreno%22,password:%22jmoreno%22,type:%221%22}";
-  var loginFile = "json/login.jsp?json={name:"+ userName +",password:"+ password +",type:%221%22}";
-  $.getJSON(loginFile, function(msg) {
-    if(msg.status=="ok"){
-      userId=msg.data.id;
-      alert(userId);
-      window.location = "index.html";
-                } else {
-                  $('#result').html(msg.error.message);
-                }
-              });
+function checkId(){
+  if(typeof(localStorage.trackersId) == "undefined"){
+    alert("No ha iniciado sesion");
+  }
 }
-function resetMsg(){
-  if ($("#msg").is(":visible")) {
-    $("#username,#password").focus(function(){
-      $("#msg").slideUp("fast");
-    }
-    );
+function initializeNav() {
+  //Info Usuario
+  $("#userNameNav").html(localStorage.trackersUser);
+  if (localStorage.trackersRole==1) {
+    $("#userRoleNav").html("Administrador");
+  } else if(localStorage.trackersRole==2) {
+    $("#userRoleNav").html("Operador");
+  } else if(localStorage.trackersRole==3){
+    $("#userRoleNav").html("Entidad");
   };
+  //Logout
+  $("#btnLogout").on("click",function(){
+
+    window.location = "login.html";
+  });
 }
