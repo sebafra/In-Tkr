@@ -72,8 +72,8 @@
                       <th>Tipo</th>
                     </tr>
                   </thead>
-                  <tbody>
-                   <tr class="danger">
+                  <tbody id="lastAlerts">
+<!--                    <tr class="danger">
                     <td>1</td>
                     <td>25-12 10:25</td>
                     <td>lara-tracker</td>
@@ -168,7 +168,7 @@
                     <td>25-12 10:25</td>
                     <td>Juan Acosta</td>
                     <td>Emergencia</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -221,8 +221,8 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12">
                   <div class="panel panel-default">
-                  <div class="panel-body homeMapContainer">
-                <img src="img/mapa.jpg">
+                  <div id="map-canvas" class="panel-body homeMapContainer">
+                <!-- <img src="img/mapa.jpg"> -->
                 </div>
                 </div>
                 </div>
@@ -240,8 +240,7 @@
                   <th>Usuario</th>
                 </tr>
               </thead>
-              <tbody id="lastAlerts">
-
+              <tbody id="trackersWithoutReport">
             </tbody>
           </table>
         </div>
@@ -286,6 +285,7 @@ if (!window.jQuery) {
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/jasny-bootstrap.min.js"></script>
 <script src="js/main.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false"></script>
 <script src="js/dashboard.js"></script>
 
 </body>
