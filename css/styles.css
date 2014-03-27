@@ -69,7 +69,7 @@ address{
 }
 #msg{
 	margin-top: 10px;
-	display: hidden;
+	display: none;
 }
 
 /**
@@ -86,7 +86,7 @@ address{
 	text-align: center;
 }
 .homeContainer .reportIcon{
-	font-size: 5em;
+	font-size: 4.5em;
 	font-weight: lighter;
 	display: block;
 	color: #555;
@@ -130,9 +130,10 @@ address{
 	color: #555
 }
 .alertFace {
-	padding-left: 1.5em;
-	padding-right: 1.5em;
-	max-height: 140px;
+	max-height: 70px;
+	max-width: 70px;
+	margin-right: 50px;
+
 }
 .alertFaceContainer {
 	max-width: 180px;
