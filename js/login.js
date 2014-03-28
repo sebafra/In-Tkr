@@ -12,7 +12,7 @@ $(document).ready(function () {
               $('#msg').addClass("alert alert-danger");
               $('#msg').html("Complete los campos");
               $('#msg').slideDown("fast");
-            };
+            }
 
           });
         resetMsg();
@@ -21,15 +21,15 @@ $(document).ready(function () {
 //authenticate function to make ajax call
 function authenticate(userName, password) {
 
-   var loginFile = "http://comovil.cloudapp.net/trackers/api/user/login?json={name:%22jmoreno%22,password:%22jmoreno%22,type:%221%22}";
-  //var loginFile = "json/login.jsp?json={name:"+ userName +",password:"+ password +",type:%221%22}";
+   var loginFile = SERVER_URL+"/api/user/login?json={name%3A%22jmoreno%22%2Cpassword%3A%22jmoreno%22%2C%20type%3A%221%22}";
   $.getJSON(loginFile, function(msg) {
     if(msg.status=="ok"){
       userId=msg.data.id;
-      userName=msg.data.userName;
+      userName=msg.data.name;
       userRole=msg.data.type;
-      alert(userId + userName + userRole);
-      storageUserInfo(userId,userName,userRole);
+      entityId="32b223c1-3e8e-0f85-d498-edb5d52569c2";
+      //alert(userId + userName + userRole + entityId);
+      storageUserInfo(userId,userName,userRole,entityId);
       window.location = "index.html";
                 } else {
                   $('#result').html(msg.error.message);
@@ -38,19 +38,20 @@ function authenticate(userName, password) {
 }
 function resetMsg(){
   if ($("#msg").is(":visible")) {
-    $("#username,#password").focus(function(){
+    $("#username,#password").on("focus",function(){
       $("#msg").slideUp("fast");
     }
     );
   }
 }
 //LocalStorage User Info
-function storageUserInfo(id,userName,role){
+function storageUserInfo(id,userName,role,entityId){
   if(typeof(Storage)!=="undefined")
   {
   localStorage.setItem("trackersId", id);
   localStorage.setItem("trackersUser", userName);
   localStorage.setItem("trackersRole", role);
+  localStorage.setItem("trackersEntityId", entityId);
   }
 else
   {

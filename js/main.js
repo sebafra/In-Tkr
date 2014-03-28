@@ -1,3 +1,5 @@
+var SERVER_URL = "http://comovil.cloudapp.net/trackers";
+
 $(document).ready(function () {
   checkId();
   initializeNav();
@@ -17,7 +19,7 @@ function initializeNav() {
     $("#userRoleNav").html("Operador");
   } else if(localStorage.trackersRole==3){
     $("#userRoleNav").html("Entidad");
-  };
+  }
   //Logout
   $("#btnLogout").on("click",function(){
 
