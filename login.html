@@ -22,33 +22,33 @@
       <body class="loginBody">
         <div class="container loginContainer">
           <form class="form-signin" role="form">
-        <h2 class="form-signin-heading">Ingresar a Trackers</h2>
-        <input type="email" class="form-control" id="username" placeholder="Correo Electr&oacute;nico" autofocus>
-        <input type="password" class="form-control" id="password" placeholder="Contrase&ntilde;a">
-       <!--  <button class="btn btn-lg btn-primary btn-block" type="button" onclick="location.replace('index.html')">Ingresar</button> -->
-       <button id="btnLoginSubmit" class="btn btn-lg btn-primary btn-block" type="button">Ingresar</button>
-       <button id="btnRegisterSubmit" class="btn btn-lg btn-default btn-block" type="button">Registrarse</button>
-       <div id="msg"></div>
-      </form>
-
+            <h2 class="form-signin-heading">Ingresar a Trackers</h2>
+            <select class="form-control" id="userType" style="margin-bottom: 1em">
+              <option value="2">Usuario Operador</option>
+              <option value="3">Entidad</option>
+              <option value="4">Usuario Final</option>
+            </select>
+            <input type="email" class="form-control" id="username" placeholder="Correo Electr&oacute;nico" autofocus>
+            <input type="password" class="form-control" id="password" placeholder="Contrase&ntilde;a">
+            <button id="btnLoginSubmit" class="btn btn-lg btn-primary btn-block" type="button">Ingresar</button>
+            <button id="btnRegisterSubmit" class="btn btn-lg btn-default btn-block" type="button">Registrarse</button>
+            <div id="msg"></div>
+          </form>
         </div>
 
-
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="//code.jquery.com/jquery.js"></script>
-<script>
-if (!window.jQuery) {
-    document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
-}
-</script>
-<script src="//code.jquery.com/jquery.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/libs/bootstrap.min.js"></script>
-<script src="js/libs/jasny-bootstrap.min.js"></script>
-<script src="js/constants.js"></script>
-<script src="js/main.js"></script>
-<script src="js/login.js"></script>
-
-</body>
-</html>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script>
+        if (!window.jQuery) {
+          document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+        }
+        </script>
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/libs/bootstrap.min.js"></script>
+        <script src="js/libs/jasny-bootstrap.min.js"></script>
+        <script src="js/constants.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/login.js"></script>
+      </body>
+      </html>

@@ -13,10 +13,47 @@ function initializeNav() {
   } else if(localStorage.trackersRole==3){
     $("#userRoleNav").html("Entidad");
   }
+  //ChangeUser
+  changeUserPass();
   //Logout
   $("#btnLogout").on("click",function(){
-
+    localStorage.removeItem("trackersEntityId");
+    localStorage.removeItem("trackersId");
+    localStorage.removeItem("trackersRole");
+    localStorage.removeItem("trackersUser");
     window.location = "login.html";
+  });
+}
+
+function changeUserPass(){
+   $("#savePassForm").on("click",function(){
+                var oldPassword = $("#inputActualPass").val();
+                var newPassword = $("#inputNewPass").val();
+                var newPassword2 = $("#inputNewPass2").val();
+                var id = localStorage.trackersId;
+                var type = localStorage.trackersRole;
+                //alert(oldPassword + newPassword + newPassword2 + id + type);
+  var file = SERVER_URL+"/api/user/updatePassword?json={id:%22"+ id +"%22,oldPassword:%22"+ oldPassword +"%22,newPassword:%22"+ newPassword +"%22,type:%22"+ type +"%22}";
+                if (oldPassword !== "" && newPassword !== "" && newPassword2 !== "") {
+                  if (newPassword == newPassword2) {
+                  $.getJSON(file, function(result){
+                    if(result.status=="ok"){
+                      $("#msg-modal").empty();
+                      showAlert ("msg-modal","success","Constrase&ntilde;a modificada con &eacute;xito");
+                      $('#myModal').delay(3000).modal('hide');
+                    } else {
+                      showAlert ("msg-modal","danger",result.error.message);
+                    }
+                  });
+                } else {
+                  showAlert ("msg-modal","danger","Complete todos los campos");
+                }
+              } else {
+                showAlert ("msg-modal","danger","Las contrase&ntilde;as no coinciden");
+              }
+});
+  $("#resetPassForm").on("click",function() {
+    $("#inputActualPass,#inputNewPass,#inputNewPass2").val("");
   });
 }
 
@@ -24,11 +61,14 @@ function initializeNav() {
 
 // Form Alerts | In type use bootstrap classes: danger, success, warning, etc...
 function showAlert (divId,type,msg){
+  $('#'+divId).removeClass();
   $('#'+divId).addClass("alert alert-"+ type).html(msg).slideDown("fast");
+  $('#'+divId).delay(5000).slideUp("fast");
 }
 // Prevent enter without login first
 function checkId(){
   if(typeof(localStorage.trackersId) == "undefined"){
     alert("No ha iniciado sesion");
+    window.location = "login.html";
   }
 }

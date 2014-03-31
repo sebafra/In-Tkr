@@ -4,14 +4,12 @@ $(document).ready(function () {
             //collect userName and password entered by users
             var userName = $("#username").val();
             var password = $("#password").val();
-
+            var userType = $("#userType").val();
             //call the authenticate function
             if (userName !== "" && password !== "") {
-              authenticate(userName, password);
+              authenticate(userName, password, userType);
             } else {
-              $('#msg').addClass("alert alert-danger");
-              $('#msg').html("Complete los campos");
-              $('#msg').slideDown("fast");
+              showAlert ("msg","danger","Complete todos los campos");
             }
 
           });
@@ -19,21 +17,22 @@ $(document).ready(function () {
       });
 
 //authenticate function to make ajax call
-function authenticate(userName, password) {
+function authenticate(userName, password, userType) {
 
-   var loginFile = SERVER_URL+"/api/user/login?json={name%3A%22oca%22%2Cpassword%3A%22oca%22%2C%20type%3A%223%22}";
+   var loginFile = SERVER_URL+"/api/user/login?json={name:%22"+ userName +"%22,password:%22"+ password +"%22,type:%22"+ userType +"%22}";
   $.getJSON(loginFile, function(msg) {
+    //alert(userName + password + userType);
     if(msg.status=="ok"){
       userId=msg.data.id;
-      userName=msg.data.name;
+      userName=msg.data.firstName;
       userRole=msg.data.type;
-      entityId="32b223c1-3e8e-0f85-d498-edb5d52569c2";
-      //alert(userId + userName + userRole + entityId);
+      //entityId="32b223c1-3e8e-0f85-d498-edb5d52569c2";
+      entityId=msg.data.entityId;
       storageUserInfo(userId,userName,userRole,entityId);
       window.location = "index.html";
       //$('#result').html(msg.error.message);
                 } else {
-                  $('#result').html(msg.error.message);
+                  showAlert ("msg","danger",msg.error.message);
                 }
               });
 }

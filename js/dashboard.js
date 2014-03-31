@@ -117,7 +117,7 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
     mapOptions);
   var contentString = '<div class="container-fluid">'+
       '<div class="col-md-2 col-lg-2 pull-left">'+
-      '<img src="img/face.jpg" class="img-circle alertFace">'+
+      '<img src="'+ IMG_URL + finalUserPictureUrl +'" onerror="this.onerror=null;this.src="'+ IMG_URL +'user_avatar.png" class="img-circle alertFace";">'+
       '</div>'+
       '<div class="col-md-2 col-lg-2"></div>'+
       '<div class="col-md-8 col-lg-8" style="padding-left:20px">'+
