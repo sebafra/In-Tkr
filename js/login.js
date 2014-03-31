@@ -21,7 +21,7 @@ $(document).ready(function () {
 //authenticate function to make ajax call
 function authenticate(userName, password) {
 
-   var loginFile = SERVER_URL+"/api/user/login?json={name%3A%22jmoreno%22%2Cpassword%3A%22jmoreno%22%2C%20type%3A%221%22}";
+   var loginFile = SERVER_URL+"/api/user/login?json={name%3A%22oca%22%2Cpassword%3A%22oca%22%2C%20type%3A%223%22}";
   $.getJSON(loginFile, function(msg) {
     if(msg.status=="ok"){
       userId=msg.data.id;
@@ -31,6 +31,7 @@ function authenticate(userName, password) {
       //alert(userId + userName + userRole + entityId);
       storageUserInfo(userId,userName,userRole,entityId);
       window.location = "index.html";
+      //$('#result').html(msg.error.message);
                 } else {
                   $('#result').html(msg.error.message);
                 }

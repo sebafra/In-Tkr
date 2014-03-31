@@ -1,15 +1,8 @@
-var SERVER_URL = "http://comovil.cloudapp.net/trackers";
-
 $(document).ready(function () {
   checkId();
   initializeNav();
 });
 
-function checkId(){
-  if(typeof(localStorage.trackersId) == "undefined"){
-    alert("No ha iniciado sesion");
-  }
-}
 function initializeNav() {
   //Info Usuario
   $("#userNameNav").html(localStorage.trackersUser);
@@ -25,4 +18,17 @@ function initializeNav() {
 
     window.location = "login.html";
   });
+}
+
+// Helpers
+
+// Form Alerts | In type use bootstrap classes: danger, success, warning, etc...
+function showAlert (divId,type,msg){
+  $('#'+divId).addClass("alert alert-"+ type).html(msg).slideDown("fast");
+}
+// Prevent enter without login first
+function checkId(){
+  if(typeof(localStorage.trackersId) == "undefined"){
+    alert("No ha iniciado sesion");
+  }
 }
