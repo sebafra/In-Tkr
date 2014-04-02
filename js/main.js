@@ -1,3 +1,5 @@
+var section;
+
 $(document).ready(function () {
   checkId();
   initializeNav();
@@ -5,7 +7,7 @@ $(document).ready(function () {
 
 function initializeNav() {
   //Info Usuario
-  $("#userNameNav").html(localStorage.trackersUser);
+  $("#userNameNav").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
   if (localStorage.trackersRole==1) {
     $("#userRoleNav").html("Administrador");
   } else if(localStorage.trackersRole==2) {
@@ -20,7 +22,8 @@ function initializeNav() {
     localStorage.removeItem("trackersEntityId");
     localStorage.removeItem("trackersId");
     localStorage.removeItem("trackersRole");
-    localStorage.removeItem("trackersUser");
+    localStorage.removeItem("trackersFirstName");
+    localStorage.removeItem("trackersLastName");
     window.location = "login.html";
   });
 }
@@ -42,14 +45,14 @@ function changeUserPass(){
                       showAlert ("msg-modal","success","Constrase&ntilde;a modificada con &eacute;xito");
                       $('#myModal').delay(3000).modal('hide');
                     } else {
-                      showAlert ("msg-modal","danger",result.error.message);
+                      showAlert("msg-modal","danger",result.error.message);
                     }
                   });
                 } else {
-                  showAlert ("msg-modal","danger","Complete todos los campos");
+                  showAlert("msg-modal","danger","Complete todos los campos");
                 }
               } else {
-                showAlert ("msg-modal","danger","Las contrase&ntilde;as no coinciden");
+                showAlert("msg-modal","danger","Las contrase&ntilde;as no coinciden");
               }
 });
   $("#resetPassForm").on("click",function() {
@@ -67,8 +70,8 @@ function showAlert (divId,type,msg){
 }
 // Prevent enter without login first
 function checkId(){
-  if(typeof(localStorage.trackersId) == "undefined"){
-    alert("No ha iniciado sesion");
+  if(typeof(localStorage.trackersId) == "undefined" && section != "login"){
+    //alert("No ha iniciado sesion");
     window.location = "login.html";
   }
 }

@@ -25,8 +25,8 @@ function showOperators(){
     for (var i = 0; i < msg.data.operatorUsers.length; i++) {
        fillOperatorsList(i);
        clickRowEvent(i);
-       $("#operatorsLoader").remove();
     }
+    $("#operatorsLoader").remove();
     showOperatorsCount();
     } else {
       showAlert ("msg","danger","Ha ocurrido un error");
@@ -54,7 +54,7 @@ function showOperatorsCount(){
 }
 }
 
-// Operators Form
+// Operators Form Buttons
 function resetOperatorsForm(){
   $("#resetOperatorsForm").click(function() {
     $("#operatorsForm input").val("");

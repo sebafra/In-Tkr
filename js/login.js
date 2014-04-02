@@ -1,3 +1,5 @@
+var section = "login";
+
 $(document).ready(function () {
         //event handler for submit button
         $("#btnLoginSubmit").click(function () {
@@ -24,13 +26,13 @@ function authenticate(userName, password, userType) {
     //alert(userName + password + userType);
     if(msg.status=="ok"){
       userId=msg.data.id;
-      userName=msg.data.firstName;
+      firstName=msg.data.firstName;
+      lastName=msg.data.lastName;
       userRole=msg.data.type;
-      //entityId="32b223c1-3e8e-0f85-d498-edb5d52569c2";
       entityId=msg.data.entityId;
-      storageUserInfo(userId,userName,userRole,entityId);
+      storageUserInfo(userId,firstName,lastName,userRole,entityId);
+      alert("userId:"+userId+"userName:"+firstName+"lastName:"+lastName+"userRole:"+userRole+"entityId:"+entityId);
       window.location = "index.html";
-      //$('#result').html(msg.error.message);
                 } else {
                   showAlert ("msg","danger",msg.error.message);
                 }
@@ -45,11 +47,12 @@ function resetMsg(){
   }
 }
 //LocalStorage User Info
-function storageUserInfo(id,userName,role,entityId){
+function storageUserInfo(id,firstName,lastName,role,entityId){
   if(typeof(Storage)!=="undefined")
   {
   localStorage.setItem("trackersId", id);
-  localStorage.setItem("trackersUser", userName);
+  localStorage.setItem("trackersFirstName", firstName);
+  localStorage.setItem("trackersLastName", lastName);
   localStorage.setItem("trackersRole", role);
   localStorage.setItem("trackersEntityId", entityId);
   }

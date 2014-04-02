@@ -42,7 +42,7 @@
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fa fa-user"></span><span id="userNameNav"></span>|<span id="userRoleNav"></span></a></li>
-                <li class="dropdown">
+      <!--           <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Configuraci&oacute;n 1</a></li>
@@ -51,7 +51,7 @@
                     <li class="divider"></li>
                     <li><a href="#">Otras opciones</a></li>
                   </ul>
-                </li>
+                </li> -->
                 <li><a href="#" id="btnLogout"><span class="fa fa-sign-out"></span> Logout</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
@@ -149,6 +149,45 @@
 <div class="footer navbar-fixed-bottom">
   <p>Intraway Corporation</p>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modificar Contrase&ntilde;a</h4>
+      </div>
+      <div class="modal-body">
+                 <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputActualPass" class="col-sm-4 control-label">Contrase&ntilde;a Actual</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputActualPass" placeholder="Ingrese su contrase&ntilde;a actual">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputNewPass" class="col-sm-4 control-label">Nueva Contrase&ntilde;a</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputNewPass" placeholder="Ingrese su nueva contrase&ntilde;a">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputNewPass2" class="col-sm-4 control-label">Reingresar nueva contrase&ntilde;a</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputNewPass2" placeholder="Reingrese la nueva contrase&ntilde;a">
+              </div>
+            </div>
+            <div id="msg-modal"></div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button id="resetPassForm" type="button" class="btn btn-default">Limpiar</button>
+        <button id="savePassForm" type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- Modal end -->
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="//code.jquery.com/jquery.js"></script>

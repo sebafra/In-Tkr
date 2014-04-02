@@ -41,8 +41,8 @@
                 <li><a href="reports.html">Reportes</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
-                <li class="dropdown">
+                 <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fa fa-user"></span><span id="userNameNav"></span>|<span id="userRoleNav"></span></a></li>
+      <!--           <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Configuraci&oacute;n 1</a></li>
@@ -51,8 +51,8 @@
                     <li class="divider"></li>
                     <li><a href="#">Otras opciones</a></li>
                   </ul>
-                </li>
-                <li><a href="#"><span class="fa fa-sign-out"></span> Logout</a></li>
+                </li> -->
+                <li><a href="#" id="btnLogout"><span class="fa fa-sign-out"></span> Logout</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
@@ -71,27 +71,27 @@
               <div class="panel-heading">
                 <form class="form-inline" role="form">
                  <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Usuarios
-                  <span class="fa fa-search pull-right text-primary"></span>
-                  <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#myModal" style="margin-right: 1em;"></span>
+                  <span id="usersSearchBtn" class="fa fa-search pull-right text-primary"></span>
+                  <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#importModal" style="margin-right: 1em;"></span>
               </form>
             </div>
             <div class="panel-body bodyUsersList">
-              <div class="row" style="padding-left: 15px; padding-right: 15px">
+              <div id="usersSearch" class="row" style="padding-left: 15px; padding-right: 15px">
                 <div class="input-group">
                   <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Usuario</a></li>
-                      <li><a href="#">Apellido</a></li>
-                      <li><a href="#">IMEI</a></li>
+                    <button id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></button>
+                    <ul id="dropdownUl" class="dropdown-menu">
+                      <li id="dniSelected"><a href="#">DNI</a></li>
+                      <li id="lastNameSelected"><a href="#">Apellido</a></li>
+                      <!-- <li><a href="#">IMEI</a></li> -->
                       <li class="divider"></li>
                       <li><a href="#">Todos</a></li>
                     </ul>
                   </div><!-- /btn-group -->
                   <input type="text" class="form-control">
                 </div><!-- /input-group -->
+                <hr>
               </div>
-              <hr>
               <table class="table table-hover">
                <thead>
                  <tr>
@@ -102,143 +102,85 @@
 
                 </tr>
               </thead>
-              <tbody>
-               <tr>
-                <td>21.034.922</td>
-                <td>Jorge</td>
-                <td>Bustos</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Juan</td>
-                <td>Martinez</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Rita</td>
-                <td>Lee</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Jorge</td>
-                <td>Bustos</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Juan</td>
-                <td>Martinez</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Rita</td>
-                <td>Lee</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Jorge</td>
-                <td>Bustos</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Juan</td>
-                <td>Martinez</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Rita</td>
-                <td>Lee</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Jorge</td>
-                <td>Bustos</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Juan</td>
-                <td>Martinez</td>
-                <td>356938035643809</td>
-              </tr>
-              <tr>
-                <td>21.034.922</td>
-                <td>Rita</td>
-                <td>Lee</td>
-                <td>356938035643809</td>
-              </tr>
+              <tbody id="usersList">
+                <tr id="usersListLoader" style="text-align: center"><td colspan="4"><img src="img/ajax-loader.gif" alt="">
             </tbody>
           </table>
-
-          <!-- <ul class="media-list">
-  <li class="media">
-    <a class="pull-left" href="#">
-      <img class="media-object" src="http://placehold.it/50x50" alt="...">
-    </a>
-    <div class="media-body">
-      <h4 class="media-heading">Juan Ortiz</h4>
-      <span class=>Identificador: ortiz-tracker</span>
-    </div>
-  </li>
-</ul> -->
+          <div id="msg"></div>
 </div>
 <div class="panel-footer">
-  12 usuarios registrados
+   <span id="finalUsersCount"></span> <span id="finalUsersCountTxt"></span>
 </div>
 </div>
 </div>
+
+<!-- Formulario ABM de usuario -->
+
 <div class="col-md-6 col-lg-6">
- <form class="form-horizontal" role="form">
+ <form id="finalUsersForm" class="form-horizontal" role="form" action="http://comovil.cloudapp.net/trackers/api/finalUser/createWithPicture" method="post" enctype="multipart/form-data" target="formResultFrame">
+  <input type="hidden" name="json" id="jsonVars" value=""/>
   <div class="panel panel-default">
     <div class="panel-heading">
       <span class="fa fa-edit" style="margin-right: 1em;"></span>Datos del usuario</div>
       <div class="panel-body">
         <div class="col-md-3 col-lg-3">
-          <img src="img/face.jpg" class="img-responsive img-circle">
+          <!-- <img src="img/face.jpg" class="img-responsive img-circle"> -->
+          <img id="finalUserPhoto" src="" onerror="this.onerror=null;this.src='img/user_avatar.png';" class="img-circle alertFace">
         </div>
         <div class="col-md-9 col-lg-9">
           <div class="form-group">
-            <label for="inputIdentifier" class="col-sm-2 control-label">Id</label>
+            <label for="inputId" class="col-sm-2 control-label">Id</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputIdentifier" placeholder="4285685478">
+              <input type="text" class="form-control" id="inputId" placeholder="Id" disabled="disabled">
             </div>
           </div>
           <div class="form-group">
             <label for="inputDateTime" class="col-sm-2 control-label">Fecha</label>
             <div class="col-sm-10">
-              <input type="datetime-local" class="form-control" id="inputDateTime" placeholder="Ingrese la fecha de alta del Tracker">
-              <span class="help-block">Ingrese la fecha y hora de alta</span>
+              <input type="text" class="form-control" id="inputDateTime" placeholder="Ingrese la fecha de alta">
+              <span class="help-block">Ejemplo: 01-04-2014</span>
             </div>
           </div>
 
         </div>
         <div class="clearfix"></div>
         <div class="form-group">
-          <label for="inputDNI" class="col-sm-2 control-label">DNI</label>
+          <label for="inputDni" class="col-sm-2 control-label">DNI</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputDNI" placeholder="Ingrese su DNI">
+            <input type="text" class="form-control" id="inputDni" placeholder="Ingrese su DNI">
           </div>
         </div>
         <div class="form-group">
-          <label for="inputUserName" class="col-sm-2 control-label">Nombre</label>
+          <label for="inputFirstName" class="col-sm-2 control-label">Nombre</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputUserName" placeholder="Ingrese el nombre">
+            <input type="text" class="form-control" id="inputFirstName" placeholder="Ingrese el nombre">
           </div>
         </div>
         <div class="form-group">
-          <label for="inputUserLastName" class="col-sm-2 control-label">Apellido</label>
+          <label for="inputLastName" class="col-sm-2 control-label">Apellido</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputUserLastName" placeholder="Ingrese el apellido">
+            <input type="text" class="form-control" id="inputLastName" placeholder="Ingrese el apellido">
           </div>
         </div>
+        <div class="form-group">
+          <label for="inputUser" class="col-sm-2 control-label">Usuario</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputUserPassword" class="col-sm-2 control-label">Contrase&ntilde;a</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputUserPassword" placeholder="Ingrese la Contrase&ntilde;a">
+          </div>
+          </div>
+          <div class="form-group">
+          <label for="inputUserPassword2" class="col-sm-2 control-label">Reingrese Contrase&ntilde;a</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputUserPassword2" placeholder="Ingrese nuevamente la Contrase&ntilde;a">
+          </div>
+          </div>
+
         <div class="form-group">
           <label for="inputEmail" class="col-sm-2 control-label">Email</label>
           <div class="col-sm-10">
@@ -246,14 +188,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="inputIMEI" class="col-sm-2 control-label">IMEI</label>
+          <label for="inputImei" class="col-sm-2 control-label">IMEI</label>
           <div class="col-sm-10">
-            <select class="form-control">
-              <option>356938035643809</option>
-              <option>356938035643809</option>
-              <option>356938035643809</option>
-              <option>356938035643809</option>
-              <option>356938035643809</option>
+            <select class="form-control" id="inputImei">
             </select>
           </div>
         </div>
@@ -269,7 +206,7 @@
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="input-group">
                 <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="..."></span>
+                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="picture"></span>
                 <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
               </div>
               <span class="help-block">Formatos de im&aacute;gen permitidos: jpg png y gif</span>
@@ -285,22 +222,24 @@
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
-            <button type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
+            <button id="saveUser" type="button" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
+            <button id="resetForm" type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
+              <button id="deleteUser" type="button" class="btn btn-labeled btn-danger"><span class="btn-label"><i class="fa fa-minus"></i></span>Borrar</button>
           </div>
         </div>
+        <div id="msg_form"></div>
       </div>
     </div>
   </div>
 </form>
 </div>
 <div class="footer">
-  <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+  <p>Intraway Corporation</p>
 </div>
 
 <!-- Ventana Modal Upload -->
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -336,6 +275,45 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+  <!-- Modal User Change Password -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modificar Contrase&ntilde;a</h4>
+      </div>
+      <div class="modal-body">
+                 <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputActualPass" class="col-sm-4 control-label">Contrase&ntilde;a Actual</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputActualPass" placeholder="Ingrese su contrase&ntilde;a actual">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputNewPass" class="col-sm-4 control-label">Nueva Contrase&ntilde;a</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputNewPass" placeholder="Ingrese su nueva contrase&ntilde;a">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputNewPass2" class="col-sm-4 control-label">Reingresar nueva contrase&ntilde;a</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputNewPass2" placeholder="Reingrese la nueva contrase&ntilde;a">
+              </div>
+            </div>
+            <div id="msg-modal"></div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button id="resetPassForm" type="button" class="btn btn-default">Limpiar</button>
+        <button id="savePassForm" type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- Modal end -->
+
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="//code.jquery.com/jquery.js"></script>
   <script>
@@ -347,6 +325,11 @@
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/libs/bootstrap.min.js"></script>
   <script src="js/libs/jasny-bootstrap.min.js"></script>
+  <script src="js/constants.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/users.js"></script>
+
+
 </body>
 </html>
 

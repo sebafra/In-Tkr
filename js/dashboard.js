@@ -19,8 +19,9 @@ $.getJSON(trackersFile, function(msg) {
   if(msg.status=="ok"){
     $("#trackersWithoutReport").empty();
     for (var i = 0, len = msg.data.trackers.length; i < len; i++) {
-     $("#trackersWithoutReport").append("<tr><td>"+ i +"</td><td>"+ parseTime(msg.data.trackers[i].trackTimestamp) +"</td><td>"+ msg.data.trackers[i].imei +"</td></tr>");
+     $("#trackersWithoutReport").append("<tr><td>"+ i +"</td><td>"+ parseTime(msg.data.trackers[i].trackTimestamp) +"</td><td>"+ msg.data.trackers[i].firstName +"</td><td>"+ msg.data.trackers[i].lastName +"</td></tr>");
    }
+   $("#operatorsLoader").remove();
  }
 });
 }
@@ -50,6 +51,7 @@ function showTopAlerts() {
          //Eventos en filas del listado de ultimas alertas
          clickRowLastAlerts(i,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
        }
+       $("#operatorsLoader").remove();
        $("#lastAlerts > tr:first-child").addClass("bg-danger");
        initialShowMap();
      }

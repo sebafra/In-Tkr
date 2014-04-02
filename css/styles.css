@@ -147,6 +147,9 @@ address{
 .usersContainer{
 	margin-top: 1em;
 }
+#usersSearch {
+	display: none;
+}
 
 /**
 * Reports

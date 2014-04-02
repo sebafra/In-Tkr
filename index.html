@@ -42,7 +42,7 @@
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fa fa-user"></span><span id="userNameNav"></span>|<span id="userRoleNav"></span></a></li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Configuraci&oacute;n 1</a></li>
@@ -51,7 +51,7 @@
                     <li class="divider"></li>
                     <li><a href="#">Otras opciones</a></li>
                   </ul>
-                </li>
+                </li> -->
                 <li><a href="#" id="btnLogout"><span class="fa fa-sign-out"></span> Logout</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
@@ -73,6 +73,7 @@
                     </tr>
                   </thead>
                   <tbody id="lastAlerts">
+                    <tr id="operatorsLoader" style="text-align: center"><td colspan="4"><img src="img/ajax-loader.gif" alt="">
                 </tbody>
               </table>
             </div>
@@ -97,10 +98,12 @@
                  <tr>
                   <th>#</th>
                   <th>Hora</th>
-                  <th>Usuario</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
                 </tr>
               </thead>
               <tbody id="trackersWithoutReport">
+                <tr id="operatorsLoader" style="text-align: center"><td colspan="4"><img src="img/ajax-loader.gif" alt="">
             </tbody>
           </table>
         </div>
@@ -170,7 +173,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> <!-- Modal end -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- <script src="//code.jquery.com/jquery.js"></script>-->
