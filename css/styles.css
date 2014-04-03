@@ -16,10 +16,11 @@ address{
 	margin-bottom: 0;
 }
 .footer{
-	background:#cccccc;
+	/*background:#cccccc;*/
 	height:50px;
 	text-align:center;
 	padding-top:1em;
+	border-top: 1px solid #3da8e3;
 }
 .checkbox{
 	padding-left: 20px;
@@ -168,4 +169,15 @@ address{
 .bodyReportTrackerList {
 	max-height: 610px;
 	overflow-y: scroll;
+}
+.pagination {
+	margin-top: 0 !important;
+	margin-bottom:  0 !important;
+}
+.paginationContainer {
+	margin:0 auto;
+	text-align: center;
+}
+.caret, #trackersListTable th, #tracksListTable th {
+	cursor: pointer;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Trackers : Intraway</title>
+  <title>Seguimiento de Tracks : Intraway</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <!-- Bootstrap -->
   <link href="css/bootstrap.css" rel="stylesheet" media="all">
@@ -41,19 +41,19 @@
           <li class="active"><a href="reports.html">Reportes</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="fa fa-user"></span> Juan Perez | Entidad</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Configuraci&oacute;n 1</a></li>
-              <li><a href="#">Configuraci&oacute;n 2</a></li>
-              <li><a href="#">Configuraci&oacute;n 3</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Otras opciones</a></li>
-            </ul>
-          </li>
-          <li><a href="#"><span class="fa fa-sign-out"></span> Logout</a></li>
-        </ul>
+                <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fa fa-user"></span><span id="userNameNav"></span>|<span id="userRoleNav"></span></a></li>
+      <!--           <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Configuraci&oacute;n 1</a></li>
+                    <li><a href="#">Configuraci&oacute;n 2</a></li>
+                    <li><a href="#">Configuraci&oacute;n 3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Otras opciones</a></li>
+                  </ul>
+                </li> -->
+                <li><a href="#" id="btnLogout"><span class="fa fa-sign-out"></span> Logout</a></li>
+              </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -61,7 +61,7 @@
     <div class="row">
       <ul class="nav nav-pills reportsNav">
         <li><a href="reports.html">Parque de trackers</a></li>
-        <li class="active"><a href="#">Seguimiento de trackers</a></li>
+        <li class="active"><a href="#">Seguimiento de tracks</a></li>
       </ul>
     </div>
   </div>
@@ -73,7 +73,7 @@
             <span class="panel-title">Reporte historico de alertas</span>
               <div class="pull-right" style="display:inline;font-size: 1.3em">
             <span class="fa fa-print" onclick="window.print()"></span>
-            <span class="fa fa-download" onclick="window.location='file.csv'" ></span>
+            <span id="table2csv" class="fa fa-download" ></span>
               </div>
           </div>
           <div class="panel-body bodyReportTrackerList">
@@ -81,13 +81,11 @@
               <div class="col-md-4 col-lg-4">
                 <div class="input-group">
                   <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Id</a></li>
+                    <button id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Nombre <span class="caret"></span></button>
+                    <ul id="dropdownUl" class="dropdown-menu">
+                      <li><a href="#">DNI</a></li>
                       <li><a href="#">Apellido</a></li>
                       <li><a href="#">IMEI</a></li>
-                      <li class="divider"></li>
-                      <li><a href="#">Tipo</a></li>
                     </ul>
                   </div><!-- /btn-group -->
                   <input type="text" class="form-control">
@@ -115,143 +113,39 @@
               </div>
             </div>
             <hr>
-            <table class="table table-hover">
+            <div id="msg"></div>
+            <table id="tracksListTable" class="table table-hover">
              <thead>
                <tr>
-                <th>Fecha <a href=""><span class="caret"></span></a></th>
-                <th>DNI <a href=""><span class="caret"></span></a></th>
-                <th>Nombre <a href=""><span class="caret"></span></a></th>
-                <th>Apellido <a href=""><span class="caret"></span></a></th>
-                <th>IMEI <a href=""><span class="caret"></span></a></th>
-                <th>Tipo <a href=""><span class="caret"></span></a></th>
+                <th>Fecha <span id="orderByDatetime" class="caret"></span></th>
+                <th>DNI <span id="orderByDni" class="caret"></span></a></th>
+                <th>Nombre <span id="orderByFirstName" class="caret"></span></a></th>
+                <th>Apellido <span id="orderByLastName" class="caret"></span></a></th>
+                <th>IMEI <span id="orderByImei" class="caret"></span></a></th>
+                <th>Tipo <span id="orderByType" class="caret"></span></th>
               </tr>
             </thead>
-            <tbody>
-             <tr>
-               <td><a href="reports.html">12/03/2014 10:25</a></td>
-               <td>10.523.544</td>
-               <td>Jorge</td>
-               <td>Bustos</td>
-               <td>356938035643809</td>
-               <td><span class="label">Track</span></td>
-             </tr>
-             <tr>
-              <td>12/03/2014 10:25</td>
-              <td>30.211.469</td>
-              <td>Juan</td>
-              <td>Martinez</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>12.452.436</td>
-              <td>Rita</td>
-              <td>Lee</td>
-              <td>356938035643809</td>
-              <td><span class="label label-danger">Emergencia</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>10.523.544</td>
-              <td>Jorge</td>
-              <td>Bustos</td>
-              <td>356938035643809</td>
-              <td><span class="label label-warning">P&aacute;nico</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>30.211.469</td>
-              <td>Juan</td>
-              <td>Martinez</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>12.452.436</td>
-              <td>Rita</td>
-              <td>Lee</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>10.523.544</td>
-              <td>Jorge</td>
-              <td>Bustos</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>30.211.469</td>
-              <td>Juan</td>
-              <td>Martinez</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>12.452.436</td>
-              <td>Rita</td>
-              <td>Lee</td>
-              <td>356938035643809</td>
-              <td><span class="label label-info">Ca&iacute;da Libre</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>10.523.544</td>
-              <td>Jorge</td>
-              <td>Bustos</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>30.211.469</td>
-              <td>Juan</td>
-              <td>Martinez</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>12.452.436</td>
-              <td>Rita</td>
-              <td>Lee</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>10.523.544</td>
-              <td>Jorge</td>
-              <td>Bustos</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>30.211.469</td>
-              <td>Juan</td>
-              <td>Martinez</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
-            <tr>
-              <td>12/03/2014 10:25</td>
-              <td>12.452.436</td>
-              <td>Rita</td>
-              <td>Lee</td>
-              <td>356938035643809</td>
-              <td><span class="label">Track</span></td>
-            </tr>
+            <tbody id="tracksList">
+              <tr id="loader" style="text-align: center"><td colspan="6"><img src="img/ajax-loader.gif" alt=""></td></tr>
           </tbody>
         </table>
       </div>
-      <div class="panel-footer">
-        12 usuarios registrados</span>
+            <div class="panel-footer">
+        <div class="row">
+        <div class="col-lg-4 col-md-4"><span id="tracksCount"></span> <span id="tracksCountTxt"></span></div>
+        <div class="col-lg-4 col-md-4 paginationContainer">
+          <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-4"></div>
+      </div>
       </div>
     </div>
   </div>
@@ -259,8 +153,47 @@
 </div>
 </div>
 <div class="footer">
-  <p>Intraway Corporation | <span class="fa fa-refresh"></span> &Uacute;ltima actualizaci&oacute;n a las 14:25hs</p>
+  <p>Intraway Corporation</p>
 </div>
+
+ <!-- Modal User Change Password -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modificar Contrase&ntilde;a</h4>
+      </div>
+      <div class="modal-body">
+                 <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputActualPass" class="col-sm-4 control-label">Contrase&ntilde;a Actual</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputActualPass" placeholder="Ingrese su contrase&ntilde;a actual">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputNewPass" class="col-sm-4 control-label">Nueva Contrase&ntilde;a</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputNewPass" placeholder="Ingrese su nueva contrase&ntilde;a">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputNewPass2" class="col-sm-4 control-label">Reingresar nueva contrase&ntilde;a</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="inputNewPass2" placeholder="Reingrese la nueva contrase&ntilde;a">
+              </div>
+            </div>
+            <div id="msg-modal"></div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button id="resetPassForm" type="button" class="btn btn-default">Limpiar</button>
+        <button id="savePassForm" type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- Modal end -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="//code.jquery.com/jquery.js"></script>
@@ -273,6 +206,11 @@ if (!window.jQuery) {
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/jasny-bootstrap.min.js"></script>
+<script src="js/libs/jquery.table2CSV.js"></script>
+<script src="js/libs/jquery.tableCSVExport.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/main.js"></script>
+<script src="js/tracks-history.js"></script>
 </body>
 </html>
 
