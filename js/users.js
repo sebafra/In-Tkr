@@ -35,6 +35,15 @@ function initialize () {
 //  saveUserData();
   filterList();
   imeiList();
+
+}
+
+function initializeData(){
+  showUsers();
+  imeiListReload();
+  clearForm();
+  showDefaultDateTime();
+  filterList();
 }
 
 
@@ -147,7 +156,8 @@ function formFinalUserCheckSubmission(){
         formParticipacionSubmitted = false;
         if(json.status == "ok"){
     		//window.location = 'exito.html';
-        	showMessageOK("Se creo exito!!!");
+        	showMessageOK("Se actualizo la informacion con exito!!!");
+        	initializeData();
         } else {
         	showMessageError(json.error.message);
         }
@@ -221,6 +231,8 @@ function deleteUser(){
     $.getJSON(deleteUrl, function(json) {
         if(json.status == "ok"){
         	showMessageOK("Se elimino con exito!!!");
+        	initializeData();
+
         } else {
         	showMessageError(json.error.message);
         }
@@ -285,20 +297,27 @@ function showDefaultDateTime(){
   var year = currentTime.getFullYear();
 
   var total = date + "-" + month + "-" + year;
-  $("#inputDateTime").attr({
-    value: total,
-  });
+  $("#inputDateTime").val(total);
 }
 function resetForm(){
   $("#resetForm").click(function(){
+	  clearForm();
+    });
+}
+
+function clearForm(){
     $("#finalUsersForm input").val("");
     $("#finalUsersForm textarea").val("");
 
+    $("#finalUserPhoto").attr({
+        src: "img/user_avatar.png"
+      });
+    showDefaultDateTime();
     imeiListReload();
     
-    setTimeout(function(){showDefaultDateTime();}, 1000); //No anda
-    });
+    //setTimeout(function(){showDefaultDateTime();}, 1000); //No anda
 }
+
 function saveUserData(){
   $("#saveUser").on("click",function(){
     var id = $("#inputId").val();
