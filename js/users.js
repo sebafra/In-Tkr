@@ -1,24 +1,192 @@
 var entityIdUrl = encodeURI(localStorage.trackersEntityId);
 var finalUsers;
 var inputEmpty = 0;
+var serverUrl;
+var trackers;
 
 $(document).ready(function () {
         initialize();
+        obtainServerUrl();
       });
+
+function obtainServerUrl(){
+	serverUrl = window.location.protocol + "//" + window.location.host;
+	var loc = window.location.pathname;
+    var directories=loc.split('/');
+    for(i = 1 ; i < directories.length - 1; i++){
+    	serverUrl += "/" + directories[i];
+    }
+}
 
 function initialize () {
   // Search Btn
   $("#usersSearchBtn").on("click",function(){
     $("#usersSearch").toggle("fast");
   });
+  
+  $("#deleteUser").on("click",function(){
+	    deleteUser();
+  });
+  
   showUserPhoto();
   showUsers();
   resetForm();
   showDefaultDateTime();
-  saveUserData();
+//  saveUserData();
   filterList();
   imeiList();
 }
+
+
+
+
+/******************/
+/** (+) SAVE      */
+
+var formFinalUserMessage = "";
+var formFinalUserSubmitted = false;
+function formFinalUserPrepare(){
+	if(!formFinalUserCheckData()){
+		showMessageError(formFinalUserMessage);
+		return false;
+	}
+	formFinalUserSubmitted = true;
+	
+	return formFinalUserPrepareData();
+}
+
+function showMessageError(msg){
+	alert(msg);
+}
+
+function showMessageOK(msg){
+	alert(msg);
+}
+
+function formFinalUserCheckData(){
+	var checkOK = true;
+    var intRegex = /^\d+$/;
+    
+    if($.trim($("#inputDateTime").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Fecha de nacimiento'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputDni").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'DNI'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputFirstName").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Nombre'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputLastName").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Apellido'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputUser").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Usuario'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputUserPassword").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Password'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputUserPassword2").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Confirmacion de Password'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputEmail").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Email'";
+    	checkOK = false;
+    }
+    else if($.trim($("#inputPhones").val()) == ""){
+    	formFinalUserMessage = "Debe ingresar 'Telefonos'";
+    	checkOK = false;
+    }
+    
+    return checkOK;
+}
+
+function formFinalUserPrepareData(){
+	
+  	var jsonObject = {
+  	  	id:$.trim($("#inputId").val()),
+  		firstName:$.trim($("#inputFirstName").val()),
+  		lastName:$.trim($("#inputLastName").val()),
+  		userName:$.trim($("#inputUser").val()),
+  		userPassword:$.trim($("#inputUserPassword").val()),
+  		entityId:entityIdUrl,
+  		email:$.trim($("#inputEmail").val()),
+  		phones:$.trim($("#inputPhones").val()),
+  		notes:$.trim($("#inputNotes").val()),
+  		dni:$.trim($("#inputDni").val()),
+  		pictureOld:$.trim($("#inputPictureOld").val())
+  		}
+  	
+  	var trackerId = $("#inputImei option:selected").val();
+  	if(trackerId != "0"){
+  		jsonObject.trackerId = trackerId;  		
+  	}
+  	
+  	$("#json").val(getJsonString(jsonObject));
+  	
+	return true;
+}
+
+function formFinalUserCheckSubmission(){
+	
+	if(!formFinalUserSubmitted) return;
+
+	
+	try{
+		//hideMessages();
+        var f = $("#formFinalUserResultFrame").contents().text();
+        f = f.replace("if (window.top.ripple) { window.top.ripple(\"bootstrap\").inject(window, document); }","");
+        var json = $.parseJSON(f);
+
+        formParticipacionSubmitted = false;
+        if(json.status == "ok"){
+    		//window.location = 'exito.html';
+        	showMessageOK("Se creo exito!!!");
+        } else {
+        	showMessageError(json.error.message);
+        }
+    }catch(e){
+    	showMessageError(e);
+    }
+}
+
+function getJsonString(jsonObject){
+	// implement JSON.stringify serialization
+	JSON.stringify = JSON.stringify || function (obj) {
+	    var t = typeof (obj);
+	    if (t != "object" || obj === null) {
+	        // simple data type
+	        if (t == "string") obj = '"'+obj+'"';
+	        return String(obj);
+	    }
+	    else {
+	        // recurse array or object
+	        var n, v, json = [], arr = (obj && obj.constructor == Array);
+	        for (n in obj) {
+	            v = obj[n]; t = typeof(v);
+	            if (t == "string") v = '"'+v+'"';
+	            else if (t == "object" && v !== null) v = JSON.stringify(v);
+	            json.push((arr ? "" : '"' + n + '":') + String(v));
+	        }
+	        return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+	    }
+	};
+
+	var tmpStr = JSON.stringify(jsonObject); 
+	
+	return tmpStr;
+}
+/** (-) SAVE      */
+/******************/
+
+
+
 
 function showUsers(){
  var loginFile = SERVER_URL+"/api/finalUser/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
@@ -42,8 +210,26 @@ function showUsers(){
     }
   });
 }
+
+
+function deleteUser(){
+	
+    var id = $("#inputId").val();
+    if(id == "") return;
+    
+    var deleteUrl = SERVER_URL+"/api/finalUser/remove?json={id:%22"+ id +"%22}";
+    $.getJSON(deleteUrl, function(json) {
+        if(json.status == "ok"){
+        	showMessageOK("Se elimino con exito!!!");
+        } else {
+        	showMessageError(json.error.message);
+        }
+    });
+}
+
+
 function fillUsersList(i){
-  $("#usersList").append("<tr id='user"+i+"'><td>"+ finalUsers[i].id +"</td><td>"+ finalUsers[i].firstName +"</td><td>"+ finalUsers[i].lastName +"</td><td>"+ finalUsers[i].userName +"</td></tr>");
+  $("#usersList").append("<tr id='user"+i+"'><td>"+ finalUsers[i].dni +"</td><td>"+ finalUsers[i].firstName +"</td><td>"+ finalUsers[i].lastName +"</td><td>"+ finalUsers[i].userName +"</td></tr>");
 }
 function clickRowEvent(i){
   $("tr#user"+i).on("click",function(){
@@ -52,16 +238,18 @@ function clickRowEvent(i){
       $("#inputDni").val(finalUsers[i].dni);
       $("#inputFirstName").val(finalUsers[i].firstName);
       $("#inputLastName").val(finalUsers[i].lastName);
-      $("#inputUserName").val(finalUsers[i].userName);
+      $("#inputUser").val(finalUsers[i].userName);
       $("#inputUserPassword").val(finalUsers[i].userPassword);
       $("#inputUserPassword2").val(finalUsers[i].userPassword);
       $("#inputEmail").val(finalUsers[i].email);
       //$("#inputImei").val(finalUsers[i].imei);
       $("#inputNotes").val(finalUsers[i].notes);
       $("#inputPhones").val(finalUsers[i].phones);
-      showUserPhoto(finalUsers[i].finalUserPictureUrl);
+      $("#inputPictureOld").val(finalUsers[i].picture);
+      showUserPhoto(finalUsers[i].picture);
       imeiSelected(finalUsers[i].imei);
-      alert(finalUsers[i].id);
+      if(finalUsers[i].trackerId != undefined)
+    	  addImeiToList(finalUsers[i].trackerId);
   });
 }
 function showListCount(){
@@ -83,10 +271,10 @@ function parseDate(currentField){
 
    return date +"-"+ month +"-"+ year;
 }
-function showUserPhoto(finalUserPictureUrl){
-  if (finalUserPictureUrl !== undefined) {
+function showUserPhoto(picture){
+  if (picture !== undefined) {
     $("#finalUserPhoto").attr({
-      src: "img/"+finalUserPictureUrl,
+      src: SERVER_URL + picture
     });
   }
 }
@@ -105,6 +293,9 @@ function resetForm(){
   $("#resetForm").click(function(){
     $("#finalUsersForm input").val("");
     $("#finalUsersForm textarea").val("");
+
+    imeiListReload();
+    
     setTimeout(function(){showDefaultDateTime();}, 1000); //No anda
     });
 }
@@ -180,19 +371,53 @@ function filterList(){
     $("#dropdownBtn").text(str);
   });
 }
+
+function imeiListReload(){
+	if(trackers == undefined) return;
+	
+	$("#inputImei").empty();
+    $("#inputImei").append("<option value=0>SIN IMEI</option>");
+
+    for (var i = 0; i < trackers.length; i++) {
+    	if(trackers[i].finalUserId == undefined)
+    		$("#inputImei").append("<option value="+trackers[i].id+">"+trackers[i].imei+"</option>");
+    }
+
+}
+
 function imeiList(){
-  var imeiItems = SERVER_URL+"/api/tracker/getAllNotAssigned?json={entityId:%22"+ entityIdUrl +"%22}";
+//  var imeiItems = SERVER_URL+"/api/tracker/getAllNotAssigned?json={entityId:%22"+ entityIdUrl +"%22}";
+	  var imeiItems = SERVER_URL+"/api/tracker/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
  $.getJSON(imeiItems, function(msg) {
   if(msg.status=="ok"){
     imeiValues = msg.data.trackers;
+
+    trackers = msg.data.trackers;
+    $("#inputImei").append("<option value=0>SIN IMEI</option>");
     for (var i = 0; i < msg.data.trackers.length; i++) {
-      $("#inputImei").append("<option value="+i+">"+msg.data.trackers[i].imei+"</option>");
+    	if(msg.data.trackers[i].finalUserId == undefined)
+      $("#inputImei").append("<option value="+msg.data.trackers[i].id+">"+msg.data.trackers[i].imei+"</option>");
     }
     } else {
       showAlert ("msg","danger",msg.error.message);
     }
   });
 }
+
+function addImeiToList(trackerId){
+	if(trackerId == undefined) return;
+	if(trackers == undefined) return;
+	
+    for (var i = 0; i < trackers.length; i++) {
+    	if(trackers[i].id == trackerId){
+    		$("#inputImei").append("<option selected=true value="+trackers[i].id+">"+trackers[i].imei+"</option>");
+
+    		break;
+    	}
+    }
+}
+
+
 function imeiSelected(imeiActual){
   for (var i = 0; i < imeiValues.length; i++) {
       if (imeiValues[i]==imeiActual) {
