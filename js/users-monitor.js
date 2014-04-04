@@ -8,8 +8,11 @@ $(document).ready(function () {
 
 function initialize () {
   resetOperatorsForm();
-  createNewOperator();
+  saveOperator();
   deleteOperator();
+  $("#resetOperatorsForm").click(function() {
+    resetOperatorsForm();
+  });
 }
 function showOperators(){
  var loginFile = SERVER_URL+"/api/operatorUser/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
@@ -56,11 +59,9 @@ function showOperatorsCount(){
 
 // Operators Form Buttons
 function resetOperatorsForm(){
-  $("#resetOperatorsForm").click(function() {
     $("#operatorsForm input").val("");
-});
 }
-function createNewOperator(){
+function saveOperator(){
             $("#saveOperator").on("click",function(){
                 var id = $("#inputOperatorId").val();
                 var firstName = $("#inputOperatorFirstName").val();
@@ -92,6 +93,7 @@ function createNewOperator(){
                   }
                 });
               }
+              resetOperatorsForm();
             });
 }
 function deleteOperator() {
@@ -104,6 +106,7 @@ function deleteOperator() {
                     if(result.status=="ok"){
                       showAlert ("msg","success","Operador borrado con &eacute;xito");
                       showOperators();
+                      resetOperatorsForm();
                     } else {
                       showAlert ("msg","danger","Ha ocurrido un error");
                     }

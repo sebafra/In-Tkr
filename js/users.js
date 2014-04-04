@@ -23,11 +23,11 @@ function initialize () {
   $("#usersSearchBtn").on("click",function(){
     $("#usersSearch").toggle("fast");
   });
-  
+
   $("#deleteUser").on("click",function(){
 	    deleteUser();
   });
-  
+
   showUserPhoto();
   showUsers();
   resetForm();
@@ -60,7 +60,7 @@ function formFinalUserPrepare(){
 		return false;
 	}
 	formFinalUserSubmitted = true;
-	
+
 	return formFinalUserPrepareData();
 }
 
@@ -75,7 +75,7 @@ function showMessageOK(msg){
 function formFinalUserCheckData(){
 	var checkOK = true;
     var intRegex = /^\d+$/;
-    
+
     if($.trim($("#inputDateTime").val()) == ""){
     	formFinalUserMessage = "Debe ingresar 'Fecha de nacimiento'";
     	checkOK = false;
@@ -112,12 +112,12 @@ function formFinalUserCheckData(){
     	formFinalUserMessage = "Debe ingresar 'Telefonos'";
     	checkOK = false;
     }
-    
+
     return checkOK;
 }
 
 function formFinalUserPrepareData(){
-	
+
   	var jsonObject = {
   	  	id:$.trim($("#inputId").val()),
   		firstName:$.trim($("#inputFirstName").val()),
@@ -131,22 +131,22 @@ function formFinalUserPrepareData(){
   		dni:$.trim($("#inputDni").val()),
   		pictureOld:$.trim($("#inputPictureOld").val())
   		}
-  	
+
   	var trackerId = $("#inputImei option:selected").val();
   	if(trackerId != "0"){
-  		jsonObject.trackerId = trackerId;  		
+  		jsonObject.trackerId = trackerId;
   	}
-  	
+
   	$("#json").val(getJsonString(jsonObject));
-  	
+
 	return true;
 }
 
 function formFinalUserCheckSubmission(){
-	
+
 	if(!formFinalUserSubmitted) return;
 
-	
+
 	try{
 		//hideMessages();
         var f = $("#formFinalUserResultFrame").contents().text();
@@ -188,8 +188,8 @@ function getJsonString(jsonObject){
 	    }
 	};
 
-	var tmpStr = JSON.stringify(jsonObject); 
-	
+	var tmpStr = JSON.stringify(jsonObject);
+
 	return tmpStr;
 }
 /** (-) SAVE      */
@@ -223,10 +223,10 @@ function showUsers(){
 
 
 function deleteUser(){
-	
+
     var id = $("#inputId").val();
     if(id == "") return;
-    
+
     var deleteUrl = SERVER_URL+"/api/finalUser/remove?json={id:%22"+ id +"%22}";
     $.getJSON(deleteUrl, function(json) {
         if(json.status == "ok"){
@@ -314,7 +314,7 @@ function clearForm(){
       });
     showDefaultDateTime();
     imeiListReload();
-    
+
     //setTimeout(function(){showDefaultDateTime();}, 1000); //No anda
 }
 
@@ -344,20 +344,20 @@ function saveUserData(){
     var phones = $("#inputPhones").val();
     checkInput("#inputPhones");
 
-    alert(datetime +"*-*"+ dni +"*-*"+ firstName +"*-*"+ lastName +"*-*"+ userName +"*-*"+ userPassword +"*-*"+ userPassword2 +"*-*"+ email +"*-*"+ imei +"*-*"+ notes +"*-*"+ phones);
+    //alert(datetime +"*-*"+ dni +"*-*"+ firstName +"*-*"+ lastName +"*-*"+ userName +"*-*"+ userPassword +"*-*"+ userPassword2 +"*-*"+ email +"*-*"+ imei +"*-*"+ notes +"*-*"+ phones);
 
     if (inputEmpty === 0) {
       if (checkEmail()===true) {
         if (id==="") {
           var file = "{datetime:%22"+ datetime +"%22,entityId:%22"+ entityIdUrl +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22,firstName:%22"+ firstName +"%22,lastName:%22"+ lastName +"%22,email:%22"+ email +"%22,phones:%22"+ phones +"%22,notes:%22"+ notes +"%22,dni:%22"+ dni +"%22}";
           //$("#jsonVars").setAttribute('value', file);
-          alert(file);
+          //alert(file);
           $("#finalUsersForm").submit();
         } else {
           var file = "{id:%22"+ id +"%22,datetime:%22"+ datetime +"%22,entityId:%22"+ entityIdUrl +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22,firstName:%22"+ firstName +"%22,lastName:%22"+ lastName +"%22,email:%22"+ email +"%22,phones:%22"+ phones +"%22,notes:%22"+ notes +"%22,dni:%22"+ dni +"%22}";
         }
       } else {
-        alert("false");
+        //alert("false");
         showAlert ("msg_form","danger","Las contrase&ntilde;as no coinciden");
       }
     } else {
@@ -393,7 +393,7 @@ function filterList(){
 
 function imeiListReload(){
 	if(trackers == undefined) return;
-	
+
 	$("#inputImei").empty();
     $("#inputImei").append("<option value=0>SIN IMEI</option>");
 
@@ -426,7 +426,7 @@ function imeiList(){
 function addImeiToList(trackerId){
 	if(trackerId == undefined) return;
 	if(trackers == undefined) return;
-	
+
     for (var i = 0; i < trackers.length; i++) {
     	if(trackers[i].id == trackerId){
     		$("#inputImei").append("<option selected=true value="+trackers[i].id+">"+trackers[i].imei+"</option>");

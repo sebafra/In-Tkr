@@ -21,8 +21,8 @@ function initialize () {
   $("#entityId").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
 }
 function showtracks(){
- //var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%22"+ entityIdUrl +"%22}";
- var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%2230dc20e5-b2e9-6bc9-ac98-39f7637a798a%22}";
+ var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%22"+ entityIdUrl +"%22}";
+ //var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%2230dc20e5-b2e9-6bc9-ac98-39f7637a798a%22}";
  $.getJSON(tracksFile, function(msg) {
   if(msg.status=="ok"){
     tracks=msg.data.tracks;
@@ -176,16 +176,16 @@ function orderByImei(){
 // Pagination
 
 function getPaginationLength(){
-  // var file = SERVER_URL+"/api/tracker/getParkLength?json={entityId:%22"+ entityIdUrl +"%22}";
-  // $.getJSON(file, function(result){
-  //   if(result.status=="ok"){
-  //     var parkLength=result.data.number;
-  //     var pagesTemp=parkLength/50;
-  //     pages=(Math.floor(pagesTemp))+1;
+  var file = SERVER_URL+"/api/tracker/getTracingLength?json={entityId:%22"+ entityIdUrl +"%22}";
+  $.getJSON(file, function(result){
+    if(result.status=="ok"){
+      var parkLength=result.data.number;
+      var pagesTemp=parkLength/50;
+      pages=(Math.floor(pagesTemp))+1;
 
-      //return pages;
-      return 10;
-  //}});
+      return pages;
+      //return 10;
+  }});
 }
 function buildPagination(){
   //n = getPaginationLength();
