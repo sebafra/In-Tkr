@@ -79,12 +79,15 @@ function reloadTopAlerts() {
         for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
           alertItem = msg.data.tracks[i];
           var exists = false;
-          for (var n = 0, leng = oldItems.length; n < leng; n++) {
-            console.log(alertItem.id +" - "+ oldItems[n].id);
-            console.log(n);
-            if (alertItem.id == oldItems[n].id) {
-              exists = true;
-            }
+          var plus = 0;
+          if(oldItems !== undefined){
+            for (var n = 0, leng = oldItems.length; n < leng; n++) {
+                  console.log(alertItem.id +" - "+ oldItems[n].id);
+                  console.log(n);
+                  if (alertItem.id == oldItems[n].id) {
+                    exists = true;
+                  }
+                }
           }
           if (exists == false) {
             console.log(alertItem.id);
@@ -93,8 +96,10 @@ function reloadTopAlerts() {
             clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
             $("#alertRow"+position).addClass("bg-danger");
             //$("#alertRow"+(position-1)).remove();
-            $("#lastAlerts tr:last-child").remove();
+            //$("#lastAlerts tr:last-child").remove();
+            deleteOlderAlert();
             orderAlertPosition();
+            //plus = 1;
           }
         }
         oldItems = msg.data.tracks;
@@ -196,7 +201,8 @@ function refresh(){
       showReportSummary();
       showLastRefresh();
       refresh();
-}, 18000); // Cada 2 minutos refresh
+
+}, 30000); // Cada 2 minutos refresh
 }
 function showLastRefresh(){
   var currentTime = new Date();
@@ -210,7 +216,16 @@ function showLastRefresh(){
 }
 function orderAlertPosition(){
   $("#lastAlerts tr").each(function(index){
+    console.log(index);
   $("#lastAlerts tr:nth-child("+index+") td:first-child").html(index);
+  });
+}
+function deleteOlderAlert(){
+  //var size = $("#lastAlerts tr").length();
+    $("#lastAlerts tr").each(function(index){
+      if (index > 20) {
+         $("#lastAlerts tr:nth-child("+index+")").remove();
+      }
   });
 }
 

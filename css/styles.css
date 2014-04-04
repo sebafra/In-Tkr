@@ -151,6 +151,9 @@ address{
 #usersSearch {
 	display: none;
 }
+#usersMenu{
+	display: none;
+}
 
 /**
 * Reports

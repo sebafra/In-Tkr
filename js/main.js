@@ -26,8 +26,14 @@ function initializeNav() {
     localStorage.removeItem("trackersLastName");
     window.location = "login.html";
   });
+  buildNav();
 }
 
+function buildNav(){
+  if (localStorage.trackersRole!=2) {
+    $("li#usersMenu").show();
+  }
+}
 function changeUserPass(){
    $("#savePassForm").on("click",function(){
                 var oldPassword = $("#inputActualPass").val();
