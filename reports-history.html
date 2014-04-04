@@ -66,10 +66,13 @@
     </div>
   </div>
   <div class="container reportsContainer">
+    <div class="visible-print">
+      <h3>Reporte de Seguimiento de Tracks</h3>
+      <small><span id="entityId"></span> | <span id="currentTime"></span></small><hr></div>
     <div class="row">
       <div class="col-md-12 col-lg-12">
         <div class="panel panel-primary">
-          <div class="panel-heading">
+          <div class="panel-heading hidden-print">
             <span class="panel-title">Reporte historico de alertas</span>
               <div class="pull-right" style="display:inline;font-size: 1.3em">
             <span class="fa fa-print" onclick="window.print()"></span>
@@ -112,8 +115,8 @@
               </form>
               </div>
             </div>
-            <hr>
-            <div id="msg"></div>
+            <hr class="hidden-print">
+            <div id="msg" class="hidden-print"></div>
             <table id="tracksListTable" class="table table-hover">
              <thead>
                <tr>
@@ -134,14 +137,7 @@
         <div class="row">
         <div class="col-lg-4 col-md-4"><span id="tracksCount"></span> <span id="tracksCountTxt"></span></div>
         <div class="col-lg-4 col-md-4 paginationContainer">
-          <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
+          <ul class="pagination hidden-print">
           </ul>
         </div>
         <div class="col-lg-4 col-md-4"></div>

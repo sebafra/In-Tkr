@@ -16,6 +16,9 @@ function initialize () {
   $("#dropdownUl li").on("click",function(){
     filterList(this);
   });
+  buildPagination();
+  showCurrentTime();
+  $("#entityId").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
 }
 function showtracks(){
  //var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%22"+ entityIdUrl +"%22}";
@@ -34,6 +37,7 @@ function showtracks(){
     }
     $("#loader").hide("fast");
     showListCount();
+    $(".pagination li:first-child").addClass("active");
     } else {
       showAlert ("msg","danger",msg.error.message);
     }
@@ -167,4 +171,45 @@ function orderByImei(){
     }
     $("#loader").hide("fast");
     $(".caret").css("color","black");
+}
+
+// Pagination
+
+function getPaginationLength(){
+  // var file = SERVER_URL+"/api/tracker/getParkLength?json={entityId:%22"+ entityIdUrl +"%22}";
+  // $.getJSON(file, function(result){
+  //   if(result.status=="ok"){
+  //     var parkLength=result.data.number;
+  //     var pagesTemp=parkLength/50;
+  //     pages=(Math.floor(pagesTemp))+1;
+
+      //return pages;
+      return 10;
+  //}});
+}
+function buildPagination(){
+  //n = getPaginationLength();
+  var n = getPaginationLength();
+  for (var i = 0; i < n; i++) {
+    $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
+    $("#page"+(i+1)).on("click",function(){
+      showtrackers(i+1);
+      $(".pagination li").removeClass("active");
+      $(this).addClass("active");
+    });
+    //console.log("works "+(i+1));
+  }
+}
+function showCurrentTime(){
+  var currentTime = new Date();
+  var date = currentTime.getDate();
+  var month = currentTime.getMonth();
+  var year = currentTime.getFullYear();
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+
+  if (minutes < 10)
+  minutes = "0" + minutes;
+
+  $("#currentTime").html(date+ "-" +month+ "-" +year+ " " +hours + ":" + minutes + " " + "hs");
 }

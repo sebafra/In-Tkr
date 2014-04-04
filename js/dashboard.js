@@ -1,10 +1,13 @@
  var mapFlag = true;
  var entityIdUrl = encodeURI(localStorage.trackersEntityId);
+ var oldItems;
+ var oldItem;
+ var alertItems;
+ var alertItem;
+ var lastAlertLatitude;
+ var lastAlertLongitude;
+
   $(document).ready(function () {
-  var alertItems;
-  var alertItem;
-  var lastAlertLatitude;
-  var lastAlertLongitude;
   showTopAlerts();
   showTrackersWithoutReport();
   showReportSummary();
@@ -43,29 +46,70 @@ function showTopAlerts() {
       if (msg.data.tracks.length!==0) {
         var myLatlng;
         alertItems = msg.data.tracks;
-        $("#lastAlerts").empty();
+        alertItems.sort(function(a, b){
+          if (a.timestamp < b.timestamp) return -1;
+          if (b.timestamp < a.timestamp) return 1;
+          return 0;
+        });
+        alertItems.reverse();
+        //$("#lastAlerts").empty();
         for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
           alertItem = msg.data.tracks[i];
          //Listado de ultimas alertas
-         $("#lastAlerts").append("<tr id='alertRow"+ i +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].entityId +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+         $("#lastAlerts").append("<tr id='alertRow"+ i +"'><td>"+ (i+1) +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].entityId +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
          //Eventos en filas del listado de ultimas alertas
          clickRowLastAlerts(i,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
        }
        $("#operatorsLoader").remove();
-       $("#lastAlerts > tr:first-child").addClass("bg-danger");
+       //$("#lastAlerts > tr:first-child").addClass("bg-danger");
        initialShowMap();
+       oldItems = msg.data.tracks;
      }
    } else {
     $("#lastAlerts").append("<div class='center-block'>No hay alertas disponibles</div>");
    }
  });
 }
+function reloadTopAlerts() {
+  var alertsFile = SERVER_URL+"/api/track/getLastAlerts?json={entityId%3A"+entityIdUrl+"}";
+  $.getJSON(alertsFile, function(msg) {
+    if(msg.status=="ok"){
+      if (msg.data.tracks.length!==0) {
+        var myLatlng;
+        for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
+          alertItem = msg.data.tracks[i];
+          var exists = false;
+          for (var n = 0, leng = oldItems.length; n < leng; n++) {
+            console.log(alertItem.id +" - "+ oldItems[n].id);
+            console.log(n);
+            if (alertItem.id == oldItems[n].id) {
+              exists = true;
+            }
+          }
+          if (exists == false) {
+            console.log(alertItem.id);
+            var position = len-1;
+            $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].entityId +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+            clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
+            $("#alertRow"+position).addClass("bg-danger");
+            //$("#alertRow"+(position-1)).remove();
+            $("#lastAlerts tr:last-child").remove();
+            orderAlertPosition();
+          }
+        }
+        oldItems = msg.data.tracks;
+      }
+    } else {
+      $("#lastAlerts").append("<div class='center-block'>No hay alertas disponibles</div>");
+    }
+  });
+}
 // Evento Click en filas del panel ultimas alertas reportadas
 function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   $("#alertRow"+ i).on("click", function(){
     showMap(alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
-    $("#lastAlerts > tr").removeClass("bg-danger");
-    $("#lastAlerts > tr#alertRow"+i).addClass("bg-danger");
+    $("#lastAlerts > tr").removeClass("bg-info").removeClass("bg-danger");
+    $("#lastAlerts > tr#alertRow"+i).addClass("bg-info");
   });
 }
 function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
@@ -147,12 +191,12 @@ marker.setMap(map);
 function refresh(){
   setTimeout(function() {
       mapFlag = false;
-      showTopAlerts();
+      reloadTopAlerts();
       showTrackersWithoutReport();
       showReportSummary();
       showLastRefresh();
       refresh();
-}, 180000);
+}, 18000); // Cada 2 minutos refresh
 }
 function showLastRefresh(){
   var currentTime = new Date();
@@ -163,6 +207,11 @@ function showLastRefresh(){
   minutes = "0" + minutes;
 
   $("#showLastRefresh").html(hours + ":" + minutes + " " + "hs");
+}
+function orderAlertPosition(){
+  $("#lastAlerts tr").each(function(index){
+  $("#lastAlerts tr:nth-child("+index+") td:first-child").html(index);
+  });
 }
 
 

@@ -57,7 +57,7 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <div class="container">
+  <div class="container hidden-print">
     <div class="row">
       <ul class="nav nav-pills reportsNav">
         <li class="active"><a href="#">Parque de trackers</a></li>
@@ -66,10 +66,13 @@
     </div>
   </div>
   <div class="container reportsContainer">
+    <div class="visible-print">
+      <h3>Reporte de Parque de trackers</h3>
+      <small><span id="entityId"></span> | <span id="currentTime"></span></small><hr></div>
     <div class="row">
       <div class="col-md-12 col-lg-12">
         <div class="panel panel-primary">
-          <div class="panel-heading">
+          <div class="panel-heading hidden-print">
             <span class="panel-title">Reporte del parque de trackers</span>
               <div class="pull-right" style="display:inline;font-size: 1.3em">
             <span class="fa fa-print" onclick="window.print()"></span>
@@ -77,7 +80,7 @@
               </div>
           </div>
           <div class="panel-body bodyReportTrackerList">
-            <div class="row" style="padding-left: 15px; padding-right: 15px">
+            <div class="row hidden-print" style="padding-left: 15px; padding-right: 15px">
               <div class="col-md-5 col-lg-5">
                 <div class="input-group">
                   <div class="input-group-btn">
@@ -98,8 +101,8 @@
               </form>
               </div>
             </div>
-            <hr>
-            <div id="msg"></div>
+            <hr class="hidden-print">
+            <div class="hidden-print" id="msg"></div>
             <table id="trackersListTable" class="table table-hover">
              <thead>
                <tr>
@@ -117,16 +120,9 @@
       </div>
       <div class="panel-footer">
         <div class="row">
-        <div class="col-lg-4 col-md-4"><span id="tracksCount"></span> <span id="tracksCountTxt"></span></div>
+        <div class="col-lg-4 col-md-4"><span id="trackersCount"></span> <span id="trackersCountTxt"></span></div>
         <div class="col-lg-4 col-md-4 paginationContainer">
-          <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
+          <ul class="pagination hidden-print">
           </ul>
         </div>
         <div class="col-lg-4 col-md-4"></div>
@@ -148,7 +144,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modificar Contrase&ntilde;a</h4>
+        <h3 class="modal-title" id="myModalLabel">Modificar Contrase&ntilde;a</h3>
       </div>
       <div class="modal-body">
                  <form class="form-horizontal" role="form">

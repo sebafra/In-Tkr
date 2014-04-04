@@ -181,3 +181,19 @@ address{
 .caret, #trackersListTable th, #tracksListTable th {
 	cursor: pointer;
 }
+
+/**
+* Print Styles for Reports
+*/
+
+@media print {
+	.panel {
+		border: none;
+	}
+	.panel-body{
+		overflow-y:hidden;
+	}
+	.table td {
+		padding: 4px;
+	}
+}

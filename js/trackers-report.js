@@ -6,7 +6,7 @@ $(document).ready(function () {
       });
 
 function initialize () {
-  showtrackers();
+  showtrackers(1);
   $("#table2csv").on("click",function(){
     $('#trackersListTable').table2CSV({
        delivery: 'download'
@@ -16,9 +16,12 @@ function initialize () {
   $("#dropdownUl li").on("click",function(){
     filterList(this);
   });
+  buildPagination();
+  showCurrentTime();
+  $("#entityId").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
 }
-function showtrackers(){
- var trackersFile = SERVER_URL+"/api/tracker/getPark?json={entityId:%22"+ entityIdUrl +"%22}";
+function showtrackers(page){
+ var trackersFile = SERVER_URL+"/api/tracker/getPark?json={entityId:%22"+ entityIdUrl +"%22,page:%22"+ page +"%22}";
  $.getJSON(trackersFile, function(msg) {
   if(msg.status=="ok"){
     trackers=msg.data.trackers;
@@ -33,8 +36,8 @@ function showtrackers(){
     }
     $("#trackersListLoader").hide("fast");
     showListCount();
+    $(".pagination li:first-child").addClass("active");
     } else {
-      alert("Hola");
       showAlert ("msg","danger",msg.error.message);
     }
   });
@@ -156,4 +159,42 @@ function orderByImei(){
     }
     $("#trackersListLoader").hide("fast");
     $(".caret").css("color","black");
+}
+function getPaginationLength(){
+  // var file = SERVER_URL+"/api/tracker/getParkLength?json={entityId:%22"+ entityIdUrl +"%22}";
+  // $.getJSON(file, function(result){
+  //   if(result.status=="ok"){
+  //     var parkLength=result.data.number;
+  //     var pagesTemp=parkLength/50;
+  //     pages=(Math.floor(pagesTemp))+1;
+
+      //return pages;
+      return 10;
+  //}});
+}
+function buildPagination(){
+  //n = getPaginationLength();
+  var n = getPaginationLength();
+  for (var i = 0; i < n; i++) {
+    $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
+    $("#page"+(i+1)).on("click",function(){
+      showtrackers(i+1);
+      $(".pagination li").removeClass("active");
+      $(this).addClass("active");
+    });
+    //console.log("works "+(i+1));
+  }
+}
+function showCurrentTime(){
+  var currentTime = new Date();
+  var date = currentTime.getDate();
+  var month = currentTime.getMonth();
+  var year = currentTime.getFullYear();
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+
+  if (minutes < 10)
+  minutes = "0" + minutes;
+
+  $("#currentTime").html(date+ "-" +month+ "-" +year+ " " +hours + ":" + minutes + " " + "hs");
 }
