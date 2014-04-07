@@ -95,27 +95,30 @@ function buildPagination(jsonObjectUrl){
         pages=1;
         $(".pagination").hide();
       }
-      $(".pagination").empty();
-      for (var i = 0; i < pages; i++) {
-        $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
-        $("#page"+(i+1)).click(paginationClickEvent((i+1)));
-      }
       if (pageActive !== undefined) {
-         $("#page"+(pageActive)).addClass("active");
-      } else {
-        $("#page1").addClass("active");
-      }
-    } else {
-      showAlert ("msg","danger",msg.error.message);
+       $("#pgCurrent a").text(pageActive);
+     } else {
+      $("#pgCurrent a").text(1);
+      $("#pgPrevious a").addClass("disabled");
     }
-  });
-}
-
-function paginationClickEvent(i){
-  return function(){
-    showtrackers((i),jsonObject.orderBy,jsonObject.orderDirection);
-    pageActive = i;
-  };
+    $("#pgNext").on("click",function(){
+      if (pageActive < parkLength) {
+        var nextPage = pageActive + 1;
+        showtrackers(nextPage,jsonObject.orderBy,jsonObject.orderDirection);
+        pageActive = nextPage;
+      };
+    });
+    $("#pgPrevious").on("click",function(){
+      if (pageActive <= 1){
+        var previousPage = pageActive - 1;
+        showtrackers(previousPage,jsonObject.orderBy,jsonObject.orderDirection);
+        pageActive = previousPage;
+      }
+    });
+  } else {
+    showAlert ("msg","danger",msg.error.message);
+  }
+});
 }
 
 // Order By

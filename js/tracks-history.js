@@ -2,6 +2,7 @@ var entityIdUrl = encodeURI(localStorage.trackersEntityId);
 var tracks;
 var jsonObject;
 var pageActive;
+var pages;
 
 $(document).ready(function () {
         initialize();
@@ -13,7 +14,6 @@ function initialize () {
   $("#dropdownUl li").on("click",function(){
     filterList(this);
   });
-  buildPagination();
   showCurrentTime();
   $("#entityId").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
     $("#searchBtn").on('click',function(){
@@ -32,6 +32,7 @@ function showtracks(page,orderBy,orderDirection){
     $("#loader").hide("fast");
     //showListCount();
     buildPagination(showTracksPrepareData(page,orderBy,orderDirection));
+    console.log("buildPagination");
     } else {
       showAlert ("msg","danger",msg.error.message);
     }
@@ -88,7 +89,7 @@ function filterList(id){
     $("#dropdownBtn").attr("name",name);
 }
 function buildPagination(jsonObjectUrl){
-  var pages;
+  //var pages;
   var resultsPerPage = 5;
   var file = SERVER_URL+"/api/track/getTracingLength?json="+ jsonObjectUrl;
   $.getJSON(file, function(result){
@@ -97,32 +98,46 @@ function buildPagination(jsonObjectUrl){
       showListCount(tracingLength);
       if (tracingLength > resultsPerPage) {
         var pagesTemp=tracingLength/resultsPerPage;
-        pages=(Math.floor(pagesTemp))+1;
+        //pages=(Math.floor(pagesTemp));
+        pages=pagesTemp;
         $(".pagination").show();
       } else {
         pages=1;
         $(".pagination").hide();
       }
-      $(".pagination").empty();
-      for (var i = 0; i < pages; i++) {
-        $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
-        $("#page"+(i+1)).click(paginationClickEvent((i+1)));
-      }
       if (pageActive !== undefined) {
-         $("#page"+(pageActive)).addClass("active");
-      } else {
-        $("#page1").addClass("active");
+       $("#pgCurrent").text(pageActive);
+       $("#pgPrevious").parent().removeClass("disabled");
+     } else {
+      $("#pgCurrent").text(1);
+      $("#pgPrevious").parent().addClass("disabled");
+      pageActive = 1;
+    }
+    $("#pgNext").click(function(e){
+      console.log("pageActive" + pageActive);
+      if (pageActive < pages) {
+        var nextPage = pageActive + 1;
+        showtracks(nextPage,jsonObject.orderBy,jsonObject.orderDirection);
+        pageActive = nextPage;
       }
+      e.preventDefault();
+    });
+    $("#pgPrevious").click(function(e){
+      //alert(pageActive + "Previous");
+      if (pageActive > 1){
+        $("#pgPrevious").parent().removeClass("disabled");
+        var previousPage = pageActive - 1;
+        showtracks(previousPage,jsonObject.orderBy,jsonObject.orderDirection);
+        pageActive = previousPage;
+      } else {
+        $("#pgPrevious").parent().addClass("disabled");
+      }
+      e.preventDefault();
+    });
     } else {
       showAlert ("msg","danger",msg.error.message);
     }
   });
-}
-function paginationClickEvent(i){
-  return function(){
-    showtracks((i),jsonObject.orderBy,jsonObject.orderDirection);
-    pageActive = i;
-  };
 }
 function showListCount(tracingLength){
   $("#tracksCount").html(tracingLength);
