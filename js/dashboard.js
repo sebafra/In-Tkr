@@ -57,7 +57,7 @@ function showTopAlerts() {
         for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
           alertItem = msg.data.tracks[i];
          //Listado de ultimas alertas
-         $("#lastAlerts").append("<tr id='alertRow"+ i +"'><td>"+ (i+1) +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].entityId +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+         $("#lastAlerts").append("<tr id='alertRow"+ i +"'><td>"+ (i+1) +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
          //Eventos en filas del listado de ultimas alertas
          clickRowLastAlerts(i,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
        }
@@ -83,19 +83,20 @@ function reloadTopAlerts() {
           var plus = 0;
           if(oldItems !== undefined){
             for (var n = 0, leng = oldItems.length; n < leng; n++) {
-                  console.log(alertItem.id +" - "+ oldItems[n].id);
-                  console.log(n);
+                  //console.log(alertItem.id +" - "+ oldItems[n].id);
+                  //console.log(n);
                   if (alertItem.id == oldItems[n].id) {
                     exists = true;
                   }
                 }
           }
           if (exists == false) {
-            console.log(alertItem.id);
+            //console.log(alertItem.id);
             var position = len-1;
-            $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].entityId +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+            $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
             clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
             $("#alertRow"+position).addClass("bg-danger");
+            showMap(alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
             deleteOlderAlert();
             orderAlertPosition();
           }
@@ -122,7 +123,7 @@ function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,tracker
 }
 function initialShowMap (){
   if (mapFlag === true) {
-      var lastAlert = alertItems.length-1;
+      var lastAlert = 0;
       showMap(alertItems[lastAlert].latitude,alertItems[lastAlert].longitude,alertItems[lastAlert].finalUserFirstName,alertItems[lastAlert].finalUserLastName,alertItems[lastAlert].trackerAni,alertItems[lastAlert].finalUserPhones,alertItems[lastAlert].finalUserPictureUrl);
   }
 }
@@ -190,11 +191,18 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
   });
+  // To add the marker to the map, call setMap();
+  marker.setMap(map);
+  //setTimeout(function(){infowindow.open(map,marker);}, 1000);
+  var checkMapLoadFn = setInterval(function(){checkMapLoad()},500);
 
-    setTimeout(function(){infowindow.open(map,marker);}, 1000);
-
-// To add the marker to the map, call setMap();
-marker.setMap(map);
+  function checkMapLoad(){
+   if (marker.position !== NaN){
+    infowindow.open(map,marker);
+    clearInterval(checkMapLoadFn);
+    }
+    console.log(marker.position);
+  }
 }
 function refresh(){
   setTimeout(function() {
@@ -219,7 +227,6 @@ function showLastRefresh(){
 }
 function orderAlertPosition(){
   $("#lastAlerts tr").each(function(index){
-    console.log(index);
   $("#lastAlerts tr:nth-child("+index+") td:first-child").html(index);
   });
 }

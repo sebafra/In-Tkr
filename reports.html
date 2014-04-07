@@ -75,12 +75,13 @@
           <div class="panel-heading hidden-print">
             <span class="panel-title">Reporte del parque de trackers</span>
               <div class="pull-right" style="display:inline;font-size: 1.3em">
+            <span id="usersSearchBtn" class="fa fa-search"></span>
             <span class="fa fa-print" onclick="window.print()"></span>
             <span id="table2csv" class="fa fa-download" ></span>
               </div>
           </div>
           <div class="panel-body bodyReportTrackerList">
-            <div class="row hidden-print" style="padding-left: 15px; padding-right: 15px">
+            <div id="searchContent" class="row hidden-print" style="padding-left: 15px; padding-right: 15px">
               <div class="col-md-5 col-lg-5">
                 <div class="input-group">
                   <div class="input-group-btn">
@@ -97,11 +98,11 @@
               </div>
               <div class="col-md-7 col-lg-7" style="text-align: left">
               <form class="form-inline" role="form">
-                <button id="searchBtn" type="button" class="btn btn-default">Buscar</button>
+                <button id="searchBtn" type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
               </form>
               </div>
+              <hr class="hidden-print">
             </div>
-            <hr class="hidden-print">
             <div class="hidden-print" id="msg"></div>
             <table id="trackersListTable" class="table table-hover">
              <thead>

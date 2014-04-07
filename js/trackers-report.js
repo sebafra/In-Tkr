@@ -18,6 +18,9 @@ function initialize () {
   $("#searchBtn").on('click',function(){
     showtrackers();
   });
+  $("#usersSearchBtn").on("click",function(){
+    $("#searchContent").slideToggle("fast");
+  });
 }
 function showtrackers(page,orderBy,orderDirection){
   var trackersFile = SERVER_URL+"/api/tracker/getPark?json="+ showTrackersPrepareData(page,orderBy,orderDirection);

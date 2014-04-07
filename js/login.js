@@ -24,11 +24,12 @@ $(document).ready(function () {
         });
         $('#createEntity').on('show.bs.modal', function (e) {
           resetForm();
-        })
+        });
       });
 
 //authenticate function to make ajax call
 function authenticate(userName, password, userType) {
+  $("#btnLoginSubmit").html("<img src='img/ajax-loader.gif' alt='placeholder+image'>");
  var loginFile = SERVER_URL+"/api/user/login?json={name:%22"+ userName +"%22,password:%22"+ password +"%22,type:%22"+ userType +"%22}";
  $.getJSON(loginFile, function(msg) {
     if(msg.status=="ok"){
@@ -41,6 +42,7 @@ function authenticate(userName, password, userType) {
       window.location = "index.html";
     } else {
       showAlert ("msg","danger",msg.error.message);
+      $("#btnLoginSubmit").html("Ingresar");
     }
   });
 }
@@ -70,6 +72,7 @@ else
 //Alta de Entidad
 
 function createNewEntity(){
+  $("#saveForm").html("<img src='img/ajax-loader.gif' alt='placeholder+image'>");
   inputEmpty = 0;
   var name = $("#entityName").val();
   checkInput("#entityName");
@@ -90,12 +93,15 @@ function createNewEntity(){
          setTimeout(function(){$('#createEntity').modal('hide');}, 3000);
        } else {
         showAlert ("msg-modal","danger",msg.error.message);
+        $("#saveForm").html("Guardar");
       }
     }); // getJson ends
     } else {
+      $("#saveForm").html("Guardar");
       showAlert ("msg-modal","danger","Las contrase&ntilde;as no coinciden"); //inputEmpty
     }
   } else {
+    $("#saveForm").html("Guardar");
       showAlert ("msg-modal","danger","Complete todos los campos"); //inputEmpty
     }
 }

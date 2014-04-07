@@ -205,6 +205,9 @@ address{
 .caret, #trackersListTable th, #tracksListTable th {
 	cursor: pointer;
 }
+#searchContent {
+	display: none;
+}
 
 /**
 * Print Styles for Reports

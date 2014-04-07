@@ -309,7 +309,7 @@
 						<div class="col-sm-10">
 							<iframe style="display: none" name="formFinalUserImportResultFrame"
 								id="formFinalUserImportResultFrame" onload="formFinalUserImportCheckSubmission()"></iframe>
-						
+
 							<form role="form"
 								action="/trackers/api/finalUser/importCSVFile"
 								method="post" enctype="multipart/form-data"
@@ -330,8 +330,10 @@
 									<span class="help-block">Formato permitido: .csv</span>
 								</div>
 								<div>
-									<button type="submit" class="btn btn-labeled btn-primary"
-									onclick="return formFinalUserImportPrepare();">Importar</button>
+									<button type="submit"
+									class="btn btn-labeled btn-primary"
+									onclick="return formFinalUserImportPrepare();">
+									<span class="btn-label"><i class="fa fa-upload"></i></span>Importar</button>
 									<input type="hidden" name="jsonImport" id="jsonImport"/>
 								</div>
 							</form>

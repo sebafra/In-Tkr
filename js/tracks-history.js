@@ -19,6 +19,9 @@ function initialize () {
     $("#searchBtn").on('click',function(){
     showtracks();
   });
+    $("#usersSearchBtn").on("click",function(){
+    $("#searchContent").slideToggle("fast");
+  });
 }
 function showtracks(page,orderBy,orderDirection){
  var tracksFile = SERVER_URL+"/api/track/getTracing?json="+ showTracksPrepareData(page,orderBy,orderDirection);
