@@ -66,9 +66,9 @@ function showTrackersPrepareData(page,orderBy,orderDirection){
 
   return getJsonString(jsonObject);
 }
-function showListCount(){
-  $("#trackersCount").html(trackers.length);
-  if (trackers.length!=1) {
+function showListCount(parkLength){
+  $("#trackersCount").html(parkLength);
+  if (parkLength!=1) {
     $("#trackersCountTxt").html("usuarios registrados");
   } else {
     $("#trackersCountTxt").html("usuario registrado");
@@ -82,11 +82,12 @@ function filterList(id){
 }
 function buildPagination(jsonObjectUrl){
   var pages;
-  var resultsPerPage = 5;
+  var resultsPerPage = 50;
   var file = SERVER_URL+"/api/tracker/getParkLength?json="+ jsonObjectUrl;
   $.getJSON(file, function(result){
     if(result.status=="ok"){
       var parkLength=result.data.parkLength;
+      showListCount(parkLength)
       if (parkLength > resultsPerPage) {
         var pagesTemp=parkLength/resultsPerPage;
         pages=(Math.floor(pagesTemp))+1;
@@ -130,16 +131,14 @@ function orderEvents(){
     //alert(orderByCurrent);
     if (order !== "ASC" || order == "") {
       showtrackers(undefined,orderByCurrent,"ASC");
-      $(".caret").removeClass("inverse");
+      $("#trackersListTable .caret").removeClass("inverse");
       order = "ASC";
-      alert("ASC");
     } else {
       showtrackers(undefined,orderByCurrent,"DESC");
       order = "DESC";
       $(this).children().addClass("inverse");
-      alert("DESC");
     }
-    $(".caret").css("color","black");
+    $("#trackersListTable .caret").css("color","black");
     $(this).children().css("color","#3da8e3");
     pageActive = 1;
   });
