@@ -6,6 +6,7 @@
  var alertItem;
  var lastAlertLatitude;
  var lastAlertLongitude;
+ var infoWindow = null;
 
   $(document).ready(function () {
   showTopAlerts();
@@ -95,11 +96,8 @@ function reloadTopAlerts() {
             $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].entityId +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
             clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
             $("#alertRow"+position).addClass("bg-danger");
-            //$("#alertRow"+(position-1)).remove();
-            //$("#lastAlerts tr:last-child").remove();
             deleteOlderAlert();
             orderAlertPosition();
-            //plus = 1;
           }
         }
         oldItems = msg.data.tracks;
@@ -120,6 +118,7 @@ function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalU
 function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
     myLatlng = new google.maps.LatLng(alertLat,alertLong);
     initialize(myLatlng,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
+    //google.setOnLoadCallback(initialize);
 }
 function initialShowMap (){
   if (mapFlag === true) {
@@ -129,11 +128,11 @@ function initialShowMap (){
 }
 function showAlertType(alertType){
   if(alertType==1){
-    return "P&aacute;nico";
+    return "<span class='label label-danger'>P&aacute;nico</span>";
   } else if(alertType==2) {
-    return "Emergencia";
+    return "<span class='label label-warning'>Emergencia</span>";
   } else if (alertType==3){
-    return "Ca&iacute;da Libre";
+    return "<span class='label label-info'>Ca&iacute;da Libre</span>";
   }
 }
 function parseDate(currentField){
@@ -160,6 +159,8 @@ function parseTime(trackTimestamp){
 }
 //Google Maps API Key: AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU
 function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
+  //var geocoder;
+  //geocoder = new google.maps.Geocoder();
   var mapOptions = {
     center: mapLatyLong,
     zoom: 14
@@ -186,9 +187,12 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
     position: myLatlng,
     animation: google.maps.Animation.DROP,
   });
-  google.maps.event.addListener(marker, 'mouseover', function() {
+  // google.maps.event.addListener(marker, 'mouseover', function() {
+  //   infowindow.open(map,marker);
+  // });
+
     infowindow.open(map,marker);
-  });
+
 
 // To add the marker to the map, call setMap();
 marker.setMap(map);

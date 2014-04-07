@@ -25,6 +25,9 @@ address{
 .checkbox{
 	padding-left: 20px;
 }
+.fa:hover {
+	cursor:pointer;
+}
 
 /**
 * Login
@@ -118,7 +121,7 @@ address{
 	overflow-y: auto;
 }
 .bodyUsersList {
-	max-height: 610px;
+	height: 660px;
 	overflow-y: auto;
 }
 .homeAlertRow {
@@ -141,6 +144,10 @@ address{
 .alertBell {
 	font-size: 4em;
 }
+.table-hover .rowlink tr:hover td {
+	cursor: pointer;
+}
+
 
 /**
 * User
