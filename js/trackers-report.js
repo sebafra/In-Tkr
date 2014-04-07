@@ -1,49 +1,70 @@
 var entityIdUrl = encodeURI(localStorage.trackersEntityId);
 var trackers;
+var jsonObject;
+var pageActive;
 
 $(document).ready(function () {
         initialize();
       });
 
 function initialize () {
-  showtrackers(1);
-  $("#table2csv").on("click",function(){
-    $('#trackersListTable').table2CSV({
-       delivery: 'download'
-     });
-  });
+  showtrackers();
   orderEvents();
   $("#dropdownUl li").on("click",function(){
     filterList(this);
   });
-  buildPagination();
   showCurrentTime();
   $("#entityId").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
-}
-function showtrackers(page){
- var trackersFile = SERVER_URL+"/api/tracker/getPark?json={entityId:%22"+ entityIdUrl +"%22,page:%22"+ page +"%22}";
- $.getJSON(trackersFile, function(msg) {
-  if(msg.status=="ok"){
-    trackers=msg.data.trackers;
-    trackers.sort(function(a, b){
-          if (a.lastName < b.lastName) return -1;
-          if (b.lastName < a.lastName) return 1;
-          return 0;
-      });
-    $("#trackersList").empty();
-    for (var i = 0; i < msg.data.trackers.length; i++) {
-       filltrackersList(i);
-    }
-    $("#trackersListLoader").hide("fast");
-    showListCount();
-    $(".pagination li:first-child").addClass("active");
-    } else {
-      showAlert ("msg","danger",msg.error.message);
-    }
+  $("#searchBtn").on('click',function(){
+    showtrackers();
   });
+}
+function showtrackers(page,orderBy,orderDirection){
+  var trackersFile = SERVER_URL+"/api/tracker/getPark?json="+ showTrackersPrepareData(page,orderBy,orderDirection);
+  $.getJSON(trackersFile, function(msg) {
+    if(msg.status=="ok"){
+      trackers=msg.data.trackers;
+      $("#trackersList").empty();
+      for (var i = 0; i < msg.data.trackers.length; i++) {
+       filltrackersList(i);
+     }
+     $("#trackersListLoader").hide("fast");
+     showListCount();
+     buildPagination(showTrackersPrepareData(page,orderBy,orderDirection));
+   } else {
+    showAlert ("msg","danger",msg.error.message);
+  }
+});
 }
 function filltrackersList(i){
   $("#trackersList").append("<tr id='user"+i+"'><td>"+ parseDate(trackers[i].datetime) +"</td><td>"+ trackers[i].finalUserDni  +"</td><td>"+ trackers[i].finalUserFirstName +"</td><td>"+ trackers[i].finalUserLastName +"</td><td>"+ trackers[i].imei +"</td></tr>");
+}
+function showTrackersPrepareData(page,orderBy,orderDirection){
+     jsonObject = {
+      entityId:entityIdUrl,
+      };
+
+    var searchFilterOption = $("#dropdownBtn").attr("name");
+    var searchInput = $.trim($("#searchInput").val());
+
+    if (searchInput !== "") {
+      if (searchInput !== "todos") {
+        jsonObject[searchFilterOption] = searchInput;
+      };
+    }
+    if (typeof(page) !== undefined) {
+      jsonObject.page = page;
+    } else {
+      jsonObject.page = 1;
+    }
+     if (orderBy !== undefined) {
+      jsonObject.orderBy = orderBy;
+    }
+    if (orderDirection !== undefined) {
+      jsonObject.orderDirection = orderDirection;
+    }
+
+  return getJsonString(jsonObject);
 }
 function showListCount(){
   $("#trackersCount").html(trackers.length);
@@ -53,6 +74,76 @@ function showListCount(){
     $("#trackersCountTxt").html("usuario registrado");
 }
 }
+function filterList(id){
+    var str = $(id).text();
+    $("#dropdownBtn").text(str);
+    var name = $(id).attr("id");
+    $("#dropdownBtn").attr("name",name);
+}
+function buildPagination(jsonObjectUrl){
+  var pages;
+  var resultsPerPage = 5;
+  var file = SERVER_URL+"/api/tracker/getParkLength?json="+ jsonObjectUrl;
+  $.getJSON(file, function(result){
+    if(result.status=="ok"){
+      var parkLength=result.data.parkLength;
+      if (parkLength > resultsPerPage) {
+        var pagesTemp=parkLength/resultsPerPage;
+        pages=(Math.floor(pagesTemp))+1;
+        $(".pagination").show();
+      } else {
+        pages=1;
+        $(".pagination").hide();
+      }
+      $(".pagination").empty();
+      for (var i = 0; i < pages; i++) {
+        $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
+        $("#page"+(i+1)).click(paginationClickEvent((i+1)));
+      }
+      if (pageActive !== undefined) {
+         $("#page"+(pageActive)).addClass("active");
+      } else {
+        $("#page1").addClass("active");
+      }
+    } else {
+      showAlert ("msg","danger",msg.error.message);
+    }
+  });
+}
+
+function paginationClickEvent(i){
+  return function(){
+    showtrackers((i),jsonObject.orderBy,jsonObject.orderDirection);
+    pageActive = i;
+  };
+}
+
+// Order By
+
+function orderEvents(){
+  var order;
+  $(".orderBy").parent().on("click",function(){
+    var orderByCurrent = $(this).attr("name");
+    //alert(orderByCurrent);
+    if (order !== "ASC" || order == "") {
+      showtrackers(undefined,orderByCurrent,"ASC");
+      $(".caret").removeClass("inverse");
+      order = "ASC";
+      alert("ASC");
+    } else {
+      showtrackers(undefined,orderByCurrent,"DESC");
+      order = "DESC";
+      $(this).children().addClass("inverse");
+      alert("DESC");
+    }
+    $(".caret").css("color","black");
+    $(this).children().css("color","#3da8e3");
+    pageActive = 1;
+  });
+}
+
+// Helpers
+
 function parseDate(currentField){
   var myNewDate = new Date(currentField);
   var date = myNewDate.getDate();
@@ -60,130 +151,6 @@ function parseDate(currentField){
   var year = myNewDate.getFullYear();
 
    return date +"-"+ month +"-"+ year;
-}
-function filterList(id){
-    var str = $(id).text();
-    $("#dropdownBtn").text(str);
-}
-
-// Order By
-
-function orderEvents(){
-  $("#orderByDatetime").parent().on("click",function(){
-    orderByDatetime();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByDni").parent().on("click",function(){
-    orderByDni();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByFirstName").parent().on("click",function(){
-    orderByFirstName();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByLastName").parent().on("click",function(){
-    orderByLastName();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByImei").parent().on("click",function(){
-    orderByImei();
-    $(this).children().css("color","#3da8e3");
-  });
-}
-function orderByDatetime(){
-    $("#trackersList").empty();
-    $("#trackersListLoader").show("fast");
-    trackers.sort(function(a,b){
-          if (a.datetime < b.datetime) return -1;
-          if (b.datetime < a.datetime) return 1;
-          return 0;
-      });
-    for (var i = 0; i < trackers.length; i++) {
-       filltrackersList(i);
-    }
-    $("#trackersListLoader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByDni(){
-    $("#trackersList").empty();
-    $("#trackersListLoader").show("fast");
-    trackers.sort(function(a,b){
-          if (a.dni < b.dni) return -1;
-          if (b.dni < a.dni) return 1;
-          return 0;
-      });
-    for (var i = 0; i < trackers.length; i++) {
-       filltrackersList(i);
-    }
-    $("#trackersListLoader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByFirstName(){
-    $("#trackersList").empty();
-    $("#trackersListLoader").show("fast");
-    trackers.sort(function(a,b){
-          if (a.firstName < b.firstName) return -1;
-          if (b.firstName < a.firstName) return 1;
-          return 0;
-      });
-    for (var i = 0; i < trackers.length; i++) {
-       filltrackersList(i);
-    }
-    $("#trackersListLoader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByLastName(){
-    $("#trackersList").empty();
-    $("#trackersListLoader").show("fast");
-    trackers.sort(function(a,b){
-          if (a.lastName < b.lastName) return -1;
-          if (b.lastName < a.lastName) return 1;
-          return 0;
-      });
-    for (var i = 0; i < trackers.length; i++) {
-       filltrackersList(i);
-    }
-    $("#trackersListLoader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByImei(){
-    $("#trackersList").empty();
-    $("#trackersListLoader").show("fast");
-    trackers.sort(function(a,b){
-          if (a.imei < b.imei) return -1;
-          if (b.imei < a.imei) return 1;
-          return 0;
-      });
-    for (var i = 0; i < trackers.length; i++) {
-       filltrackersList(i);
-    }
-    $("#trackersListLoader").hide("fast");
-    $(".caret").css("color","black");
-}
-function getPaginationLength(){
-  // var file = SERVER_URL+"/api/tracker/getParkLength?json={entityId:%22"+ entityIdUrl +"%22}";
-  // $.getJSON(file, function(result){
-  //   if(result.status=="ok"){
-  //     var parkLength=result.data.number;
-  //     var pagesTemp=parkLength/50;
-  //     pages=(Math.floor(pagesTemp))+1;
-
-      //return pages;
-      return 10;
-  //}});
-}
-function buildPagination(){
-  //n = getPaginationLength();
-  var n = getPaginationLength();
-  for (var i = 0; i < n; i++) {
-    $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
-    $("#page"+(i+1)).on("click",function(){
-      showtrackers(i+1);
-      $(".pagination li").removeClass("active");
-      $(this).addClass("active");
-    });
-    //console.log("works "+(i+1));
-  }
 }
 function showCurrentTime(){
   var currentTime = new Date();
@@ -197,4 +164,30 @@ function showCurrentTime(){
   minutes = "0" + minutes;
 
   $("#currentTime").html(date+ "-" +month+ "-" +year+ " " +hours + ":" + minutes + " " + "hs");
+}
+function getJsonString(jsonObject){
+  // implement JSON.stringify serialization
+  JSON.stringify = JSON.stringify || function (obj) {
+      var t = typeof (obj);
+      if (t != "object" || obj === null) {
+          // simple data type
+          if (t == "string") obj = '"'+obj+'"';
+          return String(obj);
+      }
+      else {
+          // recurse array or object
+          var n, v, json = [], arr = (obj && obj.constructor == Array);
+          for (n in obj) {
+              v = obj[n]; t = typeof(v);
+              if (t == "string") v = '"'+v+'"';
+              else if (t == "object" && v !== null) v = JSON.stringify(v);
+              json.push((arr ? "" : '"' + n + '":') + String(v));
+          }
+          return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+      }
+  };
+
+  var tmpStr = JSON.stringify(jsonObject);
+
+  return tmpStr;
 }

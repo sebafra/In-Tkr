@@ -1,5 +1,7 @@
 var entityIdUrl = encodeURI(localStorage.trackersEntityId);
 var tracks;
+var jsonObject;
+var pageActive;
 
 $(document).ready(function () {
         initialize();
@@ -7,11 +9,6 @@ $(document).ready(function () {
 
 function initialize () {
   showtracks();
-  $("#table2csv").on("click",function(){
-    $('#tracksListTable').table2CSV({
-       delivery: 'download'
-     });
-  });
   orderEvents();
   $("#dropdownUl li").on("click",function(){
     filterList(this);
@@ -19,41 +16,146 @@ function initialize () {
   buildPagination();
   showCurrentTime();
   $("#entityId").html(localStorage.trackersLastName+" "+localStorage.trackersFirstName);
+    $("#searchBtn").on('click',function(){
+    showtracks();
+  });
 }
-function showtracks(){
- var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%22"+ entityIdUrl +"%22}";
- //var tracksFile = SERVER_URL+"/api/track/getTracing?json={entityId:%2230dc20e5-b2e9-6bc9-ac98-39f7637a798a%22}";
+function showtracks(page,orderBy,orderDirection){
+ var tracksFile = SERVER_URL+"/api/track/getTracing?json="+ showTracksPrepareData(page,orderBy,orderDirection);
  $.getJSON(tracksFile, function(msg) {
   if(msg.status=="ok"){
     tracks=msg.data.tracks;
-    tracks.sort(function(a, b){
-          if (a.lastName < b.lastName) return -1;
-          if (b.lastName < a.lastName) return 1;
-          return 0;
-      });
     $("#tracksList").empty();
     for (var i = 0; i < msg.data.tracks.length; i++) {
        filltracksList(i);
     }
     $("#loader").hide("fast");
-    showListCount();
-    $(".pagination li:first-child").addClass("active");
+    //showListCount();
+    buildPagination(showTracksPrepareData(page,orderBy,orderDirection));
     } else {
       showAlert ("msg","danger",msg.error.message);
     }
   });
 }
 function filltracksList(i){
-  $("#tracksList").append("<tr id='user"+i+"'><td>"+ parseDate(tracks[i].datetime) +"</td><td>"+ tracks[i].finalUserDni  +"</td><td>"+ tracks[i].finalUserFirstName +"</td><td>"+ tracks[i].finalUserLastName +"</td><td>"+ tracks[i].imei +"</td><td>"+ showType(tracks[i].type) +"</td></tr>");
+  $("#tracksList").append("<tr id='user"+i+"'><td>"+ parseDate(tracks[i].timestamp) +"</td><td>"+ tracks[i].finalUserDni  +"</td><td>"+ tracks[i].finalUserFirstName +"</td><td>"+ tracks[i].finalUserLastName +"</td><td>"+ tracks[i].trackerImei +"</td><td>"+ showType(tracks[i].type) +"</td></tr>");
 }
-function showListCount(){
-  $("#tracksCount").html(tracks.length);
-  if (tracks.length!=1) {
+function showTracksPrepareData(page,orderBy,orderDirection){
+     jsonObject = {
+      entityId:entityIdUrl,
+      };
+
+    var searchFilterOption = $("#dropdownBtn").attr("name");
+    var searchInput = $.trim($("#searchInput").val());
+    var trackType = $("#selectType option:selected").val();
+    var dateStart = $("#dateStart").val();
+    var dateEnd = $("#dateEnd").val();
+
+    if (searchInput !== "") {
+        jsonObject[searchFilterOption] = searchInput;
+    }
+    if (page !== undefined) {
+      jsonObject.page = page;
+    } else {
+      jsonObject.page = 1;
+    }
+     if (orderBy !== undefined) {
+      jsonObject.orderBy = orderBy;
+    }
+    if (orderDirection !== undefined) {
+      jsonObject.orderDirection = orderDirection;
+    }
+    if (trackType !== undefined && trackType !== "") {
+      jsonObject.type = trackType;
+    }
+    if (dateStart !== undefined && dateStart !== "") {
+      //if (dateFormatOK(dateStart)!==false) {
+        jsonObject.dateStart = getDateMilliseconds(dateStart);
+      //}
+    }
+    if (dateEnd !== undefined && dateEnd !== "") {
+      //if (dateFormatOK(dateEnd)!==false) {
+        jsonObject.dateEnd = getDateMilliseconds(dateEnd);
+      //}
+    }
+
+  return getJsonString(jsonObject);
+}
+function filterList(id){
+    var str = $(id).text();
+    $("#dropdownBtn").text(str);
+    var name = $(id).attr("id");
+    $("#dropdownBtn").attr("name",name);
+}
+function buildPagination(jsonObjectUrl){
+  var pages;
+  var resultsPerPage = 5;
+  var file = SERVER_URL+"/api/track/getTracingLength?json="+ jsonObjectUrl;
+  $.getJSON(file, function(result){
+    if(result.status=="ok"){
+      var tracingLength=result.data.tracingLength;
+      showListCount(tracingLength);
+      if (tracingLength > resultsPerPage) {
+        var pagesTemp=tracingLength/resultsPerPage;
+        pages=(Math.floor(pagesTemp))+1;
+        $(".pagination").show();
+      } else {
+        pages=1;
+        $(".pagination").hide();
+      }
+      $(".pagination").empty();
+      for (var i = 0; i < pages; i++) {
+        $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
+        $("#page"+(i+1)).click(paginationClickEvent((i+1)));
+      }
+      if (pageActive !== undefined) {
+         $("#page"+(pageActive)).addClass("active");
+      } else {
+        $("#page1").addClass("active");
+      }
+    } else {
+      showAlert ("msg","danger",msg.error.message);
+    }
+  });
+}
+function paginationClickEvent(i){
+  return function(){
+    showtracks((i),jsonObject.orderBy,jsonObject.orderDirection);
+    pageActive = i;
+  };
+}
+function showListCount(tracingLength){
+  $("#tracksCount").html(tracingLength);
+  if (tracingLength!=1) {
     $("#tracksCountTxt").html("tracks disponibles");
   } else {
     $("#tracksCountTxt").html("track disponible");
 }
 }
+
+// Order By
+
+function orderEvents(){
+  var order;
+  $(".orderBy").parent().on("click",function(){
+    var orderByCurrent = $(this).attr("name");
+    if (order !== "ASC" || order == "") {
+      showtracks(undefined,orderByCurrent,"ASC");
+      $(".caret").removeClass("inverse");
+      order = "ASC";
+    } else {
+      showtracks(undefined,orderByCurrent,"DESC");
+      order = "DESC";
+      $(this).children().addClass("inverse");
+    }
+    $(".caret").css("color","black");
+    $(this).children().css("color","#3da8e3");
+    pageActive = 1;
+  });
+}
+
+// Helpers
+
 function parseDate(currentField){
   var myNewDate = new Date(currentField);
   var date = myNewDate.getDate();
@@ -61,10 +163,6 @@ function parseDate(currentField){
   var year = myNewDate.getFullYear();
 
    return date +"-"+ month +"-"+ year;
-}
-function filterList(id){
-    var str = $(id).text();
-    $("#dropdownBtn").text(str);
 }
 function showType(currentType){
   var str;
@@ -76,129 +174,6 @@ function showType(currentType){
     str = "<span class='label label-info'>Ca&iacute;da Libre</span>";
   }
   return str;
-}
-
-// Order By
-
-function orderEvents(){
-  $("#orderByDatetime").parent().on("click",function(){
-    orderByDatetime();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByDni").parent().on("click",function(){
-    orderByDni();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByFirstName").parent().on("click",function(){
-    orderByFirstName();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByLastName").parent().on("click",function(){
-    orderByLastName();
-    $(this).children().css("color","#3da8e3");
-  });
-  $("#orderByImei").parent().on("click",function(){
-    orderByImei();
-    $(this).children().css("color","#3da8e3");
-  });
-}
-function orderByDatetime(){
-    $("#tracksList").empty();
-    $("#loader").show("fast");
-    tracks.sort(function(a,b){
-          if (a.datetime < b.datetime) return -1;
-          if (b.datetime < a.datetime) return 1;
-          return 0;
-      });
-    for (var i = 0; i < tracks.length; i++) {
-       filltracksList(i);
-    }
-    $("#loader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByDni(){
-    $("#tracksList").empty();
-    $("#loader").show("fast");
-    tracks.sort(function(a,b){
-          if (a.dni < b.dni) return -1;
-          if (b.dni < a.dni) return 1;
-          return 0;
-      });
-    for (var i = 0; i < tracks.length; i++) {
-       filltracksList(i);
-    }
-    $("#loader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByFirstName(){
-    $("#tracksList").empty();
-    $("#loader").show("fast");
-    tracks.sort(function(a,b){
-          if (a.firstName < b.firstName) return -1;
-          if (b.firstName < a.firstName) return 1;
-          return 0;
-      });
-    for (var i = 0; i < tracks.length; i++) {
-       filltracksList(i);
-    }
-    $("#loader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByLastName(){
-    $("#tracksList").empty();
-    $("#loader").show("fast");
-    tracks.sort(function(a,b){
-          if (a.lastName < b.lastName) return -1;
-          if (b.lastName < a.lastName) return 1;
-          return 0;
-      });
-    for (var i = 0; i < tracks.length; i++) {
-       filltracksList(i);
-    }
-    $("#loader").hide("fast");
-    $(".caret").css("color","black");
-}
-function orderByImei(){
-    $("#tracksList").empty();
-    $("#loader").show("fast");
-    tracks.sort(function(a,b){
-          if (a.imei < b.imei) return -1;
-          if (b.imei < a.imei) return 1;
-          return 0;
-      });
-    for (var i = 0; i < tracks.length; i++) {
-       filltracksList(i);
-    }
-    $("#loader").hide("fast");
-    $(".caret").css("color","black");
-}
-
-// Pagination
-
-function getPaginationLength(){
-  var file = SERVER_URL+"/api/tracker/getTracingLength?json={entityId:%22"+ entityIdUrl +"%22}";
-  $.getJSON(file, function(result){
-    if(result.status=="ok"){
-      var parkLength=result.data.number;
-      var pagesTemp=parkLength/50;
-      pages=(Math.floor(pagesTemp))+1;
-
-      return pages;
-      //return 10;
-  }});
-}
-function buildPagination(){
-  //n = getPaginationLength();
-  var n = getPaginationLength();
-  for (var i = 0; i < n; i++) {
-    $(".pagination").append("<li id='page"+(i+1)+"'><a href='#'>"+(i+1)+"</a></li>");
-    $("#page"+(i+1)).on("click",function(){
-      showtrackers(i+1);
-      $(".pagination li").removeClass("active");
-      $(this).addClass("active");
-    });
-    //console.log("works "+(i+1));
-  }
 }
 function showCurrentTime(){
   var currentTime = new Date();
@@ -213,3 +188,129 @@ function showCurrentTime(){
 
   $("#currentTime").html(date+ "-" +month+ "-" +year+ " " +hours + ":" + minutes + " " + "hs");
 }
+
+function getJsonString(jsonObject){
+  // implement JSON.stringify serialization
+  JSON.stringify = JSON.stringify || function (obj) {
+      var t = typeof (obj);
+      if (t != "object" || obj === null) {
+          // simple data type
+          if (t == "string") obj = '"'+obj+'"';
+          return String(obj);
+      }
+      else {
+          // recurse array or object
+          var n, v, json = [], arr = (obj && obj.constructor == Array);
+          for (n in obj) {
+              v = obj[n]; t = typeof(v);
+              if (t == "string") v = '"'+v+'"';
+              else if (t == "object" && v !== null) v = JSON.stringify(v);
+              json.push((arr ? "" : '"' + n + '":') + String(v));
+          }
+          return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+      }
+  };
+
+  var tmpStr = JSON.stringify(jsonObject);
+
+  return tmpStr;
+}
+function getDateMilliseconds(val){
+
+var v = val.split("-");
+
+day = parseInt(v[2]);
+
+month = parseInt(v[1]);
+
+year = parseInt(v[0]);
+
+var d = new Date();
+
+d.setDate(day);
+
+d.setMonth(month - 1);
+
+d.setFullYear(year);
+
+d.setHours(0);
+
+d.setMinutes(0);
+
+d.setSeconds(0);
+
+d.setMilliseconds(0);
+
+return d.getTime();
+
+}
+
+
+
+function dateFormatOK(val){
+
+var v = val.split("-");
+
+try{
+
+day = parseInt(v[2]);
+
+if(isNaN(day)) return false;
+
+month = parseInt(v[1]);
+
+if(isNaN(month)) return false;
+
+
+
+year = parseInt(v[0]);
+
+if(isNaN(year)) return false;
+
+if(day < 1)
+
+return false;
+
+if(month < 1 || month > 12)
+
+return false;
+
+if(month == 2)
+
+if(day > 28 )
+
+return false; // TODO biciesto
+
+
+
+if(month == 4 || month == 6 || month == 9 || month == 11 )
+
+if(day > 30 )
+
+return false;
+
+
+
+if(month == 3 || month == 5 || month == 7 || month == 8  || month == 10  || month == 12 )
+
+if(day > 31 )
+
+return false;
+
+
+
+if(year < 1914 || year > 2000)
+
+return false;
+
+}catch(e){
+
+return false;
+
+}
+
+return true;
+
+}
+
+

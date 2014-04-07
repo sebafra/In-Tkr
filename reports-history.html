@@ -84,34 +84,35 @@
               <div class="col-md-4 col-lg-4">
                 <div class="input-group">
                   <div class="input-group-btn">
-                    <button id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Nombre <span class="caret"></span></button>
+                    <button id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Seleccionar <span class="caret"></span></button>
                     <ul id="dropdownUl" class="dropdown-menu">
-                      <li><a href="#">DNI</a></li>
-                      <li><a href="#">Apellido</a></li>
-                      <li><a href="#">IMEI</a></li>
+                      <li id="finalUserDni"><a href="#">DNI</a></li>
+                      <li id="finalUserFirstName"><a href="#">Nombre</a></li>
+                      <li id="finalUserLastName"><a href="#">Apellido</a></li>
+                      <li id="trackerImei"><a href="#">IMEI</a></li>
                     </ul>
                   </div><!-- /btn-group -->
-                  <input type="text" class="form-control">
+                  <input id="searchInput" type="text" class="form-control">
                 </div><!-- /input-group -->
               </div>
               <div class="col-md-8 col-lg-8" style="text-align: right">
               <form class="form-inline" role="form">
                 <div class="form-group">
-                  <label  for="dateFrom">Desde</label>
-                  <input type="date" class="form-control" id="dateFrom" placeholder="Desde" style="width:10em">
+                  <label  for="dateStart">Desde</label>
+                  <input type="date" class="form-control" id="dateStart" placeholder="Desde" style="width:10em">
                 </div>
                 <div class="form-group">
-                  <label  for="dateFrom">Hasta</label>
-                  <input type="date" class="form-control" id="dateSince" placeholder="Hasta" style="width:10em">
+                  <label  for="dateEnd">Hasta</label>
+                  <input type="date" class="form-control" id="dateEnd" placeholder="Hasta" style="width:10em">
                 </div>
                  <label class="sr-only" for="dateFrom">Tipo</label>
-                  <select name="" id="input" class="form-control">
+                  <select name="" id="selectType" class="form-control">
                     <option value="">Todos</option>
-                    <option value="">Emergencia</option>
-                    <option value="">Panico</option>
-                    <option value="">Caida Libre</option>
+                    <option value="1">Panico</option>
+                    <option value="2">Emergencia</option>
+                    <option value="3">Caida Libre</option>
                   </select>
-                <button type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
+                <button id="searchBtn" type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
               </form>
               </div>
             </div>
@@ -120,12 +121,12 @@
             <table id="tracksListTable" class="table table-hover">
              <thead>
                <tr>
-                <th>Fecha <span id="orderByDatetime" class="caret"></span></th>
-                <th>DNI <span id="orderByDni" class="caret"></span></a></th>
-                <th>Nombre <span id="orderByFirstName" class="caret"></span></a></th>
-                <th>Apellido <span id="orderByLastName" class="caret"></span></a></th>
-                <th>IMEI <span id="orderByImei" class="caret"></span></a></th>
-                <th>Tipo <span id="orderByType" class="caret"></span></th>
+                <th name="timestamp">Fecha <span id="orderByDatetime" class="orderBy caret"></span></th>
+                <th name="finalUserDni">DNI <span id="orderByDni" class="orderBy caret"></span></a></th>
+                <th name="finalUserFirstName">Nombre <span id="orderByFirstName" class="orderBy caret"></span></a></th>
+                <th name="finalUserLastName">Apellido <span id="orderByLastName" class="orderBy caret"></span></a></th>
+                <th name="trackerImei">IMEI <span id="orderByImei" class="orderBy caret"></span></a></th>
+                <th name="type">Tipo <span id="orderByType" class="orderBy caret"></span></th>
               </tr>
             </thead>
             <tbody id="tracksList">

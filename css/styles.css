@@ -181,6 +181,16 @@ address{
 	margin:0 auto;
 	text-align: center;
 }
+.caret {
+	transform:rotate(180deg);
+	-ms-transform:rotate(180deg); /* IE 9 */
+	-webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
+}
+.inverse {
+	transform:rotate(0deg);
+	-ms-transform:rotate(0deg); /* IE 9 */
+	-webkit-transform:rotate(0deg); /* Opera, Chrome, and Safari */
+}
 .caret, #trackersListTable th, #tracksListTable th {
 	cursor: pointer;
 }

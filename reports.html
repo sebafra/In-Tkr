@@ -84,20 +84,21 @@
               <div class="col-md-5 col-lg-5">
                 <div class="input-group">
                   <div class="input-group-btn">
-                    <button id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Nombre <span class="caret"></span></button>
+                    <button name="" id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Nombre <span class="caret"></span></button>
                     <ul id="dropdownUl" class="dropdown-menu">
-                      <li><a href="#">DNI</a></li>
-                      <li><a href="#">Nombre</a></li>
-                      <li><a href="#">Apellido</a></li>
-                      <li><a href="#">IMEI</a></li>
+                      <li id="finalUserDni"><a href="#">DNI</a></li>
+                      <li id="finalUserFirstName"><a href="#">Nombre</a></li>
+                      <li id="finalUserLastName"><a href="#">Apellido</a></li>
+                      <li id="imei"><a href="#">IMEI</a></li>
+                      <li id="todos"><a href="#">Todos</a></li>
                     </ul>
                   </div><!-- /btn-group -->
-                  <input type="text" class="form-control">
+                  <input id="searchInput" type="text" class="form-control">
                 </div><!-- /input-group -->
               </div>
               <div class="col-md-7 col-lg-7" style="text-align: left">
               <form class="form-inline" role="form">
-                <button type="button" class="btn btn-default">Buscar</button>
+                <button id="searchBtn" type="button" class="btn btn-default">Buscar</button>
               </form>
               </div>
             </div>
@@ -106,11 +107,11 @@
             <table id="trackersListTable" class="table table-hover">
              <thead>
                <tr>
-                <th>Fecha Alta <span id="orderByDatetime" class="caret"></span></th>
-                <th>DNI <span id="orderByDni" class="caret"></span></a></th>
-                <th>Nombre <span id="orderByFirstName" class="caret"></span></a></th>
-                <th>Apellido <span id="orderByLastName" class="caret"></span></a></th>
-                <th>IMEI <span id="orderByImei" class="caret"></span></a></th>
+                <th name="datetime">Fecha Alta <span id="orderByDatetime" class="orderBy caret"></span></th>
+                <th name="finalUserDni">DNI <span id="orderByDni" class="orderBy caret"></span></a></th>
+                <th name="finalUserFirstName">Nombre <span id="orderByFirstName" class="orderBy caret"></span></a></th>
+                <th name="finalUserLastName">Apellido <span id="orderByLastName" class="orderBy caret"></span></a></th>
+                <th name="imei">IMEI <span id="orderByImei" class="orderBy caret"></span></a></th>
               </tr>
             </thead>
             <tbody id="trackersList">

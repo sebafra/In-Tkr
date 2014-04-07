@@ -1,0 +1,1 @@
+{"status":"ok","data":{"parkLength":"200",trackersReporting":"25","trackersWithoutReport":"20"}}
