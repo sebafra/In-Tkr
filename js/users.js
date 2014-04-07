@@ -38,21 +38,73 @@ function initialize () {
   filterList();
   //imeiList();
 
+	$("#searchBtn").on('click', function() {
+		searchUsers();
+	});
+/*	$("#dropdownUl li").on("click", function() {
+		filterList(this);
+	});*/
+}
+
+function filterList(id) {
+	var str = $(id).text();
+	$("#dropdownBtn").text(str);
+	var name = $(id).attr("id");
+	$("#dropdownBtn").attr("name", name);
+}
+
+function searchUsers(){
+	
+	var jsonObject = {
+		entityId : entityIdUrl
+	}
+
+	var searchFilterOption = $("#dropdownBtn").attr("name");
+	var searchInput = $.trim($("#searchInput").val());
+	if (searchInput !== "") {
+		if (searchInput !== "todos") {
+			jsonObject[searchFilterOption] = searchInput;
+		}
+	}
+
+	var url = SERVER_URL + "/api/finalUser/getAll?json=" + getJsonString(jsonObject);
+	$.getJSON(url, function(msg) {
+		if (msg.status == "ok") {
+			finalUsers = msg.data.finalUsers;
+			finalUsers.sort(function(a, b) {
+				if (a.lastName < b.lastName)
+					return -1;
+				if (b.lastName < a.lastName)
+					return 1;
+				return 0;
+			});
+			$("#usersList").empty();
+			for (var i = 0; i < msg.data.finalUsers.length; i++) {
+				fillUsersList(i);
+				clickRowEvent(i);
+			}
+			$("#usersListLoader").remove();
+			showListCount();
+			clearForm();
+		} else {
+			showAlert("msg", "danger", msg.error.message);
+		}
+	});
 }
 
 function initializeData(){
-  //showUsers();
-  //imeiListReload();
+  // showUsers();
+  // imeiListReload();
 	getAllTrackers();
   clearForm();
-  //showDefaultDateTime();
+  // showDefaultDateTime();
   filterList();
 }
 
 
 
 
-/******************/
+/** *************** */
 /** (+) SAVE      */
 
 var formFinalUserMessage = "";
@@ -295,8 +347,23 @@ function getJsonString(jsonObject){
 
 
 function showUsers(){
- var loginFile = SERVER_URL+"/api/finalUser/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
- $.getJSON(loginFile, function(msg) {
+	
+	var jsonObject = {
+			entityId : entityIdUrl
+		}
+
+		var searchFilterOption = $("#dropdownBtn").attr("name");
+		var searchInput = $.trim($("#searchInput").val());
+		if (searchInput !== "") {
+			if (searchInput !== "todos") {
+				jsonObject[searchFilterOption] = searchInput;
+			}
+		}
+
+		var url = SERVER_URL + "/api/finalUser/getAll?json=" + getJsonString(jsonObject);	
+	
+// var loginFile = SERVER_URL+"/api/finalUser/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
+ $.getJSON(url, function(msg) {
   if(msg.status=="ok"){
     finalUsers=msg.data.finalUsers;
     finalUsers.sort(function(a, b){
@@ -427,11 +494,16 @@ function clearForm(){
     $("#finalUsersForm input").val("");
     $("#finalUsersForm textarea").val("");
     //$(".fileinput-exists").click();
-    $(".fileinput-exists").fileinput('reset');
     
-    $("#finalUserPhoto").attr({
-        src: "img/user_avatar.png"
-      });
+    try{
+        $(".fileinput-exists").fileinput('reset');
+        
+        $("#finalUserPhoto").attr({
+            src: "img/user_avatar.png"
+          });
+    }catch(e){
+    	
+    }
     //showDefaultDateTime();
     //imeiListReload();
     imeiList();
@@ -501,8 +573,15 @@ function checkInput(input){
 }
 function filterList(){
   $("#dropdownUl li").on("click",function(){
-    var str = $(this).text();
-    $("#dropdownBtn").text(str);
+    //var str = $(this).text();
+    //$("#dropdownBtn").text(str);
+    
+	var str = $(this).text();
+	$("#dropdownBtn").text(str);
+	var name = $(this).attr("id");
+	$("#dropdownBtn").attr("name", name);
+	
+	
   });
 }
 
