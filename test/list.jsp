@@ -156,6 +156,19 @@
 		</tr>
 	</table>
 
+	<h2>Data Tests</h2>
+	<table border="1">
+		<tr>
+			<td><a href="dataTestsCreateTrackers.jsp?u=intraway&p=trackers">Crear trackers</a></td>
+		</tr>
+		<tr>
+			<td><a href="dataTestsCreateTracks.jsp?u=intraway&p=trackers">Crear tracks</a></td>
+		</tr>
+		<tr>
+			<td><a href="dataTestsCreateDataSet.jsp?u=intraway&p=trackers">Crear data set</a></td>
+		</tr>
+	</table>
+
 
 </body>
 </html>
