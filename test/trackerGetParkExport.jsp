@@ -2,18 +2,18 @@
 <html>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Tracker - Reporte - Parque</title>
+<title>Tracker - Reporte - Parque - Exportar</title>
 </head>
 <body>
-	<h1>Tracker - Reporte - Parque</h1>
+	<h1>Tracker - Reporte - Parque - Exportar</h1>
  
-	<form action="<%=request.getContextPath()%>/api/tracker/getPark" method="get">
+	<form action="<%=request.getContextPath()%>/api/tracker/getParkExport" method="get" target="_blank">
  
 	   <p>
 		Add json : <input type="text" name="json"  style="width: 400px"/>
 	   </p>
  
-	   <input type="submit" value="Reporte - Parque" />
+	   <input type="submit" value="Reporte - Parque - Exportar" />
 	</form>
  	<br/>
  	<br/>

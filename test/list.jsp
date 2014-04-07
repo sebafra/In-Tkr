@@ -50,7 +50,7 @@
 
 	<h2>Usuario final</h2>
 	<table border="1">
-		<tr>
+<!--		<tr>
 			<td><a href="finalUserCreate.jsp?u=intraway&p=trackers">Alta</a></td>
 		</tr>
 		<tr>
@@ -58,12 +58,18 @@
 		</tr>
 		<tr>
 			<td><a href="finalUserUpdate.jsp?u=intraway&p=trackers">Modificacion</a></td>
+		</tr>-->
+		<tr>
+			<td><a href="finalUserSaveWithPicture.jsp?u=intraway&p=trackers">Alta/Modificacion con foto</a></td>
 		</tr>
 		<tr>
 			<td><a href="finalUserRemove.jsp?u=intraway&p=trackers">Baja</a></td>
 		</tr>
 		<tr>
 			<td><a href="finalUserGetAll.jsp?u=intraway&p=trackers">Listar todos</a></td>
+		</tr>
+		<tr>
+			<td><a href="finalUserImportCSVFile.jsp?u=intraway&p=trackers">Importar CSV file</a></td>
 		</tr>
 
 	</table>
@@ -112,6 +118,12 @@
 		<tr>
 			<td><a href="trackerGetPark.jsp?u=intraway&p=trackers">Reporte - Parque</a></td>
 		</tr>
+		<tr>
+			<td><a href="trackerGetParkExport.jsp?u=intraway&p=trackers">Reporting - Parque - Export</a></td>
+		</tr>
+		<tr>
+			<td><a href="trackerGetParkLength.jsp?u=intraway&p=trackers">Reporting - Parque - Length</a></td>
+		</tr>
 		
 	</table>
 
@@ -134,7 +146,13 @@
 			<td><a href="trackGetLastAlerts.jsp?u=intraway&p=trackers">Ultimas alertas</a></td>
 		</tr>
 		<tr>
-			<td><a href="trackGetTracing.jsp?u=intraway&p=trackers">Reporting - Seguimiento de tracks</a></td>
+			<td><a href="trackGetTracing.jsp?u=intraway&p=trackers">Reporte - Seguimiento de tracks</a></td>
+		</tr>
+		<tr>
+			<td><a href="trackGetTracingExport.jsp?u=intraway&p=trackers">Reporte - Seguimiento de tracks - Export</a></td>
+		</tr>
+		<tr>
+			<td><a href="trackGetTracingLength.jsp?u=intraway&p=trackers">Reporte - Seguimiento de tracks - Length</a></td>
 		</tr>
 	</table>
 

@@ -17,7 +17,7 @@
 	</form>
  	<br/>
  	<br/>
- 	{firstName:"juan",lastName:"moreno", userName:"u", userPassword:"p", entityId:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a"}
+ 	{firstName:"juan",lastName:"moreno", email:"mail@mail.com", userName:"u", userPassword:"p", entityId:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a"}
  	
  	
 </body>

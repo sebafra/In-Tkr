@@ -1,67 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Trackers : Intraway</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap -->
-  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-  <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
-  <link href="css/bootflat.css" rel="stylesheet" media="screen">
-  <link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
-  <link href="css/bootflat-square.css" rel="stylesheet" media="screen">
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  <link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
-  <link href="css/styles.css" rel="stylesheet" media="screen">
+<title>Trackers : Intraway</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+<link href="css/bootflat.css" rel="stylesheet" media="screen">
+<link href="css/bootflat-extensions.css" rel="stylesheet" media="screen">
+<link href="css/bootflat-square.css" rel="stylesheet" media="screen">
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext'
+	rel='stylesheet' type='text/css'>
+<link href="css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/styles.css" rel="stylesheet" media="screen">
 
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-      <!--[if lt IE 9]>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
 
 
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="//code.jquery.com/jquery.js"></script>
-  <script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="//code.jquery.com/jquery.js"></script>
+<script>
   if (!window.jQuery) {
     document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
   }
   </script>
-  <script src="//code.jquery.com/jquery.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/libs/bootstrap.min.js"></script>
-  <script src="js/libs/jasny-bootstrap.min.js"></script>
-  <script src="js/constants.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/users.js"></script>
+<script src="//code.jquery.com/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/jasny-bootstrap.min.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/main.js"></script>
+<script src="js/users.js"></script>
 
 
 </head>
-      <body>
-        <nav class="navbar navbar-default navbar-square" role="navigation">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Intraway Trackers</a>
-            </div>
+<body>
+	<nav class="navbar navbar-default navbar-square" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Intraway Trackers</a>
+			</div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li><a href="index.html">Panel</a></li>
-                <li id="usersMenu" class="active"><a href="users.html">Usuarios</a></li>
-                <li><a href="reports.html">Reportes</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                 <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fa fa-user"></span><span id="userNameNav"></span>|<span id="userRoleNav"></span></a></li>
-      <!--           <li class="dropdown">
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Panel</a></li>
+					<li id="usersMenu" class="active"><a href="users.html">Usuarios</a></li>
+					<li><a href="reports.html">Reportes</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" data-toggle="modal" data-target="#myModal"><span
+							class="fa fa-user"></span><span id="userNameNav"></span>|<span
+							id="userRoleNav"></span></a></li>
+					<!--           <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span> Configuracion<b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">Configuraci&oacute;n 1</a></li>
@@ -71,271 +76,326 @@
                     <li><a href="#">Otras opciones</a></li>
                   </ul>
                 </li> -->
-                <li><a href="#" id="btnLogout"><span class="fa fa-sign-out"></span> Logout</a></li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-        <div class="container">
-    <div class="row">
-      <ul class="nav nav-pills reportsNav">
-        <li class="active"><a href="#">Usuarios</a></li>
-        <li><a href="users-monitor.html">Operadores</a></li>
-      </ul>
-    </div>
-  </div>
-        <div class="container usersContainer">
-          <div class="col-md-6 col-lg-6">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <form class="form-inline" role="form">
-                 <span class="fa fa-group" style="margin-right: 1em;"></span> Listado de Usuarios
-                  <span id="usersSearchBtn" class="fa fa-search pull-right text-primary"></span>
-                  <span class="pull-right fa fa-upload text-primary" data-toggle="modal" data-target="#importModal" style="margin-right: 1em;"></span>
-              </form>
-            </div>
-            <div class="panel-body bodyUsersList">
-              <div id="usersSearch" class="row" style="padding-left: 15px; padding-right: 15px">
-                <div class="input-group">
-                  <div class="input-group-btn">
-                    <button id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Usuario <span class="caret"></span></button>
-                    <ul id="dropdownUl" class="dropdown-menu">
-                      <li id="dniSelected"><a href="#">DNI</a></li>
-                      <li id="lastNameSelected"><a href="#">Apellido</a></li>
-                      <!-- <li><a href="#">IMEI</a></li> -->
-                      <li class="divider"></li>
-                      <li><a href="#">Todos</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                  <input type="text" class="form-control">
-                </div><!-- /input-group -->
-                <hr>
-              </div>
-              <table class="table table-hover">
-               <thead>
-                 <tr>
-                  <th>DNI</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>IMEI</th>
+					<li><a href="#" id="btnLogout"><span
+							class="fa fa-sign-out"></span> Logout</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<div class="container">
+		<div class="row">
+			<ul class="nav nav-pills reportsNav">
+				<li class="active"><a href="#">Usuarios</a></li>
+				<li><a href="users-monitor.html">Operadores</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container usersContainer">
+		<div class="col-md-6 col-lg-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<form class="form-inline" role="form">
+						<span class="fa fa-group" style="margin-right: 1em;"></span>
+						Listado de Usuarios <span id="usersSearchBtn"
+							class="fa fa-search pull-right text-primary"></span> <span
+							class="pull-right fa fa-upload text-primary" data-toggle="modal"
+							data-target="#importModal" style="margin-right: 1em;"></span>
+					</form>
+				</div>
+				<div class="panel-body bodyUsersList">
+					<div id="usersSearch" class="row"
+						style="padding-left: 15px; padding-right: 15px">
+						<div class="input-group">
+							<div class="input-group-btn">
+								<button id="dropdownBtn" type="button"
+									class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Usuario <span class="caret"></span>
+								</button>
+								<ul id="dropdownUl" class="dropdown-menu">
+									<li id="dniSelected"><a href="#">DNI</a></li>
+									<li id="lastNameSelected"><a href="#">Apellido</a></li>
+									<!-- <li><a href="#">IMEI</a></li> -->
+									<li class="divider"></li>
+									<li><a href="#">Todos</a></li>
+								</ul>
+							</div>
+							<!-- /btn-group -->
+							<input type="text" class="form-control">
+						</div>
+						<!-- /input-group -->
+						<hr>
+					</div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>DNI</th>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>IMEI</th>
 
-                </tr>
-              </thead>
-              <tbody id="usersList">
-                <tr id="usersListLoader" style="text-align: center"><td colspan="4"><img src="img/ajax-loader.gif" alt=""></td></tr>
-            </tbody>
-          </table>
-          <div id="msg"></div>
-</div>
-<div class="panel-footer">
-   <span id="finalUsersCount"></span> <span id="finalUsersCountTxt"></span>
-</div>
-</div>
-</div>
+							</tr>
+						</thead>
+						<tbody id="usersList">
+							<tr id="usersListLoader" style="text-align: center">
+								<td colspan="4"><img src="img/ajax-loader.gif" alt=""></td>
+							</tr>
+						</tbody>
+					</table>
+					<div id="msg"></div>
+				</div>
+				<div class="panel-footer">
+					<span id="finalUsersCount"></span> <span id="finalUsersCountTxt"></span>
+				</div>
+			</div>
+		</div>
 
-<!-- Formulario ABM de usuario -->
-<iframe style="display: none" name="formFinalUserResultFrame" id="formFinalUserResultFrame" onload="formFinalUserCheckSubmission()"></iframe>
+		<!-- Formulario ABM de usuario -->
+		<iframe style="display: none" name="formFinalUserResultFrame"
+			id="formFinalUserResultFrame" onload="formFinalUserCheckSubmission()"></iframe>
 
-<div class="col-md-6 col-lg-6">
- <form id="finalUsersForm" class="form-horizontal" role="form" action="/trackers/api/finalUser/saveWithPicture" method="post" enctype="multipart/form-data" target="formFinalUserResultFrame">
-  <input type="hidden" name="json" id="json" value=""/>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <span class="fa fa-edit" style="margin-right: 1em;"></span>Datos del usuario</div>
-      <div class="panel-body">
-        <div class="col-md-3 col-lg-3">
-          <!-- <img src="img/face.jpg" class="img-responsive img-circle"> -->
-          <img id="finalUserPhoto" src="" onerror="this.onerror=null;this.src='img/user_avatar.png';" class="img-circle alertFace">
-        </div>
-        <div class="col-md-9 col-lg-9">
-          <div class="form-group">
-            <label for="inputId" class="col-sm-2 control-label">Id</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputId" placeholder="Id" disabled="disabled">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputDateTime" class="col-sm-2 control-label">Fecha</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputDateTime" placeholder="Ingrese la fecha de alta">
-              <span class="help-block">Ejemplo: 01-04-2014</span>
-            </div>
-          </div>
+		<div class="col-md-6 col-lg-6">
+			<form id="finalUsersForm" class="form-horizontal" role="form"
+				action="/trackers/api/finalUser/saveWithPicture" method="post"
+				enctype="multipart/form-data" target="formFinalUserResultFrame">
+				<input type="hidden" name="json" id="json" value="" />
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<span class="fa fa-edit" style="margin-right: 1em;"></span>Datos
+						del usuario
+					</div>
+					<div class="panel-body">
+						<div class="col-md-3 col-lg-3">
+							<!-- <img src="img/face.jpg" class="img-responsive img-circle"> -->
+							<img id="finalUserPhoto" src=""
+								onerror="this.onerror=null;this.src='img/user_avatar.png';"
+								class="img-circle alertFace">
+						</div>
+						<div class="col-md-9 col-lg-9">
+							<div class="form-group">
+								<label for="inputId" class="col-sm-2 control-label">Id</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="inputId"
+										placeholder="Id" disabled="disabled">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputDateTime" class="col-sm-2 control-label">Fecha</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="inputDateTime"
+										placeholder="Ingrese la fecha de alta"> <span
+										class="help-block">Ejemplo: 21-10-1978 (a&ntilde;o menor a 2000)</span>
+								</div>
+							</div>
 
-        </div>
-        <div class="clearfix"></div>
-        <div class="form-group">
-          <label for="inputDni" class="col-sm-2 control-label">DNI</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputDni" placeholder="Ingrese su DNI">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputFirstName" class="col-sm-2 control-label">Nombre</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputFirstName" placeholder="Ingrese el nombre">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputLastName" class="col-sm-2 control-label">Apellido</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputLastName" placeholder="Ingrese el apellido">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputUser" class="col-sm-2 control-label">Usuario</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputUser" placeholder="Ingrese su usuario">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputUserPassword" class="col-sm-2 control-label">Contrase&ntilde;a</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputUserPassword" placeholder="Ingrese la Contrase&ntilde;a">
-          </div>
-          </div>
-          <div class="form-group">
-          <label for="inputUserPassword2" class="col-sm-2 control-label">Reingrese Contrase&ntilde;a</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputUserPassword2" placeholder="Ingrese nuevamente la Contrase&ntilde;a">
-          </div>
-          </div>
+						</div>
+						<div class="clearfix"></div>
+						<div class="form-group">
+							<label for="inputDni" class="col-sm-2 control-label">DNI</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputDni"
+									placeholder="Ingrese su DNI">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputFirstName" class="col-sm-2 control-label">Nombre</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputFirstName"
+									placeholder="Ingrese el nombre">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputLastName" class="col-sm-2 control-label">Apellido</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputLastName"
+									placeholder="Ingrese el apellido">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="inputEmail"
+									placeholder="Ingrese la casilla de  correo del usuario">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputImei" class="col-sm-2 control-label">IMEI</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="inputImei">
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputNotes" class="col-sm-2 control-label">Notas</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="inputNotes" rows="2"
+									placeholder="Observaciones"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputNotes" class="col-sm-2 control-label">Foto</label>
+							<div class="col-sm-10">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="input-group">
+										<div class="form-control" data-trigger="fileinput">
+											<i class="fa fa-file-o fileinput-exists"></i> <span
+												class="fileinput-filename"></span>
+										</div>
+										<span class="input-group-addon btn btn-default btn-file"><span
+											class="fileinput-new">Seleccionar</span><span
+											class="fileinput-exists">Modificar</span><input type="file"
+											name="picture"></span> <a href="#"
+											class="input-group-addon btn btn-default fileinput-exists"
+											data-dismiss="fileinput">Borrar</a>
+									</div>
+									<span class="help-block">Formatos de im&aacute;gen
+										permitidos: jpg, png y gif</span> <input type="hidden"
+										id="inputPictureOld">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPhones" class="col-sm-2 control-label">Tel&eacute;fonos</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputPhones"
+									placeholder="Tel&eacute;fono de contacto"> <span
+									class="help-block">Nro de tel&eacute;fono de contacto
+									ante una alerta</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button id="saveUser" type="submit"
+									class="btn btn-labeled btn-primary"
+									onclick="return formFinalUserPrepare();">
+									<span class="btn-label"><i class="fa fa-save"></i></span>Guardar
+								</button>
+								<button id="resetForm" type="button"
+									class="btn btn-labeled btn-default">
+									<span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar
+								</button>
+								<button id="deleteUser" type="button"
+									class="btn btn-labeled btn-danger">
+									<span class="btn-label"><i class="fa fa-minus"></i></span>Borrar
+								</button>
+							</div>
+						</div>
+						<div id="msg_form"></div>
+					</div>
+				</div>
+		</div>
+		</form>
+	</div>
+	<div class="footer">
+		<p>Intraway Corporation</p>
+	</div>
 
-        <div class="form-group">
-          <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail" placeholder="Ingrese la casilla de  correo del usuario">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputImei" class="col-sm-2 control-label">IMEI</label>
-          <div class="col-sm-10">
-            <select class="form-control" id="inputImei">
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputNotes" class="col-sm-2 control-label">Notas</label>
-          <div class="col-sm-10">
-            <textarea class="form-control" id="inputNotes" rows="2" placeholder="Observaciones"></textarea>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputNotes" class="col-sm-2 control-label">Foto</label>
-          <div class="col-sm-10">
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-              <div class="input-group">
-                <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="picture"></span>
-                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
-              </div>
-              <span class="help-block">Formatos de im&aacute;gen permitidos: jpg, png y gif</span>
-              <input type="hidden" id="inputPictureOld">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputPhones" class="col-sm-2 control-label">Tel&eacute;fonos</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPhones" placeholder="Tel&eacute;fono de contacto">
-            <span class="help-block">Nro de tel&eacute;fono de contacto ante una alerta</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button id="saveUser" type="submit" class="btn btn-labeled btn-primary" onclick="return formFinalUserPrepare();"><span class="btn-label"><i class="fa fa-save"></i></span>Guardar</button>
-            <button id="resetForm" type="button" class="btn btn-labeled btn-default"><span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar</button>
-            <button id="deleteUser" type="button" class="btn btn-labeled btn-danger"><span class="btn-label"><i class="fa fa-minus"></i></span>Borrar</button>
-          </div>
-        </div>
-        <div id="msg_form"></div>
-      </div>
-    </div>
-  </div>
-</form>
-</div>
-<div class="footer">
-  <p>Intraway Corporation</p>
-</div>
+	<!-- Ventana Modal Upload -->
 
-<!-- Ventana Modal Upload -->
+	<div class="modal fade" id="importModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Importar Usuarios</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="inputNotes" class="col-sm-2 control-label">Importar
+							CSV</label>
+						<div class="col-sm-10">
+							<form role="form"
+								action="http://comovil.cloudapp.net/trackers/api/user/import"
+								method="post" enctype="multipart/form-data">
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="input-group">
+										<div class="form-control" data-trigger="fileinput">
+											<i class="fa fa-file-o fileinput-exists"></i> <span
+												class="fileinput-filename"></span>
+										</div>
+										<span class="input-group-addon btn btn-default btn-file"><span
+											class="fileinput-new">Seleccionar</span><span
+											class="fileinput-exists">Modificar</span><input type="file"
+											name="csvFile"></span> <a href="#"
+											class="input-group-addon btn btn-default fileinput-exists"
+											data-dismiss="fileinput">Borrar</a>
+									</div>
+									<span class="help-block">Formato permitido: .csv</span>
+								</div>
+							</form>
+						</div>
+					</div>
+				<!-- <div class="form-group">
+						<label class="col-sm-2 control-label">Importar API</label>
+						<div class=" col-sm-10">
+							<button type="submit" class="btn btn-labeled btn-primary">
+								<span class="btn-label"><i class="fa fa-save"></i></span>Importar
+							</button>
+						</div>
+					</div> -->
+				</div>
+				<div class="clearfix"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
-<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Importar Usuarios</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="inputNotes" class="col-sm-2 control-label">Importar CSV</label>
-          <div class="col-sm-10">
-          	<form role="form" action="http://comovil.cloudapp.net/trackers/api/user/import" method="post" enctype="multipart/form-data">
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-              <div class="input-group">
-                <div class="form-control" data-trigger="fileinput"><i class="fa fa-file-o fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-                <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Modificar</span><input type="file" name="..."></span>
-                <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Borrar</a>
-              </div>
-              <span class="help-block">Formato permitido: .csv</span>
-            </div>
-            </form>
-          </div>
-        </div>
-         <div class="form-group">
-          <label class="col-sm-2 control-label">Importar API</label>
-          <div class=" col-sm-10">
-            <button type="submit" class="btn btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-save"></i></span>Importar</button>
-          </div>
-        </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-
-  <!-- Modal User Change Password -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modificar Contrase&ntilde;a</h4>
-      </div>
-      <div class="modal-body">
-                 <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <label for="inputActualPass" class="col-sm-4 control-label">Contrase&ntilde;a Actual</label>
-              <div class="col-sm-8">
-                <input type="password" class="form-control" id="inputActualPass" placeholder="Ingrese su contrase&ntilde;a actual">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputNewPass" class="col-sm-4 control-label">Nueva Contrase&ntilde;a</label>
-              <div class="col-sm-8">
-                <input type="password" class="form-control" id="inputNewPass" placeholder="Ingrese su nueva contrase&ntilde;a">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputNewPass2" class="col-sm-4 control-label">Reingresar nueva contrase&ntilde;a</label>
-              <div class="col-sm-8">
-                <input type="password" class="form-control" id="inputNewPass2" placeholder="Reingrese la nueva contrase&ntilde;a">
-              </div>
-            </div>
-            <div id="msg-modal"></div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button id="resetPassForm" type="button" class="btn btn-default">Limpiar</button>
-        <button id="savePassForm" type="button" class="btn btn-primary">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div> <!-- Modal end -->
+	<!-- Modal User Change Password -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Modificar
+						Contrase&ntilde;a</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="inputActualPass" class="col-sm-4 control-label">Contrase&ntilde;a
+								Actual</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="inputActualPass"
+									placeholder="Ingrese su contrase&ntilde;a actual">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputNewPass" class="col-sm-4 control-label">Nueva
+								Contrase&ntilde;a</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="inputNewPass"
+									placeholder="Ingrese su nueva contrase&ntilde;a">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputNewPass2" class="col-sm-4 control-label">Reingresar
+								nueva contrase&ntilde;a</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="inputNewPass2"
+									placeholder="Reingrese la nueva contrase&ntilde;a">
+							</div>
+						</div>
+						<div id="msg-modal"></div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="resetPassForm" type="button" class="btn btn-default">Limpiar</button>
+					<button id="savePassForm" type="button" class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal end -->
 
 
 </body>
