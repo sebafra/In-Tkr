@@ -169,7 +169,7 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
     mapOptions);
   var contentString = '<div class="container-fluid">'+
       '<div class="col-md-2 col-lg-2 pull-left">'+
-      '<img src="'+ IMG_URL + finalUserPictureUrl +'" onerror="this.onerror=null;this.src="'+ IMG_URL +'user_avatar.png" class="img-circle alertFace";">'+
+      '<img src="'+ SERVER_URL + finalUserPictureUrl +'"onerror="this.onerror=null;this.src="'+ IMG_URL +'user_avatar.png" class="img-circle alertFace";">'+
       '</div>'+
       '<div class="col-md-2 col-lg-2"></div>'+
       '<div class="col-md-8 col-lg-8" style="padding-left:20px">'+
@@ -181,18 +181,17 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
 
   var infowindow = new google.maps.InfoWindow({
       content: contentString,
-      maxWidth: 250
+      maxWidth: 275
   });
   var marker = new google.maps.Marker({
     position: myLatlng,
     animation: google.maps.Animation.DROP,
   });
-  // google.maps.event.addListener(marker, 'mouseover', function() {
-  //   infowindow.open(map,marker);
-  // });
-
+  google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
+  });
 
+    setTimeout(function(){infowindow.open(map,marker);}, 1000);
 
 // To add the marker to the map, call setMap();
 marker.setMap(map);

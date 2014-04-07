@@ -121,7 +121,7 @@ address{
 	overflow-y: auto;
 }
 .bodyUsersList {
-	height: 660px;
+	max-height: 660px;
 	overflow-y: auto;
 }
 .homeAlertRow {

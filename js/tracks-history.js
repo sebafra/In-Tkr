@@ -187,6 +187,8 @@ function showType(currentType){
     str = "<span class='label label-warning'>Emergencia</span>";
   } else if (currentType==3) {
     str = "<span class='label label-info'>Ca&iacute;da Libre</span>";
+  } else if (currentType==4) {
+    str = "<span class='label label-default'>Reporte</span>";
   }
   return str;
 }
