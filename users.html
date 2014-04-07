@@ -109,22 +109,20 @@
 						style="padding-left: 15px; padding-right: 15px">
 						<div class="input-group">
 							<div class="input-group-btn">
-								<button id="dropdownBtn" type="button"
-									class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-									Usuario <span class="caret"></span>
-								</button>
-								<ul id="dropdownUl" class="dropdown-menu">
-									<li id="dniSelected"><a href="#">DNI</a></li>
-									<li id="lastNameSelected"><a href="#">Apellido</a></li>
+			                    <button name="" id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Seleccionar <span class="caret inverse"></span></button>
+			                    <ul id="dropdownUl" class="dropdown-menu">
+									<li id="dni"><a href="#">DNI</a></li>
+									<li id="lastName"><a href="#">Apellido</a></li>
+									<li id="firstName"><a href="#">Nombre</a></li>
 									<!-- <li><a href="#">IMEI</a></li> -->
 									<li class="divider"></li>
-									<li><a href="#">Todos</a></li>
 								</ul>
 							</div>
 							<!-- /btn-group -->
-							<input type="text" class="form-control">
+			                  <input id="searchInput" type="text" class="form-control">
 						</div>
 						<!-- /input-group -->
+						<button id="searchBtn" type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
 						<hr>
 					</div>
 					<table class="table table-hover">
