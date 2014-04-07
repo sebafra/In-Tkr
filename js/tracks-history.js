@@ -90,17 +90,16 @@ function filterList(id){
 }
 function buildPagination(jsonObjectUrl){
 	//var pages;
-	var resultsPerPage = 50;
 	var maxPages = 1;
-		
+
 	var file = SERVER_URL+"/api/track/getTracingLength?json="+ jsonObjectUrl;
 	$.getJSON(file, function(result){
 		if(result.status=="ok"){
 			var tracingLength=result.data.tracingLength;
 			showListCount(tracingLength);
-			if (tracingLength > resultsPerPage) {
-				var pagesTemp=tracingLength/resultsPerPage;
-				maxPages = Math.round(tracingLength/resultsPerPage);
+			if (tracingLength > PAGE_RESULTS) {
+				var pagesTemp=tracingLength/PAGE_RESULTS;
+				maxPages = Math.round(tracingLength/PAGE_RESULTS);
 				//pages=(Math.floor(pagesTemp));
 				pages=pagesTemp;
 				$(".pagination").show();
@@ -142,9 +141,9 @@ function buildPagination(jsonObjectUrl){
 				}
 				//e.preventDefault();
 			});
-			
+
 			paginating = false;
-			
+
 			if(maxPages == 1){
 				$("#pgNext").parent().addClass("disabled");
 				$("#pgPrevious").parent().addClass("disabled");
@@ -158,11 +157,11 @@ function buildPagination(jsonObjectUrl){
 						$("#pgNext").parent().addClass("disabled");
 				}
 			}
-			
+
 		} else {
 			showAlert ("msg","danger",msg.error.message);
 		}
-		
+
 	});
 }
 

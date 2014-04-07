@@ -82,14 +82,13 @@ function filterList(id){
 }
 function buildPagination(jsonObjectUrl){
   var pages;
-  var resultsPerPage = 50;
   var file = SERVER_URL+"/api/tracker/getParkLength?json="+ jsonObjectUrl;
   $.getJSON(file, function(result){
     if(result.status=="ok"){
       var parkLength=result.data.parkLength;
       showListCount(parkLength)
-      if (parkLength > resultsPerPage) {
-        var pagesTemp=parkLength/resultsPerPage;
+      if (parkLength > PAGE_RESULTS) {
+        var pagesTemp=parkLength/PAGE_RESULTS;
         pages=(Math.floor(pagesTemp))+1;
         $(".pagination").show();
       } else {
