@@ -426,7 +426,8 @@ function resetForm(){
 function clearForm(){
     $("#finalUsersForm input").val("");
     $("#finalUsersForm textarea").val("");
-    $(".fileinput-exists").click();
+    //$(".fileinput-exists").click();
+    $(".fileinput-exists").fileinput('reset');
     
     $("#finalUserPhoto").attr({
         src: "img/user_avatar.png"

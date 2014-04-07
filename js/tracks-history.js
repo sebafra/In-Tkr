@@ -89,56 +89,85 @@ function filterList(id){
     $("#dropdownBtn").attr("name",name);
 }
 function buildPagination(jsonObjectUrl){
-  //var pages;
-  var resultsPerPage = 5;
-  var file = SERVER_URL+"/api/track/getTracingLength?json="+ jsonObjectUrl;
-  $.getJSON(file, function(result){
-    if(result.status=="ok"){
-      var tracingLength=result.data.tracingLength;
-      showListCount(tracingLength);
-      if (tracingLength > resultsPerPage) {
-        var pagesTemp=tracingLength/resultsPerPage;
-        //pages=(Math.floor(pagesTemp));
-        pages=pagesTemp;
-        $(".pagination").show();
-      } else {
-        pages=1;
-        $(".pagination").hide();
-      }
-      if (pageActive !== undefined) {
-       $("#pgCurrent").text(pageActive);
-       $("#pgPrevious").parent().removeClass("disabled");
-     } else {
-      $("#pgCurrent").text(1);
-      $("#pgPrevious").parent().addClass("disabled");
-      pageActive = 1;
-    }
-    $("#pgNext").click(function(e){
-      console.log("pageActive" + pageActive);
-      if (pageActive < pages) {
-        var nextPage = pageActive + 1;
-        showtracks(nextPage,jsonObject.orderBy,jsonObject.orderDirection);
-        pageActive = nextPage;
-      }
-      e.preventDefault();
-    });
-    $("#pgPrevious").click(function(e){
-      //alert(pageActive + "Previous");
-      if (pageActive > 1){
-        $("#pgPrevious").parent().removeClass("disabled");
-        var previousPage = pageActive - 1;
-        showtracks(previousPage,jsonObject.orderBy,jsonObject.orderDirection);
-        pageActive = previousPage;
-      } else {
-        $("#pgPrevious").parent().addClass("disabled");
-      }
-      e.preventDefault();
-    });
-    } else {
-      showAlert ("msg","danger",msg.error.message);
-    }
-  });
+	//var pages;
+	var resultsPerPage = 50;
+	var maxPages = 1;
+		
+	var file = SERVER_URL+"/api/track/getTracingLength?json="+ jsonObjectUrl;
+	$.getJSON(file, function(result){
+		if(result.status=="ok"){
+			var tracingLength=result.data.tracingLength;
+			showListCount(tracingLength);
+			if (tracingLength > resultsPerPage) {
+				var pagesTemp=tracingLength/resultsPerPage;
+				maxPages = Math.round(tracingLength/resultsPerPage);
+				//pages=(Math.floor(pagesTemp));
+				pages=pagesTemp;
+				$(".pagination").show();
+			} else {
+				pages=1;
+				maxPages = 1;
+				$(".pagination").hide();
+			}
+			if (pageActive !== undefined) {
+				$("#pgCurrent").text(pageActive);
+				$("#pgPrevious").parent().removeClass("disabled");
+			} else {
+				$("#pgCurrent").text(1);
+				$("#pgPrevious").parent().addClass("disabled");
+				pageActive = 1;
+			}
+			$("#pgNext").click(function(e){
+				if(paginating) return;
+				paginating = true;
+				console.log("pageActive" + pageActive);
+				if (pageActive < pages) {
+					var nextPage = pageActive + 1;
+					showtracks(nextPage,jsonObject.orderBy,jsonObject.orderDirection);
+					pageActive = nextPage;
+				}
+				//e.preventDefault();
+			});
+			$("#pgPrevious").click(function(e){
+				if(paginating) return;
+				paginating = true;
+				//alert(pageActive + "Previous");
+				if (pageActive > 1){
+					$("#pgPrevious").parent().removeClass("disabled");
+					var previousPage = pageActive - 1;
+					showtracks(previousPage,jsonObject.orderBy,jsonObject.orderDirection);
+					pageActive = previousPage;
+				} else {
+					$("#pgPrevious").parent().addClass("disabled");
+				}
+				//e.preventDefault();
+			});
+			
+			paginating = false;
+			
+			if(maxPages == 1){
+				$("#pgNext").parent().addClass("disabled");
+				$("#pgPrevious").parent().addClass("disabled");
+			} else {
+				if(pageActive <= 1){
+					$("#pgPrevious").parent().addClass("disabled");
+					$("#pgNext").parent().removeClass("disabled");
+				} else {
+					$("#pgPrevious").parent().removeClass("disabled");
+					if(maxPages == pageActive)
+						$("#pgNext").parent().addClass("disabled");
+				}
+			}
+			
+		} else {
+			showAlert ("msg","danger",msg.error.message);
+		}
+		
+	});
 }
+
+var paginating = false;
+
 function showListCount(tracingLength){
   $("#tracksCount").html(tracingLength);
   if (tracingLength!=1) {
