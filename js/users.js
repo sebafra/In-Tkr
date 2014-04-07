@@ -33,7 +33,7 @@ function initialize () {
   //showUsers();
   getAllTrackers();
   resetForm();
-  showDefaultDateTime();
+//  showDefaultDateTime();
 //  saveUserData();
   filterList();
   //imeiList();
@@ -45,7 +45,7 @@ function initializeData(){
   //imeiListReload();
 	getAllTrackers();
   clearForm();
-  showDefaultDateTime();
+  //showDefaultDateTime();
   filterList();
 }
 
@@ -222,6 +222,46 @@ function formFinalUserCheckSubmission(){
     }
 }
 
+var formFinalUserImportSubmitted = false;
+function formFinalUserImportPrepare(){
+	formFinalUserImportSubmitted = true;
+	
+  	var jsonObject = {
+  	  		entityId:entityIdUrl
+  	  		}
+  	  	
+  	  	$("#jsonImport").val(getJsonString(jsonObject));	
+	
+	return true;
+}
+
+function formFinalUserImportCheckSubmission(){
+	
+	if(!formFinalUserImportSubmitted) return;
+
+	
+	$('#importModal').modal("hide");
+
+	
+	try{
+		//hideMessages();
+        var f = $("#formFinalUserImportResultFrame").contents().text();
+        f = f.replace("if (window.top.ripple) { window.top.ripple(\"bootstrap\").inject(window, document); }","");
+        var json = $.parseJSON(f);
+
+        formParticipacionImportSubmitted = false;
+        if(json.status == "ok"){
+    		//window.location = 'exito.html';
+        	showMessageOK("Se actualizo la informacion con exito!!!");
+        	initializeData();
+        } else {
+        	showMessageError(json.error.message);
+        }
+    }catch(e){
+    	showMessageError(e);
+    }
+}
+
 function getJsonString(jsonObject){
 	// implement JSON.stringify serialization
 	JSON.stringify = JSON.stringify || function (obj) {
@@ -335,6 +375,7 @@ function clickRowEvent(i){
       $("#inputPictureOld").val(finalUsers[i].picture);
       showUserPhoto(finalUsers[i].picture);
 
+	  imeiList();
       if(finalUsers[i].trackerId != undefined){
     	  addImeiToList(finalUsers[i].trackerId);
     	  //selectImei(finalUsers[i].trackerId);
@@ -390,7 +431,7 @@ function clearForm(){
     $("#finalUserPhoto").attr({
         src: "img/user_avatar.png"
       });
-    showDefaultDateTime();
+    //showDefaultDateTime();
     //imeiListReload();
     imeiList();
     
