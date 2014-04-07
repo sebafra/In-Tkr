@@ -3,19 +3,20 @@ var finalUsers;
 var inputEmpty = 0;
 var serverUrl;
 var trackers;
+var trackersAll;
 
 $(document).ready(function () {
-        initialize();
-        obtainServerUrl();
-      });
+	initialize();
+	obtainServerUrl();
+});
 
 function obtainServerUrl(){
 	serverUrl = window.location.protocol + "//" + window.location.host;
 	var loc = window.location.pathname;
-    var directories=loc.split('/');
-    for(i = 1 ; i < directories.length - 1; i++){
-    	serverUrl += "/" + directories[i];
-    }
+	var directories=loc.split('/');
+	for(i = 1 ; i < directories.length - 1; i++){
+		serverUrl += "/" + directories[i];
+	}
 }
 
 function initialize () {
@@ -23,24 +24,26 @@ function initialize () {
   $("#usersSearchBtn").on("click",function(){
     $("#usersSearch").toggle("fast");
   });
-
+  
   $("#deleteUser").on("click",function(){
 	    deleteUser();
   });
-
+  
   showUserPhoto();
-  showUsers();
+  //showUsers();
+  getAllTrackers();
   resetForm();
   showDefaultDateTime();
 //  saveUserData();
   filterList();
-  imeiList();
+  //imeiList();
 
 }
 
 function initializeData(){
-  showUsers();
-  imeiListReload();
+  //showUsers();
+  //imeiListReload();
+	getAllTrackers();
   clearForm();
   showDefaultDateTime();
   filterList();
@@ -60,24 +63,90 @@ function formFinalUserPrepare(){
 		return false;
 	}
 	formFinalUserSubmitted = true;
-
+	
 	return formFinalUserPrepareData();
 }
 
 function showMessageError(msg){
-	alert(msg);
+	showAlert ("msg_form","danger",msg);
 }
 
 function showMessageOK(msg){
-	alert(msg);
+	showAlert ("msg_form","success",msg);
+}
+
+
+function getDateMilliseconds(val){
+	var v = val.split("-");
+	
+	day = parseInt(v[0]);
+	month = parseInt(v[1]);
+	year = parseInt(v[2]);	
+	
+	//var d = new Date(v[0], v[1] - 1, v[2]);
+	var d = new Date();
+	d.setDate(day);
+	d.setMonth(month - 1);
+	d.setFullYear(year);
+	d.setHours(0);
+	d.setMinutes(0);
+	d.setSeconds(0);
+	d.setMilliseconds(0);
+	
+	return d.getTime();
+}
+
+function dateFormatOK(val){
+	var v = val.split("-");
+	
+	try{
+		day = parseInt(v[0]);
+		if(isNaN(day)) return false;
+		
+		month = parseInt(v[1]);
+		if(isNaN(month)) return false;
+
+		year = parseInt(v[2]);
+		if(isNaN(year)) return false;
+		
+		if(day < 1) 
+			return false;
+		
+		if(month < 1 || month > 12) 
+			return false;
+		
+		if(month == 2)
+			if(day > 28 )
+				return false; // TODO biciesto
+
+		if(month == 4 || month == 6 || month == 9 || month == 11 )
+			if(day > 30 )
+				return false;
+
+		if(month == 3 || month == 5 || month == 7 || month == 8  || month == 10  || month == 12 )
+			if(day > 31 )
+				return false;
+
+		if(year < 1914 || year > 2000) 
+			return false;
+		
+	}catch(e){
+		return false;
+	}
+	return true;
+	
 }
 
 function formFinalUserCheckData(){
 	var checkOK = true;
     var intRegex = /^\d+$/;
-
+    
     if($.trim($("#inputDateTime").val()) == ""){
     	formFinalUserMessage = "Debe ingresar 'Fecha de nacimiento'";
+    	checkOK = false;
+    }
+    else if( !dateFormatOK( $.trim( $("#inputDateTime").val() ) ) ){
+    	formFinalUserMessage = "Debe ingresar 'Fecha de nacimiento' adecauda";
     	checkOK = false;
     }
     else if($.trim($("#inputDni").val()) == ""){
@@ -92,61 +161,48 @@ function formFinalUserCheckData(){
     	formFinalUserMessage = "Debe ingresar 'Apellido'";
     	checkOK = false;
     }
-    else if($.trim($("#inputUser").val()) == ""){
-    	formFinalUserMessage = "Debe ingresar 'Usuario'";
-    	checkOK = false;
-    }
-    else if($.trim($("#inputUserPassword").val()) == ""){
-    	formFinalUserMessage = "Debe ingresar 'Password'";
-    	checkOK = false;
-    }
-    else if($.trim($("#inputUserPassword2").val()) == ""){
-    	formFinalUserMessage = "Debe ingresar 'Confirmacion de Password'";
-    	checkOK = false;
-    }
     else if($.trim($("#inputEmail").val()) == ""){
     	formFinalUserMessage = "Debe ingresar 'Email'";
     	checkOK = false;
     }
-    else if($.trim($("#inputPhones").val()) == ""){
+/*    else if($.trim($("#inputPhones").val()) == ""){
     	formFinalUserMessage = "Debe ingresar 'Telefonos'";
     	checkOK = false;
-    }
-
+    }*/
+    
     return checkOK;
 }
 
 function formFinalUserPrepareData(){
-
+	
   	var jsonObject = {
   	  	id:$.trim($("#inputId").val()),
   		firstName:$.trim($("#inputFirstName").val()),
   		lastName:$.trim($("#inputLastName").val()),
-  		userName:$.trim($("#inputUser").val()),
-  		userPassword:$.trim($("#inputUserPassword").val()),
   		entityId:entityIdUrl,
   		email:$.trim($("#inputEmail").val()),
   		phones:$.trim($("#inputPhones").val()),
   		notes:$.trim($("#inputNotes").val()),
   		dni:$.trim($("#inputDni").val()),
+  		datetime:getDateMilliseconds($.trim($("#inputDateTime").val())),
   		pictureOld:$.trim($("#inputPictureOld").val())
   		}
-
+  	
   	var trackerId = $("#inputImei option:selected").val();
   	if(trackerId != "0"){
-  		jsonObject.trackerId = trackerId;
+  		jsonObject.trackerId = trackerId;  		
   	}
-
+  	
   	$("#json").val(getJsonString(jsonObject));
-
+  	
 	return true;
 }
 
 function formFinalUserCheckSubmission(){
-
+	
 	if(!formFinalUserSubmitted) return;
 
-
+	
 	try{
 		//hideMessages();
         var f = $("#formFinalUserResultFrame").contents().text();
@@ -188,8 +244,8 @@ function getJsonString(jsonObject){
 	    }
 	};
 
-	var tmpStr = JSON.stringify(jsonObject);
-
+	var tmpStr = JSON.stringify(jsonObject); 
+	
 	return tmpStr;
 }
 /** (-) SAVE      */
@@ -222,11 +278,23 @@ function showUsers(){
 }
 
 
-function deleteUser(){
+function getAllTrackers(){
+	var url = SERVER_URL+"/api/tracker/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
+	$.getJSON(url, function(msg) {
+		if(msg.status=="ok"){
+			trackersAll=msg.data.trackers;
+			showUsers();
+			imeiList();
+		}
+	});
+}
 
+
+function deleteUser(){
+	
     var id = $("#inputId").val();
     if(id == "") return;
-
+    
     var deleteUrl = SERVER_URL+"/api/finalUser/remove?json={id:%22"+ id +"%22}";
     $.getJSON(deleteUrl, function(json) {
         if(json.status == "ok"){
@@ -239,10 +307,20 @@ function deleteUser(){
     });
 }
 
+function getImei(trackerId){
+    for (var i = 0; i < trackersAll.length; i++) {
+    	if(trackersAll[i].id == trackerId)
+    		return trackersAll[i].imei;
+    }
+    return "";
+}
 
 function fillUsersList(i){
-  $("#usersList").append("<tr id='user"+i+"'><td>"+ finalUsers[i].dni +"</td><td>"+ finalUsers[i].firstName +"</td><td>"+ finalUsers[i].lastName +"</td><td>"+ finalUsers[i].userName +"</td></tr>");
+	var imei = getImei(finalUsers[i].trackerId);
+	
+	$("#usersList").append("<tr id='user"+i+"'><td>"+ finalUsers[i].dni +"</td><td>"+ finalUsers[i].firstName +"</td><td>"+ finalUsers[i].lastName +"</td><td>"+ imei +"</td></tr>");
 }
+
 function clickRowEvent(i){
   $("tr#user"+i).on("click",function(){
       $("#inputId").val(finalUsers[i].id);
@@ -250,18 +328,17 @@ function clickRowEvent(i){
       $("#inputDni").val(finalUsers[i].dni);
       $("#inputFirstName").val(finalUsers[i].firstName);
       $("#inputLastName").val(finalUsers[i].lastName);
-      $("#inputUser").val(finalUsers[i].userName);
-      $("#inputUserPassword").val(finalUsers[i].userPassword);
-      $("#inputUserPassword2").val(finalUsers[i].userPassword);
       $("#inputEmail").val(finalUsers[i].email);
       //$("#inputImei").val(finalUsers[i].imei);
       $("#inputNotes").val(finalUsers[i].notes);
       $("#inputPhones").val(finalUsers[i].phones);
       $("#inputPictureOld").val(finalUsers[i].picture);
       showUserPhoto(finalUsers[i].picture);
-      imeiSelected(finalUsers[i].imei);
-      if(finalUsers[i].trackerId != undefined)
+
+      if(finalUsers[i].trackerId != undefined){
     	  addImeiToList(finalUsers[i].trackerId);
+    	  //selectImei(finalUsers[i].trackerId);
+      }
   });
 }
 function showListCount(){
@@ -286,7 +363,7 @@ function parseDate(currentField){
 function showUserPhoto(picture){
   if (picture !== undefined) {
     $("#finalUserPhoto").attr({
-      src: SERVER_URL + picture
+      src: SERVER_URL + picture + "?" + new Date().getTime()
     });
   }
 }
@@ -308,13 +385,15 @@ function resetForm(){
 function clearForm(){
     $("#finalUsersForm input").val("");
     $("#finalUsersForm textarea").val("");
-
+    $(".fileinput-exists").click();
+    
     $("#finalUserPhoto").attr({
         src: "img/user_avatar.png"
       });
     showDefaultDateTime();
-    imeiListReload();
-
+    //imeiListReload();
+    imeiList();
+    
     //setTimeout(function(){showDefaultDateTime();}, 1000); //No anda
 }
 
@@ -329,12 +408,6 @@ function saveUserData(){
     checkInput("#inputFirstName");
     var lastName = $("#inputLastName").val();
     checkInput("#inputLastName");
-    var userName = $("#inputUserName").val();
-    checkInput("#inputUserName");
-    var userPassword = $("#inputUserPassword").val();
-    checkInput("#inputUserPassword");
-    var userPassword2 = $("#inputUserPassword2").val();
-    checkInput("#inputUserPassword2");
     var email = $("#inputEmail").val();
     checkInput("#inputEmail");
     var imei = $("#inputImei").val();
@@ -344,20 +417,20 @@ function saveUserData(){
     var phones = $("#inputPhones").val();
     checkInput("#inputPhones");
 
-    //alert(datetime +"*-*"+ dni +"*-*"+ firstName +"*-*"+ lastName +"*-*"+ userName +"*-*"+ userPassword +"*-*"+ userPassword2 +"*-*"+ email +"*-*"+ imei +"*-*"+ notes +"*-*"+ phones);
+    alert(datetime +"*-*"+ dni +"*-*"+ firstName +"*-*"+ lastName +"*-*"+ email +"*-*"+ imei +"*-*"+ notes +"*-*"+ phones);
 
     if (inputEmpty === 0) {
       if (checkEmail()===true) {
         if (id==="") {
           var file = "{datetime:%22"+ datetime +"%22,entityId:%22"+ entityIdUrl +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22,firstName:%22"+ firstName +"%22,lastName:%22"+ lastName +"%22,email:%22"+ email +"%22,phones:%22"+ phones +"%22,notes:%22"+ notes +"%22,dni:%22"+ dni +"%22}";
           //$("#jsonVars").setAttribute('value', file);
-          //alert(file);
+          alert(file);
           $("#finalUsersForm").submit();
         } else {
           var file = "{id:%22"+ id +"%22,datetime:%22"+ datetime +"%22,entityId:%22"+ entityIdUrl +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22,firstName:%22"+ firstName +"%22,lastName:%22"+ lastName +"%22,email:%22"+ email +"%22,phones:%22"+ phones +"%22,notes:%22"+ notes +"%22,dni:%22"+ dni +"%22}";
         }
       } else {
-        //alert("false");
+        alert("false");
         showAlert ("msg_form","danger","Las contrase&ntilde;as no coinciden");
       }
     } else {
@@ -393,7 +466,7 @@ function filterList(){
 
 function imeiListReload(){
 	if(trackers == undefined) return;
-
+	
 	$("#inputImei").empty();
     $("#inputImei").append("<option value=0>SIN IMEI</option>");
 
@@ -405,6 +478,17 @@ function imeiListReload(){
 }
 
 function imeiList(){
+	$("#inputImei").empty();
+	$("#inputImei").append("<option value=0>SIN IMEI</option>");
+    for (var i = 0; i < trackersAll.length; i++) {
+    	if(trackersAll[i].finalUserId == undefined)
+    		$("#inputImei").append("<option value="+trackersAll[i].id+">"+trackersAll[i].imei+"</option>");
+    }
+}
+
+
+
+function imeiListOld(){
 //  var imeiItems = SERVER_URL+"/api/tracker/getAllNotAssigned?json={entityId:%22"+ entityIdUrl +"%22}";
 	  var imeiItems = SERVER_URL+"/api/tracker/getAll?json={entityId:%22"+ entityIdUrl +"%22}";
  $.getJSON(imeiItems, function(msg) {
@@ -423,13 +507,15 @@ function imeiList(){
   });
 }
 
+
 function addImeiToList(trackerId){
 	if(trackerId == undefined) return;
-	if(trackers == undefined) return;
-
-    for (var i = 0; i < trackers.length; i++) {
-    	if(trackers[i].id == trackerId){
-    		$("#inputImei").append("<option selected=true value="+trackers[i].id+">"+trackers[i].imei+"</option>");
+	if(trackersAll == undefined) return;
+	
+    for (var i = 0; i < trackersAll.length; i++) {
+    	if(trackersAll[i].id == trackerId){
+    		$("#inputImei").prepend("<option selected=true value="+trackersAll[i].id+">"+trackersAll[i].imei+"</option>");
+            $("#inputImei").prop("selectedIndex",0);
 
     		break;
     	}
@@ -437,7 +523,16 @@ function addImeiToList(trackerId){
 }
 
 
-function imeiSelected(imeiActual){
+function selectImei(imeiActual){
+  for (var i = 0; i < imeiValues.length; i++) {
+      if (imeiValues[i]==imeiActual) {
+        $("#inputImei").prop("selectedIndex",i);
+      }
+    }
+}
+
+
+function imeiSelectedOld(imeiActual){
   for (var i = 0; i < imeiValues.length; i++) {
       if (imeiValues[i]==imeiActual) {
         $("#inputImei").prop("selectedIndex",i);
