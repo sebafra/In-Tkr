@@ -37,7 +37,7 @@ function showOperators(){
   });
 }
 function fillOperatorsList(i){
-  $("#operatorsList").append("<tr id='operator"+i+"'><td>"+ i +"</td><td>"+ operatorUsers[i].firstName +"</td><td>"+ operatorUsers[i].lastName +"</td><td>"+ operatorUsers[i].userName +"</td></tr>");
+  $("#operatorsList").append("<tr id='operator"+i+"'><td>"+ operatorUsers[i].firstName +"</td><td>"+ operatorUsers[i].lastName +"</td><td>"+ operatorUsers[i].userName +"</td></tr>");
 }
 function clickRowEvent(i){
   $("tr#operator"+i).on("click",function(){

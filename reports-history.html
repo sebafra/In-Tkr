@@ -92,18 +92,18 @@
                       <li id="trackerImei"><a href="#">IMEI</a></li>
                     </ul>
                   </div><!-- /btn-group -->
-                  <input id="searchInput" type="text" class="form-control">
+                  <input id="searchInput" type="text" class="form-control filterFirstLine">
                 </div><!-- /input-group -->
               </div>
-              <div class="col-md-8 col-lg-8" style="text-align: right">
+              <div class="col-md-8 col-lg-8 filterSecondLine" style="text-align: right">
               <form class="form-inline" role="form">
                 <div class="form-group">
                   <label  for="dateStart">Desde</label>
-                  <input type="date" class="form-control" id="dateStart" placeholder="Desde" style="width:12em">
+                  <input type="date" class="form-control" id="dateStart" placeholder="Desde" style="width:11.5em">
                 </div>
                 <div class="form-group">
                   <label  for="dateEnd">Hasta</label>
-                  <input type="date" class="form-control" id="dateEnd" placeholder="Hasta" style="width:12em">
+                  <input type="date" class="form-control" id="dateEnd" placeholder="Hasta" style="width:11.5em">
                 </div>
                  <label class="sr-only" for="dateFrom">Tipo</label>
                   <select name="" id="selectType" class="form-control">
@@ -155,9 +155,10 @@
 <div class="footer">
   <p>Intraway Corporation</p>
 </div>
+<div class="print visible-print"></div>
 
  <!-- Modal User Change Password -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade hidden-print" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

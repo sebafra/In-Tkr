@@ -154,6 +154,8 @@ address{
 */
 .usersContainer{
 	margin-top: 1em;
+	padding-left: 0;
+	padding-right: 0;
 }
 #usersSearch {
 	display: none;
@@ -165,7 +167,9 @@ address{
 /**
 * Reports
 */
-
+.homeReportingTrackersPanel{
+	max-height: 200px;
+}
 .reportsContainer{
 	margin-top: 1em;
 }
@@ -207,6 +211,11 @@ address{
 */
 
 @media print {
+	html, body {
+		background: white;
+		font-size: 9pt !important;
+		/*height: 99%;*/
+	}
 	.panel {
 		border: none;
 	}
@@ -214,6 +223,20 @@ address{
 		overflow-y:hidden;
 	}
 	.table td {
-		padding: 4px;
+		/*padding: 4px;*/
+	}
+	/*.print{
+    	page-break-after: always;
+	}*/
+	#trackersList tr td{
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	.caret {
+		display: none;
+	}
+	.bodyReportTrackerList {
+	max-height: none;
+	overflow-y: none;
 	}
 }

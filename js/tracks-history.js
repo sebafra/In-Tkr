@@ -156,14 +156,14 @@ function orderEvents(){
     var orderByCurrent = $(this).attr("name");
     if (order !== "ASC" || order == "") {
       showtracks(undefined,orderByCurrent,"ASC");
-      $("#trackersListTable .caret").removeClass("inverse");
+      $("#tracksList .caret").removeClass("inverse");
       order = "ASC";
     } else {
       showtracks(undefined,orderByCurrent,"DESC");
       order = "DESC";
       $(this).children().addClass("inverse");
     }
-    $("#trackersListTable .caret").css("color","black");
+    $("#tracksList .caret").css("color","black");
     $(this).children().css("color","#3da8e3");
     pageActive = 1;
   });
