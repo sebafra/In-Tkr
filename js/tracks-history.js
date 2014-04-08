@@ -5,10 +5,10 @@ var pageActive;
 var pages;
 
 $(document).ready(function() {
-	initialize();
+	initializeEvents();
 });
 
-function initialize() {
+function initializeEvents() {
 	showtracks();
 	orderEvents();
 	$("#dropdownUl li").on("click", function() {
@@ -55,12 +55,12 @@ function showtracks(page, orderBy, orderDirection) {
 					$("#tracksList").empty();
 					for (var i = 0; i < msg.data.tracks.length; i++) {
 						filltracksList(i);
+						showDetailClick(i);
 					}
 					$("#loader").hide("fast");
 					// showListCount();
-					buildPagination(showTracksPrepareData(page, orderBy,
-							orderDirection));
-					console.log("buildPagination");
+					buildPagination(showTracksPrepareData(page,orderBy,orderDirection));
+					//console.log("buildPagination");
 				} else {
 					showAlert("msg", "danger", msg.error.message);
 				}
@@ -74,6 +74,15 @@ function filltracksList(i) {
 					+ tracks[i].finalUserLastName + "</td><td>"
 					+ tracks[i].trackerImei + "</td><td>"
 					+ showType(tracks[i].type) + "</td></tr>");
+}
+function showDetailClick(i){
+	$("#tracksList #user"+i).on("click",function(){
+		$('#trackDetail').modal("show");
+		getAddress(i);
+		setTimeout(function(){initialize(i);}, 500);
+		$('#tracksList tr').removeClass();
+		$('#user'+i).addClass("bg-primary");
+	});
 }
 function showTracksPrepareData(page, orderBy, orderDirection) {
 	jsonObject = {
@@ -346,6 +355,35 @@ function orderEvents() {
 		// (-) NUEVA PAGINACION
 
 	});
+}
+
+// Google Maps Query
+
+function initialize(i) {
+  var myLatlng = new google.maps.LatLng(tracks[i].latitude, tracks[i].longitude);
+  var mapOptions = {
+    zoom: 12,
+    center: myLatlng
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: myLatlng,
+    animation: google.maps.Animation.DROP,
+    map: map,
+});
+}
+function getAddress(i){
+	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ tracks[i].latitude +","+ tracks[i].longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+	var data;
+	$.getJSON(file, function(result){
+		if(result.status=="OK"){
+			data = result.results[0].formatted_address;
+					$('#formatted_address').html(data);
+
+	}
+});
 }
 
 // Helpers
