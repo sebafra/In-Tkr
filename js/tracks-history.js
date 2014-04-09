@@ -380,10 +380,9 @@ function getAddress(i){
 	$.getJSON(file, function(result){
 		if(result.status=="OK"){
 			data = result.results[0].formatted_address;
-					$('#formatted_address').html(data);
-
-	}
-});
+			$('#formatted_address').html(data);
+		}
+	});
 }
 
 // Helpers

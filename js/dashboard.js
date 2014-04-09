@@ -7,6 +7,7 @@
  var lastAlertLatitude;
  var lastAlertLongitude;
  var infoWindow = null;
+ var alertCity;
 
   $(document).ready(function () {
   showTopAlerts();
@@ -60,6 +61,7 @@ function showTopAlerts() {
          $("#lastAlerts").append("<tr id='alertRow"+ i +"'><td>"+ (i+1) +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
          //Eventos en filas del listado de ultimas alertas
          clickRowLastAlerts(i,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
+
        }
        $("#operatorsLoader").remove();
        $("#lastAlerts > tr:first-child").addClass("bg-info");
@@ -92,10 +94,11 @@ function reloadTopAlerts() {
                 if (exists == false) {
                   plus = plus + 1;
                   var position = (len-1) + plus;
-                  //console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
-                  $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
-                  clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
+                  console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
                   $("#alertRow"+position).addClass("bg-danger");
+                  $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+                  $("#alertRow"+position).addClass("bg-danger");
+                  clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
                   showMap(alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
                   deleteOlderAlert();
                   orderAlertPosition();
@@ -113,12 +116,16 @@ function reloadTopAlerts() {
 function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   $("#alertRow"+ i).on("click", function(){
     showMap(alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
-    $("#lastAlerts > tr").removeClass("bg-info").removeClass("bg-danger");
+    $("#lastAlerts > tr").removeClass("bg-info");//.removeClass("bg-danger");
     $("#lastAlerts > tr#alertRow"+i).addClass("bg-info");
+    $("#lastAlerts > tr#alertRow"+i+".bg-danger").click(function(){
+      $(this).removeClass("bg-danger");
+    });
   });
 }
 function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
     myLatlng = new google.maps.LatLng(alertLat,alertLong);
+    getAddress(alertLat,alertLong);
     initialize(myLatlng,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
     //google.setOnLoadCallback(initialize);
 }
@@ -128,6 +135,9 @@ function initialShowMap (){
       showMap(alertItems[lastAlert].latitude,alertItems[lastAlert].longitude,alertItems[lastAlert].finalUserFirstName,alertItems[lastAlert].finalUserLastName,alertItems[lastAlert].trackerAni,alertItems[lastAlert].finalUserPhones,alertItems[lastAlert].finalUserPictureUrl);
   }
 }
+// function clickRemoveClass(elem){
+//   $(elem).removeClass();
+// }
 function showAlertType(alertType){
   if(alertType==1){
     return "<span class='label label-danger'>P&aacute;nico</span>";
@@ -159,6 +169,14 @@ function parseTime(trackTimestamp){
 
    return hours+":"+minutes;
 }
+function getAddress(latitude,longitude){
+  var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+  $.getJSON(file, function(result){
+    if(result.status=="OK"){
+       alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[1].long_name;
+    }
+  });
+}
 function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   //var geocoder;
   //geocoder = new google.maps.Geocoder();
@@ -169,14 +187,15 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   var map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
   var contentString = '<div class="container-fluid">'+
-      '<div class="col-md-2 col-lg-2 pull-left">'+
+      '<div class="col-md-2 col-lg-2 pull-left" style="padding-left:0">'+
       '<img src="'+ SERVER_URL + finalUserPictureUrl +'"onerror="this.onerror=null;this.src=\''+ IMG_URL +'/user_avatar.png\'" class="img-circle alertFace";">'+
       '</div>'+
       '<div class="col-md-2 col-lg-2"></div>'+
-      '<div class="col-md-8 col-lg-8" style="padding-left:20px">'+
+      '<div class="col-md-8 col-lg-8">'+
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
       '<span>Tel: '+finalUserPhones+'</span></br>'+
-      '<span>ANI: '+trackerAni+'</span>'+
+      '<span style="font-size:.9em;width:100%">ANI: '+trackerAni+'</span></br>'+
+      '<span class="text-primary">'+alertCity+'</span>'+
       '</div>'+
       '</div>';
 
@@ -193,16 +212,16 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   });
   // To add the marker to the map, call setMap();
   marker.setMap(map);
-  //setTimeout(function(){infowindow.open(map,marker);}, 1000);
-  var checkMapLoadFn = setInterval(function(){checkMapLoad()},500);
+  setTimeout(function(){infowindow.open(map,marker);}, 1000);
+  //var checkMapLoadFn = setInterval(function(){checkMapLoad()},500);
 
-  function checkMapLoad(){
-   if (marker.position !== NaN){
-    infowindow.open(map,marker);
-    clearInterval(checkMapLoadFn);
-    }
-    console.log(marker.position);
-  }
+  // function checkMapLoad(){
+  //  if (marker.position !== NaN){
+  //   infowindow.open(map,marker);
+  //   clearInterval(checkMapLoadFn);
+  //   }
+  //   console.log(marker.position);
+  // }
 }
 function refresh(){
   setTimeout(function() {
