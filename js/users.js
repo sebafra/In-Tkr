@@ -1,15 +1,27 @@
 var entityIdUrl = encodeURI(localStorage.trackersEntityId);
 var finalUsers;
 var inputEmpty = 0;
-var serverUrl;
+//var serverUrl;
 var trackers;
 var trackersAll;
 
 $(document).ready(function () {
 	initialize();
-	obtainServerUrl();
+	defineFormsAction();
+	//obtainServerUrl();
 });
 
+
+function defineFormsAction(){
+	// /trackers/api/finalUser/saveWithPicture
+	$('#finalUsersForm').attr("action", SERVER_URL + "/api/finalUser/saveWithPicture");
+
+	// /trackers/api/finalUser/importCSVFile
+	$('#finalUsersImportForm').attr("action", SERVER_URL + "/api/finalUser/importCSVFile");
+	
+}
+
+/*
 function obtainServerUrl(){
 	serverUrl = window.location.protocol + "//" + window.location.host;
 	var loc = window.location.pathname;
@@ -17,7 +29,7 @@ function obtainServerUrl(){
 	for(i = 1 ; i < directories.length - 1; i++){
 		serverUrl += "/" + directories[i];
 	}
-}
+}*/
 
 function initialize () {
   // Search Btn

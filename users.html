@@ -155,7 +155,7 @@
 
 		<div class="col-md-6 col-lg-6">
 			<form id="finalUsersForm" class="form-horizontal" role="form"
-				action="/trackers/api/finalUser/saveWithPicture" method="post"
+				action="" method="post"
 				enctype="multipart/form-data" target="formFinalUserResultFrame">
 				<input type="hidden" name="json" id="json" value="" />
 				<div class="panel panel-default">
@@ -309,7 +309,7 @@
 							<iframe style="display: none" name="formFinalUserImportResultFrame"
 								id="formFinalUserImportResultFrame" onload="formFinalUserImportCheckSubmission()"></iframe>
 
-							<form role="form"
+							<form role="form" id="finalUsersImportForm" 
 								action="/trackers/api/finalUser/importCSVFile"
 								method="post" enctype="multipart/form-data"
 								target="formFinalUserImportResultFrame">

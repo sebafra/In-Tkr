@@ -3,7 +3,24 @@ var section;
 $(document).ready(function () {
   checkId();
   initializeNav();
+  if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
 });
+
+
+
+function obtainServerUrl(){
+	//alert(SERVER_URL);
+	var serverUrl = window.location.protocol + "//" + window.location.host;
+	var loc = window.location.pathname;
+	var directories=loc.split('/');
+	for(i = 1 ; i < directories.length - 1; i++){
+		serverUrl += "/" + directories[i];
+	}
+	
+	SERVER_URL = serverUrl;
+	//alert(SERVER_URL);
+}
+
 
 function initializeNav() {
   //Info Usuario
