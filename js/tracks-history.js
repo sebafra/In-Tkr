@@ -387,8 +387,7 @@ function orderEvents() {
 
 	});
 }
-
-// Google Maps Query
+//Google Maps Query
 
 function initialize(i) {
   var myLatlng = new google.maps.LatLng(tracks[i].latitude, tracks[i].longitude);
@@ -415,6 +414,7 @@ function getAddress(i){
 		}
 	});
 }
+
 // Helpers
 
 function parseDate(currentField) {
