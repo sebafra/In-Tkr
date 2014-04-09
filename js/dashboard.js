@@ -57,7 +57,8 @@ function showTopAlerts() {
         for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
           alertItem = msg.data.tracks[i];
          //Listado de ultimas alertas
-         $("#lastAlerts").append("<tr id='alertRow"+ i +"'><td>"+ (i+1) +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+         $("#lastAlerts").append("<tr id='alertRow"+ i +"' style='cursor:pointer'><td>"+ (i+1) +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+         
          //Eventos en filas del listado de ultimas alertas
          clickRowLastAlerts(i,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
        }
@@ -71,44 +72,49 @@ function showTopAlerts() {
    }
  });
 }
+
 function reloadTopAlerts() {
-  var plus = 0;
-  var alertsFile = SERVER_URL+"/api/track/getLastAlerts?json={entityId%3A"+entityIdUrl+"}";
-  $.getJSON(alertsFile, function(msg) {
-    if(msg.status=="ok"){
-      if (msg.data.tracks.length!==0) {
-        var myLatlng;
-        for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
-          alertItem = msg.data.tracks[i];
-          var exists = false;
-          if(oldItems !== undefined){
-            for (var n = 0, leng = oldItems.length; n < leng; n++) {
-                  //console.log(alertItem.id +" - "+ oldItems[n].id);
-                  //console.log(n);
-                  if (alertItem.id == oldItems[n].id) {
-                    exists = true;
-                  }
-                }
-                if (exists == false) {
-                  plus = plus + 1;
-                  var position = (len-1) + plus;
-                  //console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
-                  $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
-                  clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
-                  $("#alertRow"+position).addClass("bg-danger");
-                  showMap(alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
-                  deleteOlderAlert();
-                  orderAlertPosition();
-                }
-              }
-            }
-            oldItems = msg.data.tracks;
-          }
-        } else {
-          $("#lastAlerts").append("<div class='center-block'>No hay alertas disponibles</div>");
-        }
-      });
+	var plus = 0;
+	var alertsFile = SERVER_URL+"/api/track/getLastAlerts?json={entityId%3A"+entityIdUrl+"}";
+	$.getJSON(alertsFile, function(msg) {
+		if(msg.status=="ok"){
+			if (msg.data.tracks.length!==0) {
+				var myLatlng;
+				for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
+					alertItem = msg.data.tracks[i];
+					var exists = false;
+					if(oldItems !== undefined){
+						for (var n = 0, leng = oldItems.length; n < leng; n++) {
+							//console.log(alertItem.id +" - "+ oldItems[n].id);
+							//console.log(n);
+							if (alertItem.id == oldItems[n].id) {
+								exists = true;
+							}
+						}
+						if (exists == false) {
+							plus = plus + 1;
+							var position = (len-1) + plus;
+							//console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
+							$("#lastAlerts").prepend("<tr id='alertRow"+ position +"' style='cursor:pointer'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+							clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
+							$("#alertRow"+position).addClass("bg-danger");
+							showMap(alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
+							deleteOlderAlert();
+							orderAlertPosition();
+						}
+					}
+				}
+				oldItems = msg.data.tracks;            
+			}
+
+		} else {
+			$("#lastAlerts").append("<div class='center-block'>No hay alertas disponibles</div>");      
+		}
+		oldItems = msg.data.tracks;
+	});
 }
+
+
 // Evento Click en filas del panel ultimas alertas reportadas
 function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   $("#alertRow"+ i).on("click", function(){
@@ -159,6 +165,7 @@ function parseTime(trackTimestamp){
 
    return hours+":"+minutes;
 }
+
 function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   //var geocoder;
   //geocoder = new google.maps.Geocoder();

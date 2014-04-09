@@ -59,8 +59,9 @@ function showtracks(page, orderBy, orderDirection) {
 					}
 					$("#loader").hide("fast");
 					// showListCount();
-					buildPagination(showTracksPrepareData(page,orderBy,orderDirection));
-					//console.log("buildPagination");
+					buildPagination(showTracksPrepareData(page, orderBy,
+							orderDirection));
+					console.log("buildPagination");
 				} else {
 					showAlert("msg", "danger", msg.error.message);
 				}
@@ -125,6 +126,36 @@ function showTracksPrepareData(page, orderBy, orderDirection) {
 
 	return getJsonString(jsonObject);
 }
+
+//Google Maps Query
+
+function initialize(i) {
+  var myLatlng = new google.maps.LatLng(tracks[i].latitude, tracks[i].longitude);
+  var mapOptions = {
+    zoom: 12,
+    center: myLatlng
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: myLatlng,
+    animation: google.maps.Animation.DROP,
+    map: map,
+});
+}
+function getAddress(i){
+	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ tracks[i].latitude +","+ tracks[i].longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+	var data;
+	$.getJSON(file, function(result){
+		if(result.status=="OK"){
+			data = result.results[0].formatted_address;
+					$('#formatted_address').html(data);
+
+	}
+});
+}
+
 function filterList(id) {
 	var str = $(id).text();
 	$("#dropdownBtn").text(str);
@@ -355,35 +386,6 @@ function orderEvents() {
 		// (-) NUEVA PAGINACION
 
 	});
-}
-
-// Google Maps Query
-
-function initialize(i) {
-  var myLatlng = new google.maps.LatLng(tracks[i].latitude, tracks[i].longitude);
-  var mapOptions = {
-    zoom: 12,
-    center: myLatlng
-  };
-  var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-
-  var marker = new google.maps.Marker({
-    position: myLatlng,
-    animation: google.maps.Animation.DROP,
-    map: map,
-});
-}
-function getAddress(i){
-	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ tracks[i].latitude +","+ tracks[i].longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
-	var data;
-	$.getJSON(file, function(result){
-		if(result.status=="OK"){
-			data = result.results[0].formatted_address;
-					$('#formatted_address').html(data);
-
-	}
-});
 }
 
 // Helpers

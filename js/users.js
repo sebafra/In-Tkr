@@ -131,9 +131,9 @@ function showMessageOK(msg){
 function getDateMilliseconds(val){
 	var v = val.split("-");
 	
-	day = parseInt(v[0]);
+	day = parseInt(v[2]);
 	month = parseInt(v[1]);
-	year = parseInt(v[2]);	
+	year = parseInt(v[0]);	
 	
 	//var d = new Date(v[0], v[1] - 1, v[2]);
 	var d = new Date();
@@ -152,13 +152,13 @@ function dateFormatOK(val){
 	var v = val.split("-");
 	
 	try{
-		day = parseInt(v[0]);
+		day = parseInt(v[2]);
 		if(isNaN(day)) return false;
 		
 		month = parseInt(v[1]);
 		if(isNaN(month)) return false;
 
-		year = parseInt(v[2]);
+		year = parseInt(v[0]);
 		if(isNaN(year)) return false;
 		
 		if(day < 1) 
@@ -425,7 +425,7 @@ function getImei(trackerId){
 function fillUsersList(i){
 	var imei = getImei(finalUsers[i].trackerId);
 	
-	$("#usersList").append("<tr id='user"+i+"'><td>"+ finalUsers[i].dni +"</td><td>"+ finalUsers[i].firstName +"</td><td>"+ finalUsers[i].lastName +"</td><td>"+ imei +"</td></tr>");
+	$("#usersList").append("<tr id='user"+i+"' style='cursor:pointer'><td>"+ finalUsers[i].dni +"</td><td>"+ finalUsers[i].firstName +"</td><td>"+ finalUsers[i].lastName +"</td><td>"+ imei +"</td></tr>");
 }
 
 function clickRowEvent(i){
@@ -461,12 +461,22 @@ function showListCount(){
 // User Form
 
 function parseDate(currentField){
-  var myNewDate = new Date(currentField);
+/*  var myNewDate = new Date(currentField);
   var date = myNewDate.getDate();
   var month = myNewDate.getMonth()+1;
   var year = myNewDate.getFullYear();
 
-   return date +"-"+ month +"-"+ year;
+   return date +"-"+ month +"-"+ year;*/
+	
+	var now = new Date(currentField);
+
+	var day = ("0" + now.getDate()).slice(-2);
+	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	
+	return today;
+
 }
 function showUserPhoto(picture){
   if (picture !== undefined) {
