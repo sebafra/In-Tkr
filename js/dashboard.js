@@ -199,7 +199,7 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
       '<span>Tel: '+finalUserPhones+'</span></br>'+
       '<span style="font-size:.9em;width:100%">ANI: '+trackerAni+'</span></br>'+
-      '<span class="text-primary">'+alertCity+'</span>'+
+      '<span class="label label-primary">'+alertCity+'</span>'+
       '</div>'+
       '</div>';
 
