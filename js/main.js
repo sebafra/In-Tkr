@@ -1,9 +1,9 @@
 var section;
 
 $(document).ready(function () {
+  if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
   checkId();
   initializeNav();
-  if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
 });
 
 
