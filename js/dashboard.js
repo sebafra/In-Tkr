@@ -7,7 +7,7 @@
  var lastAlertLatitude;
  var lastAlertLongitude;
  var infoWindow = null;
- var alertCity;
+ var alertCity = "";
  
 $(document).ready(function () {
   if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
@@ -127,12 +127,30 @@ function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalU
     });
   });
 }
+
+var currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl;
 function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
+	
+    myLatlng = new google.maps.LatLng(alertLat,alertLong);
+    
+    currentMapMyLatlng 			= myLatlng;
+    currentMapFinalUserFirstName = finalUserFirstName;
+    currentMapFinalUserLastName	 = finalUserLastName;
+    currentMapTrackerAni		 = trackerAni;
+    currentMapFinalUserPhones	 = finalUserPhones;
+    currentMapFinalUserPictureUrl= finalUserPictureUrl;
+    
+    getAddressNew(alertLat,alertLong);
+    
+    //google.setOnLoadCallback(initialize);
+}
+
+/*function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
     myLatlng = new google.maps.LatLng(alertLat,alertLong);
     getAddress(alertLat,alertLong);
     initialize(myLatlng,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
     //google.setOnLoadCallback(initialize);
-}
+}*/
 function initialShowMap (){
   if (mapFlag === true) {
       var lastAlert = 0;
@@ -171,6 +189,32 @@ function parseTime(trackTimestamp){
 
    return hours+":"+minutes;
 }
+
+function getAlertCityName(result){
+	var fa  = result.results[0].formatted_address;
+	var fas = fa.split(",");
+	if(fas.length >= 3)
+		return fas[fas.length - 3] + "," + fas[fas.length -2];
+	else 
+		return fa;
+}
+
+function getAddressNew(latitude,longitude){
+  var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+  $.getJSON(file, function(result){
+    if(result.status=="OK"){
+    	/*try{
+    		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[1].long_name;
+    	}catch(e){
+    		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[0].long_name;
+    	}*/
+    	alertCity = getAlertCityName(result);
+       initialize(currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
+    }
+  });
+}
+
+
 function getAddress(latitude,longitude){
   var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
   $.getJSON(file, function(result){
@@ -198,7 +242,7 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
       '<span>Tel: '+(finalUserPhones==undefined?"":finalUserPhones)+'</span></br>'+
       '<span style="font-size:.9em;width:100%">ANI: '+trackerAni+'</span></br>'+
-      '<span class="label label-primary">'+alertCity+'</span>'+
+      '<span class="label label-primary" id="alertCityName">'+alertCity+'</span>'+
       '</div>'+
       '</div>';
 
