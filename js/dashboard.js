@@ -177,7 +177,14 @@ function getAddress(latitude,longitude){
   var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
   $.getJSON(file, function(result){
     if(result.status=="OK"){
-       alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[1].long_name;
+      var stringA = result.results[1].address_components[0].long_name;
+      var stringB = result.results[1].address_components[1].long_name;
+      var length = 12;
+      var trimmedString1 = stringA.length > length ? stringA.substring(0, length - 3) + "..." : stringA.substring(0, length);
+      var trimmedString2 = stringB.length > length ? stringB.substring(0, length - 3) + "..." : stringB.substring(0, length);
+      alertCity = trimmedString1+" ,"+trimmedString2;
+    } else {
+      //alert("Error obteniendo coordenadas: "+result.results.error);
     }
   });
 }
@@ -198,7 +205,7 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       '<div class="col-md-8 col-lg-8">'+
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
       '<span>Tel: '+finalUserPhones+'</span></br>'+
-      '<span style="font-size:.9em;width:100%">ANI: '+trackerAni+'</span></br>'+
+      '<span style="font-size:.8em;width:100%">ANI: '+trackerAni+'</span></br>'+
       '<span class="label label-primary">'+alertCity+'</span>'+
       '</div>'+
       '</div>';
