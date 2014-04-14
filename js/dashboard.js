@@ -7,9 +7,10 @@
  var lastAlertLatitude;
  var lastAlertLongitude;
  var infoWindow = null;
- var alertCity;
+ var alertCity = "";
 
-  $(document).ready(function () {
+$(document).ready(function () {
+  if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
   showTopAlerts();
   showTrackersWithoutReport();
   showReportSummary();
@@ -62,7 +63,6 @@ function showTopAlerts() {
 
          //Eventos en filas del listado de ultimas alertas
          clickRowLastAlerts(i,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
-
        }
        $("#operatorsLoader").remove();
        $("#lastAlerts > tr:first-child").addClass("bg-info");
@@ -98,7 +98,7 @@ function reloadTopAlerts() {
                   var position = (len-1) + plus;
                   console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
                   $("#alertRow"+position).addClass("bg-danger");
-                  $("#lastAlerts").prepend("<tr id='alertRow"+ position +"'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
+                  $("#lastAlerts").prepend("<tr id='alertRow"+ position +"' style='cursor:pointer'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
                   $("#alertRow"+position).addClass("bg-danger");
                   clickRowLastAlerts(position,alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
                   showMap(alertItem.latitude,alertItem.longitude,alertItem.finalUserFirstName,alertItem.finalUserLastName,alertItem.trackerAni,alertItem.finalUserPhones,alertItem.finalUserPictureUrl);
@@ -127,21 +127,37 @@ function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalU
     });
   });
 }
+
+var currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl;
 function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
+
+    myLatlng = new google.maps.LatLng(alertLat,alertLong);
+
+    currentMapMyLatlng 			= myLatlng;
+    currentMapFinalUserFirstName = finalUserFirstName;
+    currentMapFinalUserLastName	 = finalUserLastName;
+    currentMapTrackerAni		 = trackerAni;
+    currentMapFinalUserPhones	 = finalUserPhones;
+    currentMapFinalUserPictureUrl= finalUserPictureUrl;
+
+    getAddressNew(alertLat,alertLong);
+
+    //google.setOnLoadCallback(initialize);
+}
+
+/*function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
     myLatlng = new google.maps.LatLng(alertLat,alertLong);
     getAddress(alertLat,alertLong);
     initialize(myLatlng,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
     //google.setOnLoadCallback(initialize);
-}
+}*/
 function initialShowMap (){
   if (mapFlag === true) {
       var lastAlert = 0;
       showMap(alertItems[lastAlert].latitude,alertItems[lastAlert].longitude,alertItems[lastAlert].finalUserFirstName,alertItems[lastAlert].finalUserLastName,alertItems[lastAlert].trackerAni,alertItems[lastAlert].finalUserPhones,alertItems[lastAlert].finalUserPictureUrl);
   }
 }
-// function clickRemoveClass(elem){
-//   $(elem).removeClass();
-// }
+
 function showAlertType(alertType){
   if(alertType==1){
     return "<span class='label label-danger'>P&aacute;nico</span>";
@@ -173,6 +189,32 @@ function parseTime(trackTimestamp){
 
    return hours+":"+minutes;
 }
+
+function getAlertCityName(result){
+	var fa  = result.results[0].formatted_address;
+	var fas = fa.split(",");
+	if(fas.length >= 3)
+		return fas[fas.length - 3] + "," + fas[fas.length -2];
+	else
+		return fa;
+}
+
+function getAddressNew(latitude,longitude){
+  var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+  $.getJSON(file, function(result){
+    if(result.status=="OK"){
+    	/*try{
+    		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[1].long_name;
+    	}catch(e){
+    		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[0].long_name;
+    	}*/
+    	alertCity = getAlertCityName(result);
+       initialize(currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
+    }
+  });
+}
+
+
 function getAddress(latitude,longitude){
   var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
   $.getJSON(file, function(result){
@@ -188,6 +230,7 @@ function getAddress(latitude,longitude){
     }
   });
 }
+
 function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   //var geocoder;
   //geocoder = new google.maps.Geocoder();
@@ -204,9 +247,9 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       '<div class="col-md-2 col-lg-2"></div>'+
       '<div class="col-md-8 col-lg-8">'+
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
-      '<span>Tel: '+finalUserPhones+'</span></br>'+
-      '<span style="font-size:.8em;width:100%">ANI: '+trackerAni+'</span></br>'+
-      '<span class="label label-primary">'+alertCity+'</span>'+
+      '<span>Tel: '+(finalUserPhones==undefined?"":finalUserPhones)+'</span></br>'+
+      '<span style="font-size:.9em;width:100%">ANI: '+trackerAni+'</span></br>'+
+      '<span class="label label-primary" id="alertCityName">'+alertCity+'</span>'+
       '</div>'+
       '</div>';
 
@@ -226,13 +269,13 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   setTimeout(function(){infowindow.open(map,marker);}, 1000);
   //var checkMapLoadFn = setInterval(function(){checkMapLoad()},500);
 
-  // function checkMapLoad(){
-  //  if (marker.position !== NaN){
-  //   infowindow.open(map,marker);
-  //   clearInterval(checkMapLoadFn);
-  //   }
-  //   console.log(marker.position);
-  // }
+//  function checkMapLoad(){
+//   if (marker.position !== NaN){
+//    infowindow.open(map,marker);
+//    clearInterval(checkMapLoadFn);
+//    }
+//    console.log(marker.position);
+//  }
 }
 function refresh(){
   setTimeout(function() {
