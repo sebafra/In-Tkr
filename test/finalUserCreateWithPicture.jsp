@@ -18,7 +18,7 @@
 	</form>
  
  	<br/>
- 	{firstName:"juan",lastName:"moreno", entityId:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a", trackerId:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a", email:"juan@mail.com",phones:"3512564819, 3543464124", notes:"notas", dni:"22222222"}
+ 	{firstName:"juan",lastName:"moreno", entityId:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a", trackerId:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a", phones:"3512564819, 3543464124", notes:"notas", dni:"22222222"}
  
 </body>
 </html>

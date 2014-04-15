@@ -225,14 +225,23 @@ function formFinalUserCheckData(){
     	formFinalUserMessage = "Debe ingresar 'Apellido'";
     	checkOK = false;
     }
-    else if($.trim($("#inputEmail").val()) == ""){
+/*    else if($.trim($("#inputEmail").val()) == ""){
     	formFinalUserMessage = "Debe ingresar 'Email'";
     	checkOK = false;
+    }*/
+    else if($('#inputPicture')[0].files.length > 0){
+    	
+    	if($('#inputPicture')[0].files[0].size > (PICTURE_MAX_SIZE * 1024)){
+            formFinalUserMessage = "La imagen no debe superar los " + PICTURE_MAX_SIZE+ "Kb";
+        	checkOK = false;
+    	}
+
     }
 /*    else if($.trim($("#inputPhones").val()) == ""){
     	formFinalUserMessage = "Debe ingresar 'Telefonos'";
     	checkOK = false;
     }*/
+    
     
     return checkOK;
 }
@@ -244,7 +253,7 @@ function formFinalUserPrepareData(){
   		firstName:$.trim($("#inputFirstName").val()),
   		lastName:$.trim($("#inputLastName").val()),
   		entityId:entityIdUrl,
-  		email:$.trim($("#inputEmail").val()),
+  		//email:$.trim($("#inputEmail").val()),
   		phones:$.trim($("#inputPhones").val()),
   		notes:$.trim($("#inputNotes").val()),
   		dni:$.trim($("#inputDni").val()),
@@ -322,7 +331,9 @@ function formFinalUserImportCheckSubmission(){
         	showMessageError(json.error.message);
         }
     }catch(e){
-    	showMessageError(e);
+    	console.log(e);
+    	//showMessageError(e);
+    	showMessageOK("Ocurrio un posible error. Por favor verifique los cambios!!!");
     }
 }
 
@@ -442,12 +453,18 @@ function fillUsersList(i){
 
 function clickRowEvent(i){
   $("tr#user"+i).on("click",function(){
+	  
+      $("#finalUserPhoto").attr({
+          src: "img/ajax-loader.gif"
+        });
+
+	  
       $("#inputId").val(finalUsers[i].id);
       $("#inputDateTime").val(parseDate(finalUsers[i].datetime));
       $("#inputDni").val(finalUsers[i].dni);
       $("#inputFirstName").val(finalUsers[i].firstName);
       $("#inputLastName").val(finalUsers[i].lastName);
-      $("#inputEmail").val(finalUsers[i].email);
+      //$("#inputEmail").val(finalUsers[i].email);
       //$("#inputImei").val(finalUsers[i].imei);
       $("#inputNotes").val(finalUsers[i].notes);
       $("#inputPhones").val(finalUsers[i].phones);
@@ -495,6 +512,10 @@ function showUserPhoto(picture){
     $("#finalUserPhoto").attr({
       src: SERVER_URL + picture + "?" + new Date().getTime()
     });
+  } else {
+    $("#finalUserPhoto").attr({
+        src: SERVER_URL + "/" + IMG_URL + "user_avatar.png"
+      });
   }
 }
 function showDefaultDateTime(){
@@ -517,12 +538,12 @@ function clearForm(){
     $("#finalUsersForm textarea").val("");
     //$(".fileinput-exists").click();
     
+    $("#finalUserPhoto").attr({
+        src: "img/user_avatar.png"
+      });
+    
     try{
         $(".fileinput-exists").fileinput('reset');
-        
-        $("#finalUserPhoto").attr({
-            src: "img/user_avatar.png"
-          });
     }catch(e){
     	
     }
@@ -544,8 +565,8 @@ function saveUserData(){
     checkInput("#inputFirstName");
     var lastName = $("#inputLastName").val();
     checkInput("#inputLastName");
-    var email = $("#inputEmail").val();
-    checkInput("#inputEmail");
+//    var email = $("#inputEmail").val();
+//    checkInput("#inputEmail");
     var imei = $("#inputImei").val();
     checkInput("#inputImei");
     var notes = $("#inputNotes").val();

@@ -21,7 +21,7 @@
  	{entityId:"d8c27398-6c82-4aa0-5d22-e791a5148485"}
  	<br/>
  	<br/>
- 	COLUMNAS DEL ARCHIVO: dni, firstName, lastname, email, phones (opcional)
+ 	COLUMNAS DEL ARCHIVO: dni, firstName, lastname, phones (opcional)
  
 </body>
 </html>

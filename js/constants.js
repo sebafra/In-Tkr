@@ -7,4 +7,6 @@ var OBTAIN_URL_DINAMICALLY = true;
 // Images
 var IMG_URL = "img/";
 
-var PAGE_RESULTS = 5;
+var PAGE_RESULTS = 50;
+
+var PICTURE_MAX_SIZE = 100 ; //  KB

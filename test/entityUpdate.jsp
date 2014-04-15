@@ -17,7 +17,7 @@
 	</form>
  	<br/>
  	<br/>
- 	{name:"entidad1",userName:"u", userPassword:"p",  id:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a"}
+ 	{name:"entidad1",userName:"u", userPassword:"p",  id:"30dc20e5-b2e9-6bc9-ac98-39f7637a798a", email:"m@mail.com"}
  	
  	
 </body>
