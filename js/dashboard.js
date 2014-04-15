@@ -8,6 +8,8 @@
  var lastAlertLongitude;
  var infoWindow = null;
  var alertCity = "";
+ var alertAddress = "";
+ //var map;
 
 $(document).ready(function () {
   if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
@@ -193,10 +195,28 @@ function parseTime(trackTimestamp){
 function getAlertCityName(result){
 	var fa  = result.results[0].formatted_address;
 	var fas = fa.split(",");
-	if(fas.length >= 3)
-		return fas[fas.length - 3] + "," + fas[fas.length -2];
-	else
-		return fa;
+	if(fas.length >= 3){
+    var stringA = fas[fas.length - 3];
+    var stringB = fas[fas.length - 2];
+    var length = 13;
+    var trimmedStringA = stringA.length > length ? stringA.substring(0, length - 3) + "..." : stringA.substring(0, length);
+    var trimmedStringB = stringB.length > length ? stringB.substring(0, length - 3) + "..." : stringB.substring(0, length);
+
+		return trimmedStringA + "," + trimmedStringB;
+  }	else {
+    var stringA = fas[0];
+    var stringB = fas[1];
+    var length = 13;
+    var trimmedStringA = stringA.length > length ? stringA.substring(0, length - 3) + "..." : stringA.substring(0, length);
+    var trimmedStringB = stringB.length > length ? stringB.substring(0, length - 3) + "..." : stringB.substring(0, length);
+		return trimmedStringA + "," + trimmedStringB;
+  }
+}
+function getAlertAddressName(result){
+  var stringA  = result.results[0].address_components[1].long_name;
+  var stringB  = result.results[0].address_components[0].long_name;
+
+    return stringA+" "+stringB;
 }
 
 function getAddressNew(latitude,longitude){
@@ -209,6 +229,7 @@ function getAddressNew(latitude,longitude){
     		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[0].long_name;
     	}*/
     	alertCity = getAlertCityName(result);
+      alertAddress = getAlertAddressName(result);
        initialize(currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
     }
   });
@@ -221,7 +242,7 @@ function getAddress(latitude,longitude){
     if(result.status=="OK"){
       var stringA = result.results[1].address_components[0].long_name;
       var stringB = result.results[1].address_components[1].long_name;
-      var length = 12;
+      var length = 10
       var trimmedString1 = stringA.length > length ? stringA.substring(0, length - 3) + "..." : stringA.substring(0, length);
       var trimmedString2 = stringB.length > length ? stringB.substring(0, length - 3) + "..." : stringB.substring(0, length);
       alertCity = trimmedString1+" ,"+trimmedString2;
@@ -236,7 +257,7 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   //geocoder = new google.maps.Geocoder();
   var mapOptions = {
     center: mapLatyLong,
-    zoom: 14
+    zoom: 12
   };
   var map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
@@ -247,8 +268,8 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       '<div class="col-md-2 col-lg-2"></div>'+
       '<div class="col-md-8 col-lg-8">'+
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
-      '<span>Tel: '+(finalUserPhones==undefined?"":finalUserPhones)+'</span></br>'+
-      '<span style="font-size:.9em;width:100%">ANI: '+trackerAni+'</span></br>'+
+      '<span><span class="fa fa-phone"></span> '+(finalUserPhones==undefined?"":finalUserPhones)+'</span></br>'+
+      '<span style="font-size:.9em;width:100%"><span class="fa fa-road"></span> '+alertAddress+'</span></br>'+
       '<span class="label label-primary" id="alertCityName">'+alertCity+'</span>'+
       '</div>'+
       '</div>';
@@ -267,15 +288,14 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   // To add the marker to the map, call setMap();
   marker.setMap(map);
   setTimeout(function(){infowindow.open(map,marker);}, 1000);
-  //var checkMapLoadFn = setInterval(function(){checkMapLoad()},500);
 
-//  function checkMapLoad(){
-//   if (marker.position !== NaN){
-//    infowindow.open(map,marker);
-//    clearInterval(checkMapLoadFn);
-//    }
-//    console.log(marker.position);
-//  }
+  google.maps.event.addListener(marker, 'click', function() {
+    map.setZoom(16);
+    map.setCenter(marker.getPosition());
+  });
+
+
+
 }
 function refresh(){
   setTimeout(function() {

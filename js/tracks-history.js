@@ -3,6 +3,7 @@ var tracks;
 var jsonObject;
 var pageActive;
 var pages;
+var clickParent;
 
 $(document).ready(function() {
 	initializeEvents();
@@ -45,23 +46,22 @@ function showtracks(page, orderBy, orderDirection) {
 	if(page == undefined || page == "" || page == "0")
 		ACTIVE_PAGE = 1;
 	// (-) NUEVA PAGINACION
-
+	$("#tracksList").empty();
+	$("#loader").show("fast");
 	var tracksFile = SERVER_URL + "/api/track/getTracing?json="
 			+ showTracksPrepareData(page, orderBy, orderDirection);
 	$.getJSON(tracksFile,
 			function(msg) {
 				if (msg.status == "ok") {
 					tracks = msg.data.tracks;
-					$("#tracksList").empty();
 					for (var i = 0; i < msg.data.tracks.length; i++) {
 						filltracksList(i);
 						showDetailClick(i);
 					}
 					$("#loader").hide("fast");
 					// showListCount();
-					buildPagination(showTracksPrepareData(page, orderBy,
-							orderDirection));
-					console.log("buildPagination");
+					buildPagination(showTracksPrepareData(page, orderBy,orderDirection));
+					//console.log("buildPagination");
 				} else {
 					showAlert("msg", "danger", msg.error.message);
 				}
@@ -368,17 +368,32 @@ function orderEvents() {
 	var order;
 	$(".orderBy").parent().on("click", function() {
 		var orderByCurrent = $(this).attr("name");
+		//alert(orderByCurrent);
 		if (order !== "ASC" || order == "") {
 			showtracks(undefined, orderByCurrent, "ASC");
-			$("#tracksList .caret").removeClass("inverse");
-			order = "ASC";
-		} else {
-			showtracks(undefined, orderByCurrent, "DESC");
-			order = "DESC";
+			$(".caret").removeClass("inverse");
 			$(this).children().addClass("inverse");
+			order = "ASC";
+			//console.log("First IF ASC");
+		} else {
+			if ($(this).text() !== clickParent) {
+				showtracks(undefined, orderByCurrent, "ASC");
+				order = "ASC";
+				//console.log("Second IF ASC");
+				$(".caret").removeClass("inverse");
+				$(this).children().addClass("inverse");
+			} else {
+				order = "DESC";
+				showtracks(undefined, orderByCurrent, "DESC");
+				//console.log("Second IF DESC");
+				$(this).children().removeClass("inverse");
+			}
 		}
-		$("#tracksList .caret").css("color", "black");
+		clickParent = $(this).text();
+		$("#tracksListTable .caret").css("color", "black");
+		$("#tracksListTable th").css("color", "black");
 		$(this).children().css("color", "#3da8e3");
+		$(this).css("color", "#3da8e3");
 		//pageActive = 1;
 
 		// (+) NUEVA PAGINACION

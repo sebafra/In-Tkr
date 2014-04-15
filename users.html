@@ -98,15 +98,15 @@
 				<div class="panel-heading">
 					<form class="form-inline" role="form">
 						<span class="fa fa-group" style="margin-right: 1em;"></span>
-						Listado de Usuarios <span id="usersSearchBtn"
-							class="fa fa-search pull-right text-primary"></span> <span
-							class="pull-right fa fa-upload text-primary" data-toggle="modal"
+						Listado de Usuarios
+						<span id="usersSearchBtn"	class="fa fa-search pull-right text-primary"></span>
+						<span	class="pull-right fa fa-upload text-primary" data-toggle="modal"
 							data-target="#importModal" style="margin-right: 1em;"></span>
 					</form>
 				</div>
 				<div class="panel-body bodyUsersList">
-					<div id="usersSearch" class="row"
-						style="padding-left: 15px; padding-right: 15px">
+					<div id="usersSearch" class="row"	style="padding-left: 15px; padding-right: 15px">
+						<div class="col-xs-10">
 						<div class="input-group">
 							<div class="input-group-btn">
 			                    <button name="" id="dropdownBtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Seleccionar <span class="caret inverse"></span></button>
@@ -120,9 +120,12 @@
 							</div>
 							<!-- /btn-group -->
 			                  <input id="searchInput" type="text" class="form-control">
+						</div><!-- /input-group -->
 						</div>
-						<!-- /input-group -->
-						<button id="searchBtn" type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
+						<div class="col-xs-2">
+							<button id="searchBtn" type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
+						</div>
+						<div class="clearfix"></div>
 						<hr>
 					</div>
 					<table class="table table-hover">
@@ -183,7 +186,7 @@
 								<div class="col-sm-10">
 									<!--<input type="text" class="form-control" id="inputDateTime"
 										placeholder="Ingrese la fecha de nacimiento">-->
-									<input type="date" class="form-control" id="inputDateTime" placeholder="Ingrese la fecha de nacimiento" style="width:21.2em">	 
+									<input type="date" class="form-control" id="inputDateTime" placeholder="Ingrese la fecha de nacimiento">
 									<span class="help-block">Ejemplo: 21/10/1978 (a&ntilde;o menor a 2000)</span>
 								</div>
 							</div>
@@ -309,7 +312,7 @@
 							<iframe style="display: none" name="formFinalUserImportResultFrame"
 								id="formFinalUserImportResultFrame" onload="formFinalUserImportCheckSubmission()"></iframe>
 
-							<form role="form" id="finalUsersImportForm" 
+							<form role="form" id="finalUsersImportForm"
 								action="/trackers/api/finalUser/importCSVFile"
 								method="post" enctype="multipart/form-data"
 								target="formFinalUserImportResultFrame">

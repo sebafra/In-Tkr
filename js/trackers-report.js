@@ -2,6 +2,7 @@ var entityIdUrl = encodeURI(localStorage.trackersEntityId);
 var trackers;
 var jsonObject;
 var pageActive;
+var clickParent;
 
 $(document).ready(function() {
 	initialize();
@@ -226,16 +227,27 @@ function orderEvents() {
 		//alert(orderByCurrent);
 		if (order !== "ASC" || order == "") {
 			showtrackers(undefined, orderByCurrent, "ASC");
-			$("#trackersListTable .caret").removeClass("inverse");
+			$(".caret").removeClass("inverse");
+			$(this).children().addClass("inverse");
 			order = "ASC";
 		} else {
-			showtrackers(undefined, orderByCurrent, "DESC");
-			order = "DESC";
-			$(this).children().addClass("inverse");
+			$(this).children().removeClass("inverse");
+			if ($(this).text() !== clickParent) {
+				showtrackers(undefined, orderByCurrent, "ASC");
+				order = "ASC";
+				$(".caret").removeClass("inverse");
+				$(this).children().addClass("inverse");
+			} else {
+				order = "DESC";
+				showtrackers(undefined, orderByCurrent, "DESC");
+			}
 		}
-		$("#trackersListTable .caret").css("color", "black");
-		$(this).children().css("color", "#3da8e3");
-		pageActive = 1;
+	clickParent = $(this).text();
+	$("#trackersListTable .caret").css("color", "black");
+	$("#trackersListTable th").css("color", "black");
+	$(this).children().css("color", "#3da8e3");
+	$(this).css("color", "#3da8e3");
+	pageActive = 1;
 
 		// (+) NUEVA PAGINACION
 		ACTIVE_PAGE = 1;
