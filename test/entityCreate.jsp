@@ -17,7 +17,7 @@
 	</form>
  	<br/>
  	<br/>
- 	{name:"entidad1", userName:"u", userPassword:"p"}
+ 	{name:"entidad1", userName:"u", userPassword:"p", email:"m@mail.com"}
  	
  	
 </body>

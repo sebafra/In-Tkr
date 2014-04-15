@@ -6,5 +6,7 @@ var OBTAIN_URL_DINAMICALLY = false;
 
 // Images
 var IMG_URL = "img/";
+var PICTURE_MAX_SIZE = 100 ; //  KB
 
+// Pagination
 var PAGE_RESULTS = 50;

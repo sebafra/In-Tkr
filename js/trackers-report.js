@@ -66,9 +66,9 @@ function showtrackers(page, orderBy, orderDirection) {
 function filltrackersList(i) {
 	$("#trackersList").append(
 			"<tr id='user" + i + "'><td>" + parseDate(trackers[i].datetime)
-					+ "</td><td>" + trackers[i].finalUserDni + "</td><td>"
-					+ trackers[i].finalUserFirstName + "</td><td>"
-					+ trackers[i].finalUserLastName + "</td><td>"
+					+ "</td><td>" + (trackers[i].finalUserDni==undefined?"":trackers[i].finalUserDni) + "</td><td>"
+					+ (trackers[i].finalUserFirstName==undefined?"":trackers[i].finalUserFirstName) + "</td><td>"
+					+ (trackers[i].finalUserLastName==undefined?"":trackers[i].finalUserLastName) + "</td><td>"
 					+ trackers[i].imei + "</td></tr>");
 }
 function showTrackersPrepareData(page, orderBy, orderDirection) {
