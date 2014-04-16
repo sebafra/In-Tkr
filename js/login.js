@@ -78,6 +78,8 @@ function createNewEntity(){
   checkInput("#entityName");
   var userName = $("#entityUserName").val();
   checkInput("#entityUserName");
+  var userEmail = $("#entityEmail").val();
+  checkInput("#entityEmail");
   var userPassword = $("#entityPassword").val();
   checkInput("#entityPassword");
   var userPassword2 = $("#entityPassword2").val();
@@ -85,7 +87,7 @@ function createNewEntity(){
 
  if (inputEmpty === 0) {
   if(checkPassword(userPassword,userPassword2)===true){
-      var entityFile = SERVER_URL+"/api/entity/create?json={name:%22"+ name +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22}";
+      var entityFile = SERVER_URL+"/api/entity/create?json={name:%22"+ name +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22,email:%22"+ userEmail +"%22}";
       $.getJSON(entityFile, function(msg) {
         if(msg.status=="ok"){
          showAlert ("msg-modal","success","Entidad creada con &eacute;xito");
