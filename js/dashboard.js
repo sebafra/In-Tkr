@@ -9,6 +9,7 @@
  var infoWindow = null;
  var alertCity = "";
  var alertAddress = "";
+ var plus = 0;
  //var map;
 
 $(document).ready(function () {
@@ -78,7 +79,6 @@ function showTopAlerts() {
 }
 
 function reloadTopAlerts() {
-  var plus = 0;
   var alertsFile = SERVER_URL+"/api/track/getLastAlerts?json={entityId%3A"+entityIdUrl+"}";
   $.getJSON(alertsFile, function(msg) {
     if(msg.status=="ok"){
@@ -98,7 +98,7 @@ function reloadTopAlerts() {
                 if (exists == false) {
                   plus = plus + 1;
                   var position = (len-1) + plus;
-                  console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
+                  //console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
                   $("#alertRow"+position).addClass("bg-danger");
                   $("#lastAlerts").prepend("<tr id='alertRow"+ position +"' style='cursor:pointer'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
                   $("#alertRow"+position).addClass("bg-danger");
@@ -122,11 +122,9 @@ function reloadTopAlerts() {
 function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   $("#alertRow"+ i).on("click", function(){
     showMap(alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
-    $("#lastAlerts > tr").removeClass("bg-info");//.removeClass("bg-danger");
-    $("#lastAlerts > tr#alertRow"+i).addClass("bg-info");
-    $("#lastAlerts > tr#alertRow"+i+".bg-danger").click(function(){
-      $(this).removeClass("bg-danger");
-    });
+    $("#lastAlerts > tr").removeClass("bg-info");
+    $(this).addClass("bg-info");
+    $(this).removeClass("bg-danger");
   });
 }
 
