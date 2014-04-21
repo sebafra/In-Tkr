@@ -12,6 +12,7 @@
  var plus = 0;
  var trackersWithoutReport;
  var trackerRouteCoordinates = new Array();
+ var lastIndexUsed;
 
 $(document).ready(function () {
   if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
@@ -27,6 +28,9 @@ $(document).ready(function () {
 function initializeEvents(){
   $("#dateFilterBtn").on("click",function(){
     $("#filterContainer").slideToggle();
+  });
+  $("#filterBtn").on("click",function(){
+    getTrackerRoute(lastIndexUsed);
   });
 }
 
@@ -51,25 +55,48 @@ function trackersWithoutReportClickEvent(i) {
     buildMapTrackerRoute(i);
   });
 }
+
+function showTracksPrepareData(i) {
+  jsonObject = {
+    trackerId : alertItems[i].trackerId,
+  };
+
+  var dateStart = $("#dateStart").val();
+  var dateEnd = $("#dateEnd").val();
+
+  if (dateStart !== undefined && dateStart !== "") {
+    jsonObject.dateStart = getDateMilliseconds(dateStart);
+  }
+  if (dateEnd !== undefined && dateEnd !== "") {
+    jsonObject.dateEnd = getDateMilliseconds(dateEnd);
+  }
+  return getJsonString(jsonObject);
+}
+
 function getTrackerRoute(i){
-  var file = "json/trackers.json";
+  //console.log("TrackerId:"+ alertItems[i].trackerId);
+  console.log(showTracksPrepareData(i));
+
+  //TODO: var tracksFile = SERVER_URL + "/api/track/getLastTracks?json=" + showTracksPrepareData(i);
+  var file = "json/tracks.json";
   $.getJSON(file, function(result){
     if(result.status=="ok"){
       trackerRouteCoordinates = new Array();
-      for (var n = 0; n < result.data.trackers.length; n++) {
-        trackerRouteCoordinates[n] = new google.maps.LatLng(Number(result.data.trackers[n].latitude),Number(result.data.trackers[n].longitude));
+      for (var n = 0; n < result.data.tracks.length; n++) {
+        trackerRouteCoordinates[n] = new google.maps.LatLng(Number(result.data.tracks[n].latitude),Number(result.data.tracks[n].longitude));
       }
       googleMapsQuery(i);
+      lastIndexUsed = i;
   }});
 }
-function buildMapTrackerRoute(i){
+function buildMapTrackerRoute(i,dateFrom,dateTo){
   $("#trackerRoute").modal("show");
-  getTrackerRoute(i);
+  getTrackerRoute(i,dateFrom,dateTo);
 }
 
 //Google Maps Query
 
-function googleMapsQuery(points) {
+function googleMapsQuery(i) {
 
   var lastTrack = trackerRouteCoordinates.length-1;
 
@@ -91,12 +118,10 @@ function googleMapsQuery(points) {
     for (var i = 0; i < trackerRouteCoordinates.length; i++) {
     bounds.extend(trackerRouteCoordinates[i]);
 }
-
   var marker = new google.maps.Marker({
     position: trackerRouteCoordinates[lastTrack],
     animation: google.maps.Animation.DROP,
   });
-
 setTimeout(function(){
   google.maps.event.trigger(map, 'resize');
   //map.setCenter(trackerRouteCoordinates[lastTrack]);
@@ -193,7 +218,7 @@ function reloadTopAlerts() {
 // Evento Click en filas del panel ultimas alertas reportadas
 function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
   $("#alertRow"+ i).on("click", function(){
-    showMap(alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
+    showMap(i,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
     $("#lastAlerts > tr").removeClass("bg-info");
     $(this).addClass("bg-info");
     $(this).removeClass("bg-danger");
@@ -201,7 +226,8 @@ function clickRowLastAlerts(i,alertRowLat,alertRowLong,finalUserFirstName,finalU
 }
 
 var currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl;
-function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
+
+function showMap(i,alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl){
 
     myLatlng = new google.maps.LatLng(alertLat,alertLong);
 
@@ -212,7 +238,7 @@ function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,tracker
     currentMapFinalUserPhones	 = finalUserPhones;
     currentMapFinalUserPictureUrl= finalUserPictureUrl;
 
-    getAddressNew(alertLat,alertLong);
+    getAddressNew(i,alertLat,alertLong);
 
     //google.setOnLoadCallback(initialize);
 }
@@ -226,7 +252,7 @@ function showMap(alertLat,alertLong,finalUserFirstName,finalUserLastName,tracker
 function initialShowMap (){
   if (mapFlag === true) {
       var lastAlert = 0;
-      showMap(alertItems[lastAlert].latitude,alertItems[lastAlert].longitude,alertItems[lastAlert].finalUserFirstName,alertItems[lastAlert].finalUserLastName,alertItems[lastAlert].trackerAni,alertItems[lastAlert].finalUserPhones,alertItems[lastAlert].finalUserPictureUrl);
+      showMap(lastAlert,alertItems[lastAlert].latitude,alertItems[lastAlert].longitude,alertItems[lastAlert].finalUserFirstName,alertItems[lastAlert].finalUserLastName,alertItems[lastAlert].trackerAni,alertItems[lastAlert].finalUserPhones,alertItems[lastAlert].finalUserPictureUrl);
   }
 }
 
@@ -289,13 +315,13 @@ function getAlertAddressName(result){
     return stringA+" "+stringB;
 }
 
-function getAddressNew(latitude,longitude){
+function getAddressNew(i,latitude,longitude){
   var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
   $.getJSON(file, function(result){
     if(result.status=="OK"){
     	alertCity = getAlertCityName(result);
       alertAddress = getAlertAddressName(result);
-       initialize(currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
+       initialize(i,currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
     }
   });
 }
@@ -316,10 +342,9 @@ function getAddress(latitude,longitude){
     }
   });
 }
+// Google Maps Query main map - START
+function initialize(i,mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
 
-function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
-  //var geocoder;
-  //geocoder = new google.maps.Geocoder();
   var mapOptions = {
     center: mapLatyLong,
     zoom: 12
@@ -327,11 +352,12 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   var map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
   var contentString = '<div class="container-fluid">'+
-      '<div class="col-md-2 col-lg-2 pull-left" style="padding-left:0">'+
+      '<div class="col-xs-1 pull-left" style="padding-left:0; text-algin:"left"><span id="infoWindowRouteBtn" class="fa fa-code-fork text-muted" style="font-size:1.5em; margin-bottom:1.5em"></span><span id="infoWindowZoomBtn" class="fa fa-search-plus text-muted" style="font-size:1.5em"></span></div>'+
+      '<div class="col-xs-1 pull-left" style="padding-left:0">'+
       '<img src="'+ SERVER_URL + finalUserPictureUrl +'"onerror="this.onerror=null;this.src=\''+ IMG_URL +'/user_avatar.png\'" class="img-circle alertFace";">'+
       '</div>'+
-      '<div class="col-md-2 col-lg-2"></div>'+
-      '<div class="col-md-8 col-lg-8">'+
+      '<div class="col-xs-2"></div>'+
+      '<div class="col-xs-8">'+
       '<span style="font-weight:bold">'+finalUserFirstName+' '+finalUserLastName+'</span></br>'+
       '<span><span class="fa fa-phone"></span> '+(finalUserPhones==undefined?"":finalUserPhones)+'</span></br>'+
       '<span style="font-size:.9em;width:100%"><span class="fa fa-road"></span> '+alertAddress+'</span></br>'+
@@ -344,8 +370,12 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       maxWidth: 275
   });
   google.maps.event.addListener(infowindow, 'domready', function() {
-    $("#alertCityName").on("click", function(e) {
-        //alert("hi!");
+    $("#infoWindowRouteBtn").on("click", function(e) {
+        buildMapTrackerRoute(i);
+    });
+    $("#infoWindowZoomBtn").on("click",function(e){
+      map.setZoom(16);
+      map.setCenter(marker.getPosition());
     });
 });
   var marker = new google.maps.Marker({
@@ -359,14 +389,10 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
   marker.setMap(map);
   setTimeout(function(){infowindow.open(map,marker);}, 1000);
 
-  google.maps.event.addListener(marker, 'click', function() {
-    map.setZoom(16);
-    map.setCenter(marker.getPosition());
-  });
-
-
-
 }
+
+// Google Maps Query main map - END
+
 function refresh(){
   setTimeout(function() {
       mapFlag = false;
@@ -400,6 +426,64 @@ function deleteOlderAlert(){
          $("#lastAlerts tr:nth-child("+index+")").remove();
       }
   });
+}
+function getJsonString(jsonObject) {
+  // implement JSON.stringify serialization
+  JSON.stringify = JSON.stringify || function(obj) {
+    var t = typeof (obj);
+    if (t != "object" || obj === null) {
+      // simple data type
+      if (t == "string")
+        obj = '"' + obj + '"';
+      return String(obj);
+    } else {
+      // recurse array or object
+      var n, v, json = [], arr = (obj && obj.constructor == Array);
+      for (n in obj) {
+        v = obj[n];
+        t = typeof (v);
+        if (t == "string")
+          v = '"' + v + '"';
+        else if (t == "object" && v !== null)
+          v = JSON.stringify(v);
+        json.push((arr ? "" : '"' + n + '":') + String(v));
+      }
+      return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+    }
+  };
+
+  var tmpStr = JSON.stringify(jsonObject);
+
+  return tmpStr;
+}
+function getDateMilliseconds(val) {
+
+  var v = val.split("-");
+
+  day = parseInt(v[2]);
+
+  month = parseInt(v[1]);
+
+  year = parseInt(v[0]);
+
+  var d = new Date();
+
+  d.setDate(day);
+
+  d.setMonth(month - 1);
+
+  d.setFullYear(year);
+
+  d.setHours(0);
+
+  d.setMinutes(0);
+
+  d.setSeconds(0);
+
+  d.setMilliseconds(0);
+
+  return d.getTime();
+
 }
 
 

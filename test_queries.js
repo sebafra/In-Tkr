@@ -22,3 +22,25 @@
                 https://maps.googleapis.com/maps/api/geocode/json?latlng=-34.58597,-58.47377&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false
 
 
+//Lat y Long para ejemplo
+
+"latitude":-34.4277257,"longitude":-58.5772935
+"latitude":-34.6081553,"longitude":-58.9446433
+"latitude":-34.8999823,"longitude":-57.9806099
+"latitude":-34.4363765,"longitude":-58.7805377
+"latitude":-34.1775948,"longitude":-58.9587738
+"latitude":-34.6463043,"longitude":-58.5996341
+"latitude":-34.6274137,"longitude":-58.5977888
+"latitude":-34.623432,"longitude:"-58.610481
+"latitude":-34.6127043,"longitude":-58.6231947
+"latitude":-36.8799438,"longitude":-60.2858208
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.4277257", longitude:"-58.5772935", timestamp:1397764758000, type:1}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.6081553", longitude:"-58.9446433", timestamp:1397740920000, type:2}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.8999823", longitude:"-57.9806099", timestamp:1397740920000, type:3}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.4363765", longitude:"-58.7805377", timestamp:1397740920000, type:1}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.1775948", longitude:"-58.9587738", timestamp:1397740920000, type:2}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.6463043", longitude:"-58.5996341", timestamp:1397740920000, type:3}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.6274137", longitude:"-58.5977888", timestamp:1397740920000, type:1}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.623432", longitude:"-58.610481", timestamp:1397740920000, type:2}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-34.6127043", longitude:"-58.6231947", timestamp:1397740920000, type:3}
+{entityId:"cb256ada-46ed-228a-f9f5-ac1ffeeda59b", trackerId:"6ce9f558-2a70-b991-0684-df3961fc88b3", latitude:"-36.8799438", longitude:"-60.2858208", timestamp:1397740920000, type:1}
