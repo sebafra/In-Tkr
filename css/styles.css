@@ -147,6 +147,13 @@ address{
 .table-hover .rowlink tr:hover td {
 	cursor: pointer;
 }
+#map-canvas-route{
+	position: relative;
+}
+#filterContainer{
+	margin-bottom: 1em;
+	display: none;
+}
 
 
 /**
@@ -192,16 +199,6 @@ address{
 	margin:0 auto;
 	text-align: center;
 }
-/*.caret {
-	transform:rotate(180deg);
-	-ms-transform:rotate(180deg);
-	-webkit-transform:rotate(180deg);
-}*/
-/*.inverse {
-	transform:rotate(0deg);
-	-ms-transform:rotate(0deg);
-	-webkit-transform:rotate(0deg);
-}*/
 .inverse {
 	transform:rotate(180deg);
 	-ms-transform:rotate(180deg); /* IE 9 */

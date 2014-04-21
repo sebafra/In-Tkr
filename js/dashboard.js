@@ -10,7 +10,8 @@
  var alertCity = "";
  var alertAddress = "";
  var plus = 0;
- //var map;
+ var trackersWithoutReport;
+ var trackerRouteCoordinates = new Array();
 
 $(document).ready(function () {
   if(OBTAIN_URL_DINAMICALLY)obtainServerUrl();
@@ -20,20 +21,91 @@ $(document).ready(function () {
   showLastRefresh();
   showMap();
   refresh();
+  initializeEvents();
 });
+
+function initializeEvents(){
+  $("#dateFilterBtn").on("click",function(){
+    $("#filterContainer").slideToggle();
+  });
+}
 
 function showTrackersWithoutReport() {
 var trackersFile = SERVER_URL+"/api/tracker/getUnreported?json={entityId%3A"+entityIdUrl+"}";
 $.getJSON(trackersFile, function(msg) {
   if(msg.status=="ok"){
+    trackersWithoutReport = msg.data.trackers;
     $("#trackersWithoutReport").empty();
     for (var i = 0, len = msg.data.trackers.length; i < len; i++) {
-     $("#trackersWithoutReport").append("<tr><td>"+ (i+1) +"</td><td>"+ parseTime(msg.data.trackers[i].trackTimestamp) +"</td><td>"+ msg.data.trackers[i].firstName +"</td><td>"+ msg.data.trackers[i].lastName +"</td></tr>");
+     $("#trackersWithoutReport").append("<tr id='trackerRow"+ i +"' style='cursor:pointer'><td>"+ (i+1) +"</td><td>"+ parseTime(msg.data.trackers[i].trackTimestamp) +"</td><td>"+ msg.data.trackers[i].firstName +"</td><td>"+ msg.data.trackers[i].lastName +"</td></tr>");
+      trackersWithoutReportClickEvent(i);
    }
    $("#operatorsLoader").remove();
  }
 });
 }
+function trackersWithoutReportClickEvent(i) {
+  $("#trackerRow"+ i).on("click", function(){
+    $("#trackersWithoutReport > tr").removeClass("bg-info");
+    $(this).addClass("bg-info");
+    buildMapTrackerRoute(i);
+  });
+}
+function getTrackerRoute(i){
+  var file = "json/trackers.json";
+  $.getJSON(file, function(result){
+    if(result.status=="ok"){
+      trackerRouteCoordinates = new Array();
+      for (var n = 0; n < result.data.trackers.length; n++) {
+        trackerRouteCoordinates[n] = new google.maps.LatLng(Number(result.data.trackers[n].latitude),Number(result.data.trackers[n].longitude));
+      }
+      googleMapsQuery(i);
+  }});
+}
+function buildMapTrackerRoute(i){
+  $("#trackerRoute").modal("show");
+  getTrackerRoute(i);
+}
+
+//Google Maps Query
+
+function googleMapsQuery(points) {
+
+  var lastTrack = trackerRouteCoordinates.length-1;
+
+  var mapOptions = {
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas-route'),
+      mapOptions);
+
+  var trackerRoute = new google.maps.Polyline({
+    path: trackerRouteCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < trackerRouteCoordinates.length; i++) {
+    bounds.extend(trackerRouteCoordinates[i]);
+}
+
+  var marker = new google.maps.Marker({
+    position: trackerRouteCoordinates[lastTrack],
+    animation: google.maps.Animation.DROP,
+  });
+
+setTimeout(function(){
+  google.maps.event.trigger(map, 'resize');
+  //map.setCenter(trackerRouteCoordinates[lastTrack]);
+  map.fitBounds(bounds);
+  marker.setMap(map);
+},200);
+  trackerRoute.setMap(map);
+}
+
 function showReportSummary(){
   var file = SERVER_URL+"/api/tracker/getStatusSummary?json={entityId%3A"+entityIdUrl+"}";
   $.getJSON(file, function(result){
@@ -221,11 +293,6 @@ function getAddressNew(latitude,longitude){
   var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
   $.getJSON(file, function(result){
     if(result.status=="OK"){
-    	/*try{
-    		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[1].long_name;
-    	}catch(e){
-    		alertCity = result.results[1].address_components[0].long_name+" ,"+result.results[1].address_components[0].long_name;
-    	}*/
     	alertCity = getAlertCityName(result);
       alertAddress = getAlertAddressName(result);
        initialize(currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
@@ -276,6 +343,11 @@ function initialize(mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,
       content: contentString,
       maxWidth: 275
   });
+  google.maps.event.addListener(infowindow, 'domready', function() {
+    $("#alertCityName").on("click", function(e) {
+        //alert("hi!");
+    });
+});
   var marker = new google.maps.Marker({
     position: myLatlng,
     animation: google.maps.Animation.DROP,

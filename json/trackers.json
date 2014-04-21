@@ -1,0 +1,17 @@
+{
+	"status":"ok",
+	"data":{
+		"trackers":[
+		{"latitude":-34.4277257,"longitude":-58.5772935},
+		{"latitude":-34.6081553,"longitude":-58.9446433},
+		{"latitude":-34.8999823,"longitude":-57.9806099},
+		{"latitude":-34.4363765,"longitude":-58.7805377},
+		{"latitude":-34.1775948,"longitude":-58.9587738},
+		{"latitude":-34.6463043,"longitude":-58.5996341},
+		{"latitude":-34.6274137,"longitude":-58.5977888},
+		{"latitude":-34.623432,"longitude":-58.610481},
+		{"latitude":-34.6127043,"longitude":-58.6231947},
+		{"latitude":-36.8799438,"longitude":-60.2858208}
+		]
+	}
+}

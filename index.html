@@ -175,14 +175,50 @@
   </div>
 </div> <!-- Modal end -->
 
+<!-- Modal User Route -->
+<div class="modal fade hidden-print" id="trackerRoute" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="pull-right" style="display:inline;font-size: 1.3em">
+            <span id="dateFilterBtn" class="fa fa-calendar text-primary" style="margin-right: 1em"></span>
+        </div>
+        <h4 class="modal-title" id="myModalLabel">Seguimiento del Tracker</h4>
+      </div>
+      <div class="modal-body">
+        <div id="filterContainer" class="row">
+          <div class="col-xs-12">
+          <form class="form-inline pull-right" role="form">
+                <div class="form-group">
+                  <label  for="dateStart">Desde</label>
+                  <input type="date" class="form-control" id="dateStart" placeholder="Desde" style="width:11.5em">
+                </div>
+                <div class="form-group">
+                  <label  for="dateEnd">Hasta</label>
+                  <input type="date" class="form-control" id="dateEnd" placeholder="Hasta" style="width:11.5em">
+                </div>
+                <button id="filterBtn" type="button" class="btn btn-default"><span class="fa fa-search"></span></button>
+              </form>
+              </div>
+        </div>
+        <div class="clearfix"></div>
+          <div id="map-canvas-route-container">
+              <div id="map-canvas-route" style="width: 100%; height: 400px"></div>
+          </div>
+      </div>
+      <!-- <div class="modal-footer"></div> -->
+    </div>
+  </div>
+</div> <!-- Modal end -->
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!-- <script src="//code.jquery.com/jquery.js"></script>-->
+ <script src="//code.jquery.com/jquery.js"></script>
 <script>
 if (!window.jQuery) {
    document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
 }
 </script>
-<script src="js/libs/jquery-1.10.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/libs/bootstrap.min.js"></script>
 <script src="js/libs/jasny-bootstrap.min.js"></script>
