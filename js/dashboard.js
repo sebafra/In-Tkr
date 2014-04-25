@@ -77,8 +77,8 @@ function getTrackerRoute(i){
   //console.log("TrackerId:"+ alertItems[i].trackerId);
   console.log(showTracksPrepareData(i));
 
-  //TODO: var tracksFile = SERVER_URL + "/api/track/getLastTracks?json=" + showTracksPrepareData(i);
-  var file = "json/tracks.json";
+  var file = SERVER_URL + "/api/track/getRoute?json=" + showTracksPrepareData(i);
+  //var file = "json/tracks.json";
   $.getJSON(file, function(result){
     if(result.status=="ok"){
       trackerRouteCoordinates = new Array();
