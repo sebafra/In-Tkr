@@ -57,8 +57,10 @@ function trackersWithoutReportClickEvent(i) {
 }
 
 function showTracksPrepareData(i) {
+	if(i == undefined) i = 0;
+	
   jsonObject = {
-    trackerId : alertItems[i].trackerId,
+    trackerId : alertItems[i].trackerId
   };
 
   var dateStart = $("#dateStart").val();
@@ -252,6 +254,7 @@ function showMap(i,alertLat,alertLong,finalUserFirstName,finalUserLastName,track
 function initialShowMap (){
   if (mapFlag === true) {
       var lastAlert = 0;
+	  trackerId = alertItems[lastAlert].trackerId;
       showMap(lastAlert,alertItems[lastAlert].latitude,alertItems[lastAlert].longitude,alertItems[lastAlert].finalUserFirstName,alertItems[lastAlert].finalUserLastName,alertItems[lastAlert].trackerAni,alertItems[lastAlert].finalUserPhones,alertItems[lastAlert].finalUserPictureUrl);
   }
 }
@@ -318,11 +321,13 @@ function getAlertAddressName(result){
 function getAddressNew(i,latitude,longitude){
   var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +","+ longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
   $.getJSON(file, function(result){
+  	alertCity    = "";
+    alertAddress = "";
     if(result.status=="OK"){
-    	alertCity = getAlertCityName(result);
-      alertAddress = getAlertAddressName(result);
-       initialize(i,currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
+    	alertCity    = getAlertCityName(result);
+        alertAddress = getAlertAddressName(result);
     }
+    initialize(i,currentMapMyLatlng,currentMapFinalUserFirstName,currentMapFinalUserLastName,currentMapTrackerAni,currentMapFinalUserPhones,currentMapFinalUserPictureUrl);
   });
 }
 
