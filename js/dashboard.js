@@ -38,12 +38,16 @@ function showTrackersWithoutReport() {
 var trackersFile = SERVER_URL+"/api/tracker/getUnreported?json={entityId%3A"+entityIdUrl+"}";
 $.getJSON(trackersFile, function(msg) {
   if(msg.status=="ok"){
+    if (msg.data.trackers.length!==0) {
     trackersWithoutReport = msg.data.trackers;
     $("#trackersWithoutReport").empty();
     for (var i = 0, len = msg.data.trackers.length; i < len; i++) {
      $("#trackersWithoutReport").append("<tr id='trackerRow"+ i +"' style='cursor:pointer'><td>"+ (i+1) +"</td><td>"+ parseTime(msg.data.trackers[i].trackTimestamp) +"</td><td>"+ msg.data.trackers[i].firstName +"</td><td>"+ msg.data.trackers[i].lastName +"</td></tr>");
       trackersWithoutReportClickEvent(i);
    }
+ } else {
+  $(".bodyTop10Trackers").html("<div style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+ }
    $("#operatorsLoader").remove();
  }
 });
@@ -58,7 +62,7 @@ function trackersWithoutReportClickEvent(i) {
 
 function showTracksPrepareData(i) {
 	if(i == undefined) i = 0;
-	
+
   jsonObject = {
     trackerId : alertItems[i].trackerId
   };
@@ -170,9 +174,9 @@ function showTopAlerts() {
        $("#lastAlerts > tr:first-child").addClass("bg-info");
        initialShowMap();
        oldItems = msg.data.tracks;
-     }
-   } else {
-    $("#lastAlerts").append("<div class='center-block'>No hay alertas disponibles</div>");
+     } else {
+    $(".bodyTop10Alerts").html("<div style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+   }
    }
  });
 }
@@ -197,7 +201,6 @@ function reloadTopAlerts() {
                 if (exists == false) {
                   plus = plus + 1;
                   var position = (len-1) + plus;
-                  //console.log(alertItem.id+" Plus: "+plus+" Position:"+position);
                   $("#alertRow"+position).addClass("bg-danger");
                   $("#lastAlerts").prepend("<tr id='alertRow"+ position +"' style='cursor:pointer'><td>"+ i +"</td><td>"+ parseDate(msg.data.tracks[i].timestamp) +"</td><td>"+ msg.data.tracks[i].finalUserFirstName +" "+ msg.data.tracks[i].finalUserLastName +"</td><td>"+ showAlertType(msg.data.tracks[i].type) +"</td></tr>");
                   $("#alertRow"+position).addClass("bg-danger");
@@ -209,9 +212,9 @@ function reloadTopAlerts() {
               }
             }
             oldItems = msg.data.tracks;
-          }
-        } else {
-          $("#lastAlerts").append("<div class='center-block'>No hay alertas disponibles</div>");
+          } else {
+          $(".bodyTop10Alerts").html("<div style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+        }
         }
       });
 }
@@ -350,10 +353,18 @@ function getAddress(latitude,longitude){
 // Google Maps Query main map - START
 function initialize(i,mapLatyLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
 
-  var mapOptions = {
+  if (i!==undefined) {
+    var mapOptions = {
     center: mapLatyLong,
     zoom: 12
   };
+} else {
+    var mapOptions = {
+    center: new google.maps.LatLng(-32.945712, -64.698066),
+    zoom: 3
+  };
+};
+
   var map = new google.maps.Map(document.getElementById("map-canvas"),
     mapOptions);
   var contentString = '<div class="container-fluid">'+
@@ -392,8 +403,9 @@ function initialize(i,mapLatyLong,finalUserFirstName,finalUserLastName,trackerAn
   });
   // To add the marker to the map, call setMap();
   marker.setMap(map);
+  if (i!==undefined) {
   setTimeout(function(){infowindow.open(map,marker);}, 1000);
-
+}
 }
 
 // Google Maps Query main map - END

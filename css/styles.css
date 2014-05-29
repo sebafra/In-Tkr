@@ -113,7 +113,7 @@ address{
 	padding: 0;
 }
 .bodyTop10Alerts {
-	max-height: 660px;
+	height: 660px;
 	overflow-y: auto;
 }
 .bodyTop10Trackers {

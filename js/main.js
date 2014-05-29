@@ -7,7 +7,6 @@ $(document).ready(function () {
 });
 
 
-
 function obtainServerUrl(){
 	//alert(SERVER_URL);
 	var serverUrl = window.location.protocol + "//" + window.location.host;
@@ -16,7 +15,7 @@ function obtainServerUrl(){
 	for(i = 1 ; i < directories.length - 1; i++){
 		serverUrl += "/" + directories[i];
 	}
-	
+
 	SERVER_URL = serverUrl;
 	//alert(SERVER_URL);
 }
@@ -89,7 +88,7 @@ function changeUserPass(){
 function showAlert (divId,type,msg){
   $('#'+divId).removeClass();
   $('#'+divId).addClass("alert alert-"+ type).html(msg).slideDown("fast");
-  $('#'+divId).delay(5000).slideUp("fast");
+  $('#'+divId).delay(2500).slideUp("fast");
 }
 // Prevent enter without login first
 function checkId(){

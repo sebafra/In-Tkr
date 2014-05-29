@@ -87,16 +87,21 @@ function createNewEntity(){
 
  if (inputEmpty === 0) {
   if(checkPassword(userPassword,userPassword2)===true){
+    $("#saveForm").attr("disabled", "disabled");
       var entityFile = SERVER_URL+"/api/entity/create?json={name:%22"+ name +"%22,userName:%22"+ userName +"%22,userPassword:%22"+ userPassword +"%22,email:%22"+ userEmail +"%22}";
       $.getJSON(entityFile, function(msg) {
         if(msg.status=="ok"){
          showAlert ("msg-modal","success","Entidad creada con &eacute;xito");
          $("#createEntity .modal-footer").slideUp("fast");
-         setTimeout(function(){$('#createEntity').modal('hide');}, 3000);
+         setTimeout(function(){
+          $('#createEntity').modal('hide');
+          $("#createEntity .modal-footer").show("slow");
+        }, 3000);
        } else {
         showAlert ("msg-modal","danger",msg.error.message);
-        $("#saveForm").html("Guardar");
       }
+      $("#saveForm").removeAttr("disabled", "disabled");
+      $("#saveForm").html("Guardar");
     }); // getJson ends
     } else {
       $("#saveForm").html("Guardar");
