@@ -16,8 +16,7 @@ function initialize() {
 	});
 	showCurrentTime();
 	$("#entityId").html(
-			localStorage.trackersLastName + " "
-					+ localStorage.trackersFirstName);
+			localStorage.trackersLastName + " "	+ localStorage.trackersFirstName);
 	$("#searchBtn").on('click', function() {
 		showtrackers();
 	});
@@ -166,57 +165,6 @@ function buildPagination(jsonObjectUrl) {
 
 	});
 }
-//(-) NUEVA PAGINACION
-
-/*
-function buildPagination(jsonObjectUrl) {
-	var pages;
-	var file = SERVER_URL + "/api/tracker/getParkLength?json=" + jsonObjectUrl;
-	$.getJSON(file, function(result) {
-		if (result.status == "ok") {
-			var parkLength = result.data.parkLength;
-			showListCount(parkLength)
-			if (parkLength > PAGE_RESULTS) {
-				var pagesTemp = parkLength / PAGE_RESULTS;
-				pages = (Math.floor(pagesTemp)) + 1;
-				$(".pagination").show();
-			} else {
-				pages = 1;
-				$(".pagination").hide();
-			}
-			if (pageActive !== undefined) {
-				$("#pgCurrent a").text(pageActive);
-			} else {
-				$("#pgCurrent a").text(1);
-				$("#pgPrevious a").addClass("disabled");
-			}
-			$("#pgNext").on(
-					"click",
-					function() {
-						if (pageActive < parkLength) {
-							var nextPage = pageActive + 1;
-							showtrackers(nextPage, jsonObject.orderBy,
-									jsonObject.orderDirection);
-							pageActive = nextPage;
-						}
-						;
-					});
-			$("#pgPrevious").on(
-					"click",
-					function() {
-						if (pageActive <= 1) {
-							var previousPage = pageActive - 1;
-							showtrackers(previousPage, jsonObject.orderBy,
-									jsonObject.orderDirection);
-							pageActive = previousPage;
-						}
-					});
-		} else {
-			showAlert("msg", "danger", msg.error.message);
-		}
-	});
-}
-*/
 
 // Order By
 
