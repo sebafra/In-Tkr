@@ -31,4 +31,14 @@
 		       autoReconnect="true" 
                url="jdbc:mysql://localhost:3306/trackers"/>
 
+  <Resource name="mail/Session" auth="Container"
+            	type="javax.mail.Session"
+            	mail.smtp.starttls.enable="true"
+				mail.smtp.host="smtp.gmail.com"
+				mail.smtp.user="alertas.m2m@intraway.com"
+				password="m2mP4ssw0rd"
+				mail.smtp.port="587"
+				mail.smtp.auth="true"
+            	/>
+
 </Context>
