@@ -291,7 +291,8 @@ function reloadTopAlerts() {
 													alertItem.finalUserPhones,
 													alertItem.finalUserPictureUrl);
 											showMap(
-													alertItem.latitude,
+													i,
+                          alertItem.latitude,
 													alertItem.longitude,
 													alertItem.finalUserFirstName,
 													alertItem.finalUserLastName,
