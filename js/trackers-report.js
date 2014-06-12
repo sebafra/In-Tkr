@@ -16,31 +16,29 @@ function initialize() {
 	});
 	showCurrentTime();
 	$("#entityId").html(
-			localStorage.trackersLastName + " "	+ localStorage.trackersFirstName);
+			localStorage.trackersLastName + " "
+					+ localStorage.trackersFirstName);
 	$("#searchBtn").on('click', function() {
 		showtrackers();
 	});
-    $("#usersSearchBtn").on("click",function(){
-    $("#searchContent").slideToggle("fast");
-  });
-
+	$("#usersSearchBtn").on("click", function() {
+		$("#searchContent").slideToggle("fast");
+	});
 
 	// (+) NUEVA PAGINACION
-	$("#pgNext").click(
-			function(e) {
-				showNextPage();
-			});
-	$("#pgPrevious").click(
-			function(e) {
-				showPreviousPage();
-			});
+	$("#pgNext").click(function(e) {
+		showNextPage();
+	});
+	$("#pgPrevious").click(function(e) {
+		showPreviousPage();
+	});
 	// (-) NUEVA PAGINACION
 
 }
 function showtrackers(page, orderBy, orderDirection) {
 
 	// (+) NUEVA PAGINACION
-	if(page == undefined || page == "" || page == "0")
+	if (page == undefined || page == "" || page == "0")
 		ACTIVE_PAGE = 1;
 	// (-) NUEVA PAGINACION
 
@@ -64,10 +62,19 @@ function showtrackers(page, orderBy, orderDirection) {
 }
 function filltrackersList(i) {
 	$("#trackersList").append(
-			"<tr id='user" + i + "'><td>" + parseDate(trackers[i].datetime)
-					+ "</td><td>" + (trackers[i].finalUserDni==undefined?"":trackers[i].finalUserDni) + "</td><td>"
-					+ (trackers[i].finalUserFirstName==undefined?"":trackers[i].finalUserFirstName) + "</td><td>"
-					+ (trackers[i].finalUserLastName==undefined?"":trackers[i].finalUserLastName) + "</td><td>"
+			"<tr id='user"
+					+ i
+					+ "'><td>"
+					+ parseDate(trackers[i].datetime)
+					+ "</td><td>"
+					+ (trackers[i].finalUserDni == undefined ? ""
+							: trackers[i].finalUserDni)
+					+ "</td><td>"
+					+ (trackers[i].finalUserFirstName == undefined ? ""
+							: trackers[i].finalUserFirstName)
+					+ "</td><td>"
+					+ (trackers[i].finalUserLastName == undefined ? ""
+							: trackers[i].finalUserLastName) + "</td><td>"
 					+ trackers[i].imei + "</td></tr>");
 }
 function showTrackersPrepareData(page, orderBy, orderDirection) {
@@ -113,19 +120,20 @@ function filterList(id) {
 	$("#dropdownBtn").attr("name", name);
 }
 
-
-//(+) NUEVA PAGINACION
+// (+) NUEVA PAGINACION
 var MAX_PAGES = 1;
 var ACTIVE_PAGE = 1;
 
-function showNextPage(){
-	if(ACTIVE_PAGE >= MAX_PAGES) return;
+function showNextPage() {
+	if (ACTIVE_PAGE >= MAX_PAGES)
+		return;
 	ACTIVE_PAGE++;
 	showtrackers(ACTIVE_PAGE, jsonObject.orderBy, jsonObject.orderDirection);
 }
 
-function showPreviousPage(){
-	if(ACTIVE_PAGE <= 1) return;
+function showPreviousPage() {
+	if (ACTIVE_PAGE <= 1)
+		return;
 	ACTIVE_PAGE--;
 	showtrackers(ACTIVE_PAGE, jsonObject.orderBy, jsonObject.orderDirection);
 }
@@ -141,7 +149,8 @@ function buildPagination(jsonObjectUrl) {
 
 			var temp = parkLength / PAGE_RESULTS;
 			MAX_PAGES = Math.round(temp);
-			if(temp > MAX_PAGES) MAX_PAGES++;
+			if (temp > MAX_PAGES)
+				MAX_PAGES++;
 
 			if (MAX_PAGES == 1) {
 				$("#pgNext").parent().addClass("disabled");
@@ -172,7 +181,7 @@ function orderEvents() {
 	var order;
 	$(".orderBy").parent().on("click", function() {
 		var orderByCurrent = $(this).attr("name");
-		//alert(orderByCurrent);
+		// alert(orderByCurrent);
 		if (order !== "ASC" || order == "") {
 			showtrackers(undefined, orderByCurrent, "ASC");
 			$(".caret").removeClass("inverse");
@@ -190,12 +199,12 @@ function orderEvents() {
 				showtrackers(undefined, orderByCurrent, "DESC");
 			}
 		}
-	clickParent = $(this).text();
-	$("#trackersListTable .caret").css("color", "black");
-	$("#trackersListTable th").css("color", "black");
-	$(this).children().css("color", "#3da8e3");
-	$(this).css("color", "#3da8e3");
-	pageActive = 1;
+		clickParent = $(this).text();
+		$("#trackersListTable .caret").css("color", "black");
+		$("#trackersListTable th").css("color", "black");
+		$(this).children().css("color", "#3da8e3");
+		$(this).css("color", "#3da8e3");
+		pageActive = 1;
 
 		// (+) NUEVA PAGINACION
 		ACTIVE_PAGE = 1;

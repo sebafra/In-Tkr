@@ -17,33 +17,29 @@ function initializeEvents() {
 	});
 	showCurrentTime();
 	$("#entityId").html(
-   localStorage.trackersLastName + " "
-   + localStorage.trackersFirstName);
+			localStorage.trackersLastName + " "
+					+ localStorage.trackersFirstName);
 	$("#searchBtn").on('click', function() {
 		showtracks();
 	});
-  $("#usersSearchBtn").on("click",function(){
-    $("#searchContent").slideToggle("fast");
-  });
+	$("#usersSearchBtn").on("click", function() {
+		$("#searchContent").slideToggle("fast");
+	});
 
 	// (+) NUEVA PAGINACION
-	$("#pgNext").click(
-   function(e) {
-    showNextPage();
-  });
-	$("#pgPrevious").click(
-   function(e) {
-    showPreviousPage();
-  });
+	$("#pgNext").click(function(e) {
+		showNextPage();
+	});
+	$("#pgPrevious").click(function(e) {
+		showPreviousPage();
+	});
 	// (-) NUEVA PAGINACION
 
 }
 
-
-
 function showtracks(page, orderBy, orderDirection) {
 	// (+) NUEVA PAGINACION
-	if(page == undefined || page == "" || page == "0")
+	if (page == undefined || page == "" || page == "0")
 		ACTIVE_PAGE = 1;
 	// (-) NUEVA PAGINACION
 	$("#tracksList").empty();
@@ -60,8 +56,9 @@ function showtracks(page, orderBy, orderDirection) {
 					}
 					$("#loader").hide("fast");
 					// showListCount();
-					buildPagination(showTracksPrepareData(page, orderBy,orderDirection));
-					//console.log("buildPagination");
+					buildPagination(showTracksPrepareData(page, orderBy,
+							orderDirection));
+					// console.log("buildPagination");
 				} else {
 					showAlert("msg", "danger", msg.error.message);
 				}
@@ -76,13 +73,15 @@ function filltracksList(i) {
 					+ tracks[i].trackerImei + "</td><td>"
 					+ showType(tracks[i].type) + "</td></tr>");
 }
-function showDetailClick(i){
-	$("#tracksList #user"+i).on("click",function(){
+function showDetailClick(i) {
+	$("#tracksList #user" + i).on("click", function() {
 		$('#trackDetail').modal("show");
 		getAddress(i);
-		setTimeout(function(){initialize(i);}, 500);
+		setTimeout(function() {
+			initialize(i);
+		}, 500);
 		$('#tracksList tr').removeClass();
-		$('#user'+i).addClass("bg-primary");
+		$('#user' + i).addClass("bg-primary");
 	});
 }
 function showTracksPrepareData(page, orderBy, orderDirection) {
@@ -127,33 +126,36 @@ function showTracksPrepareData(page, orderBy, orderDirection) {
 	return getJsonString(jsonObject);
 }
 
-//Google Maps Query
+// Google Maps Query
 
 function initialize(i) {
-  var myLatlng = new google.maps.LatLng(tracks[i].latitude, tracks[i].longitude);
-  var mapOptions = {
-    zoom: 12,
-    center: myLatlng
-  };
-  var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+	var myLatlng = new google.maps.LatLng(tracks[i].latitude,
+			tracks[i].longitude);
+	var mapOptions = {
+		zoom : 12,
+		center : myLatlng
+	};
+	var map = new google.maps.Map(document.getElementById('map-canvas'),
+			mapOptions);
 
-  var marker = new google.maps.Marker({
-    position: myLatlng,
-    animation: google.maps.Animation.DROP,
-    map: map,
-});
+	var marker = new google.maps.Marker({
+		position : myLatlng,
+		animation : google.maps.Animation.DROP,
+		map : map,
+	});
 }
-function getAddress(i){
-	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ tracks[i].latitude +","+ tracks[i].longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+function getAddress(i) {
+	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="
+			+ tracks[i].latitude + "," + tracks[i].longitude
+			+ "&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
 	var data;
-	$.getJSON(file, function(result){
-		if(result.status=="OK"){
+	$.getJSON(file, function(result) {
+		if (result.status == "OK") {
 			data = result.results[0].formatted_address;
-					$('#formatted_address').html(data);
+			$('#formatted_address').html(data);
 
-	}
-});
+		}
+	});
 }
 
 function filterList(id) {
@@ -165,18 +167,20 @@ function filterList(id) {
 
 var paginating = false;
 
-//(+) NUEVA PAGINACION
+// (+) NUEVA PAGINACION
 var MAX_PAGES = 1;
 var ACTIVE_PAGE = 1;
 
-function showNextPage(){
-	if(ACTIVE_PAGE >= MAX_PAGES) return;
+function showNextPage() {
+	if (ACTIVE_PAGE >= MAX_PAGES)
+		return;
 	ACTIVE_PAGE++;
 	showtracks(ACTIVE_PAGE, jsonObject.orderBy, jsonObject.orderDirection);
 }
 
-function showPreviousPage(){
-	if(ACTIVE_PAGE <= 1) return;
+function showPreviousPage() {
+	if (ACTIVE_PAGE <= 1)
+		return;
 	ACTIVE_PAGE--;
 	showtracks(ACTIVE_PAGE, jsonObject.orderBy, jsonObject.orderDirection);
 }
@@ -193,7 +197,8 @@ function buildPagination(jsonObjectUrl) {
 
 			var temp = tracingLength / PAGE_RESULTS;
 			MAX_PAGES = Math.round(temp);
-			if(temp > MAX_PAGES) MAX_PAGES++;
+			if (temp > MAX_PAGES)
+				MAX_PAGES++;
 
 			if (MAX_PAGES == 1) {
 				$("#pgNext").parent().addClass("disabled");
@@ -217,10 +222,7 @@ function buildPagination(jsonObjectUrl) {
 
 	});
 }
-//(-) NUEVA PAGINACION
-
-
-
+// (-) NUEVA PAGINACION
 
 function showListCount(tracingLength) {
 	$("#tracksCount").html(tracingLength);
@@ -237,24 +239,24 @@ function orderEvents() {
 	var order;
 	$(".orderBy").parent().on("click", function() {
 		var orderByCurrent = $(this).attr("name");
-		//alert(orderByCurrent);
+		// alert(orderByCurrent);
 		if (order !== "ASC" || order == "") {
 			showtracks(undefined, orderByCurrent, "ASC");
 			$(".caret").removeClass("inverse");
 			$(this).children().addClass("inverse");
 			order = "ASC";
-			//console.log("First IF ASC");
+			// console.log("First IF ASC");
 		} else {
 			if ($(this).text() !== clickParent) {
 				showtracks(undefined, orderByCurrent, "ASC");
 				order = "ASC";
-				//console.log("Second IF ASC");
+				// console.log("Second IF ASC");
 				$(".caret").removeClass("inverse");
 				$(this).children().addClass("inverse");
 			} else {
 				order = "DESC";
 				showtracks(undefined, orderByCurrent, "DESC");
-				//console.log("Second IF DESC");
+				// console.log("Second IF DESC");
 				$(this).children().removeClass("inverse");
 			}
 		}
@@ -263,7 +265,7 @@ function orderEvents() {
 		$("#tracksListTable th").css("color", "black");
 		$(this).children().css("color", "#3da8e3");
 		$(this).css("color", "#3da8e3");
-		//pageActive = 1;
+		// pageActive = 1;
 
 		// (+) NUEVA PAGINACION
 		ACTIVE_PAGE = 1;
@@ -271,28 +273,31 @@ function orderEvents() {
 
 	});
 }
-//Google Maps Query
+// Google Maps Query
 
 function initialize(i) {
-  var myLatlng = new google.maps.LatLng(tracks[i].latitude, tracks[i].longitude);
-  var mapOptions = {
-    zoom: 12,
-    center: myLatlng
-  };
-  var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+	var myLatlng = new google.maps.LatLng(tracks[i].latitude,
+			tracks[i].longitude);
+	var mapOptions = {
+		zoom : 12,
+		center : myLatlng
+	};
+	var map = new google.maps.Map(document.getElementById('map-canvas'),
+			mapOptions);
 
-  var marker = new google.maps.Marker({
-    position: myLatlng,
-    animation: google.maps.Animation.DROP,
-    map: map,
-});
+	var marker = new google.maps.Marker({
+		position : myLatlng,
+		animation : google.maps.Animation.DROP,
+		map : map,
+	});
 }
-function getAddress(i){
-	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ tracks[i].latitude +","+ tracks[i].longitude +"&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
+function getAddress(i) {
+	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="
+			+ tracks[i].latitude + "," + tracks[i].longitude
+			+ "&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
 	var data;
-	$.getJSON(file, function(result){
-		if(result.status=="OK"){
+	$.getJSON(file, function(result) {
+		if (result.status == "OK") {
 			data = result.results[0].formatted_address;
 			$('#formatted_address').html(data);
 		}
