@@ -619,11 +619,16 @@ function showLastRefresh() {
 	$("#showLastRefresh").html(hours + ":" + minutes + " " + "hs");
 }
 function orderAlertPosition() {
-	$("#lastAlerts tr").each(
+/*	$("#lastAlerts tr").each(
 			function(index) {
 				$("#lastAlerts tr:nth-child(" + index + ") td:first-child")
 						.html(index);
-			});
+			});*/
+	
+	var rowCount = $('#lastAlerts tr').length;
+	for(var idx = 0;idx < rowCount + 1 ;idx++)
+		$("#lastAlerts tr:nth-child(" + idx + ") td:first-child").html(idx );
+	
 }
 function deleteOlderAlert() {
 	// var size = $("#lastAlerts tr").length();
