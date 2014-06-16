@@ -33,9 +33,6 @@ function initializeEvents() {
 	$("#filterBtn").on("click", function() {
 		getTrackerRoute(lastIndexUsed);
 	});
-	$('#trackerRoute').on('hidden.bs.modal', function (e) {
-		resetRouteModal();
-});
 }
 
 function showTrackersWithoutReport() {
@@ -53,7 +50,8 @@ function showTrackersWithoutReport() {
 								for (var i = 0, len = msg.data.trackers.length; i < len; i++) {
 									$("#trackersWithoutReport")
 											.append(
-													"<tr id='trackerRow"+ msg.data.trackers[i].id
+													"<tr id='trackerRow"
+															+ i
 															+ "' style='cursor:pointer'><td>"
 															+ (i + 1)
 															+ "</td><td>"
@@ -63,7 +61,7 @@ function showTrackersWithoutReport() {
 															+ "</td><td>"
 															+ msg.data.trackers[i].lastName
 															+ "</td></tr>");
-									trackersWithoutReportClickEvent(msg.data.trackers[i].id);
+									trackersWithoutReportClickEvent(i);
 								}
 							} else {
 								$(".bodyTop10Trackers")
@@ -74,50 +72,20 @@ function showTrackersWithoutReport() {
 						}
 					});
 }
-function trackersWithoutReportClickEvent(trackerId) {
-	$("#trackerRow" + trackerId).on("click", function() {
+function trackersWithoutReportClickEvent(i) {
+	$("#trackerRow" + i).on("click", function() {
 		$("#trackersWithoutReport > tr").removeClass("bg-info");
 		$(this).addClass("bg-info");
-		buildMapTrackerRoute(trackerId);
+		buildMapTrackerRoute(i);
 	});
 }
 
-function buildMapTrackerRoute(trackerId, dateFrom, dateTo) {
-	$("#trackerRoute").modal("show");
-	getTrackerRoute(trackerId, dateFrom, dateTo);
-}
-
-function getTrackerRoute(trackerId) {
-	// console.log("TrackerId:"+ alertItems[i].trackerId);
-	console.log(showTracksPrepareData(trackerId));
-
-	var file = SERVER_URL + "/api/track/getRoute?json="
-			+ showTracksPrepareData(trackerId);
-	// var file = "json/tracks.json";
-	$.getJSON(file, function(result) {
-		if (result.status == "ok") {
-			if (result.data.tracks.length == 0) {
-				showAlert("emptyRoute", "danger", "No hay resultados");
-			} else {
-			trackerRouteCoordinates = new Array();
-			for (var n = 0; n < result.data.tracks.length; n++) {
-				trackerRouteCoordinates[n] = new google.maps.LatLng(
-						Number(result.data.tracks[n].latitude),
-						Number(result.data.tracks[n].longitude));
-			}
-			googleMapsQuery();
-			lastIndexUsed = trackerId;
-		}
-	}
-	});
-}
-
-function showTracksPrepareData(trackerId) {
-	// if (i == undefined)
-	// 	i = 0;
+function showTracksPrepareData(i) {
+	if (i == undefined)
+		i = 0;
 
 	jsonObject = {
-		trackerId : trackerId
+		trackerId : alertItems[i].trackerId
 	};
 
 	var dateStart = $("#dateStart").val();
@@ -132,9 +100,34 @@ function showTracksPrepareData(trackerId) {
 	return getJsonString(jsonObject);
 }
 
+function getTrackerRoute(i) {
+	// console.log("TrackerId:"+ alertItems[i].trackerId);
+	console.log(showTracksPrepareData(i));
+
+	var file = SERVER_URL + "/api/track/getRoute?json="
+			+ showTracksPrepareData(i);
+	// var file = "json/tracks.json";
+	$.getJSON(file, function(result) {
+		if (result.status == "ok") {
+			trackerRouteCoordinates = new Array();
+			for (var n = 0; n < result.data.tracks.length; n++) {
+				trackerRouteCoordinates[n] = new google.maps.LatLng(
+						Number(result.data.tracks[n].latitude),
+						Number(result.data.tracks[n].longitude));
+			}
+			googleMapsQuery(i);
+			lastIndexUsed = i;
+		}
+	});
+}
+function buildMapTrackerRoute(i, dateFrom, dateTo) {
+	$("#trackerRoute").modal("show");
+	getTrackerRoute(i, dateFrom, dateTo);
+}
+
 // Google Maps Query
 
-function googleMapsQuery() {
+function googleMapsQuery(i) {
 
 	var lastTrack = trackerRouteCoordinates.length - 1;
 
@@ -184,7 +177,8 @@ function showReportSummary() {
 function showTopAlerts() {
 	var alertsFile = SERVER_URL + "/api/track/getLastAlerts?json={entityId%3A"
 			+ entityIdUrl + "}";
-			$.getJSON(
+	$
+			.getJSON(
 					alertsFile,
 					function(msg) {
 						if (msg.status == "ok") {
@@ -206,7 +200,7 @@ function showTopAlerts() {
 									$("#lastAlerts")
 											.append(
 													"<tr id='alertRow"
-															+ msg.data.tracks[i].id
+															+ i
 															+ "' style='cursor:pointer'><td>"
 															+ (i + 1)
 															+ "</td><td>"
@@ -221,7 +215,7 @@ function showTopAlerts() {
 
 									// Eventos en filas del listado de ultimas
 									// alertas
-									clickRowLastAlerts(msg.data.tracks[i].id,msg.data.tracks[i].trackerId, alertItem.latitude,
+									clickRowLastAlerts(i, alertItem.latitude,
 											alertItem.longitude,
 											alertItem.finalUserFirstName,
 											alertItem.finalUserLastName,
@@ -229,29 +223,10 @@ function showTopAlerts() {
 											alertItem.finalUserPhones,
 											alertItem.finalUserPictureUrl);
 								}
-								//clickRowLastAlerts(msg.data.tracks.id,alertItem);
 								$("#operatorsLoader").remove();
 								$("#lastAlerts > tr:first-child").addClass(
 										"bg-info");
-								if (mapFlag === true) {
-									showMap(msg.data.tracks[0].trackerId,
-											msg.data.tracks[0].latitude,
-											msg.data.tracks[0].longitude,
-											msg.data.tracks[0].finalUserFirstName,
-											msg.data.tracks[0].finalUserLastName,
-											msg.data.tracks[0].trackerAni,
-											msg.data.tracks[0].finalUserPhones,
-											msg.data.tracks[0].finalUserPictureUrl);
-								};
-								// initialShowMap(msg.data.tracks[0].id,
-								// 			msg.data.tracks[0].trackerId,
-								// 			msg.data.tracks[0].latitude,
-								// 			msg.data.tracks[0].longitude,
-								// 			msg.data.tracks[0].finalUserFirstName,
-								// 			msg.data.tracks[0].finalUserLastName,
-								// 			msg.data.tracks[0].trackerAni,
-								// 			msg.data.tracks[0].finalUserPhones,
-								// 			msg.data.tracks[0].finalUserPictureUrl);
+								initialShowMap();
 								oldItems = msg.data.tracks;
 							} else {
 								$(".bodyTop10Alerts")
@@ -285,11 +260,14 @@ function reloadTopAlerts() {
 											}
 										}
 										if (exists == false) {
-											$("#alertRow" + alertItem.id).addClass("bg-danger");
+											plus = plus + 1;
+											var position = (len - 1) + plus;
+											$("#alertRow" + position).addClass(
+													"bg-danger");
 											$("#lastAlerts")
 													.prepend(
 															"<tr id='alertRow"
-																	+ alertItem.id
+																	+ position
 																	+ "' style='cursor:pointer'><td>"
 																	+ i
 																	+ "</td><td>"
@@ -301,11 +279,10 @@ function reloadTopAlerts() {
 																	+ "</td><td>"
 																	+ showAlertType(msg.data.tracks[i].type)
 																	+ "</td></tr>");
-											$("#alertRow" + alertItem.id).addClass(
+											$("#alertRow" + position).addClass(
 													"bg-danger");
 											clickRowLastAlerts(
-													alertItem.id,
-													alertItem.trackerId,
+													position,
 													alertItem.latitude,
 													alertItem.longitude,
 													alertItem.finalUserFirstName,
@@ -314,7 +291,7 @@ function reloadTopAlerts() {
 													alertItem.finalUserPhones,
 													alertItem.finalUserPictureUrl);
 											showMap(
-													alertItem.trackerId,
+													i,
                           alertItem.latitude,
 													alertItem.longitude,
 													alertItem.finalUserFirstName,
@@ -338,12 +315,12 @@ function reloadTopAlerts() {
 }
 
 // Evento Click en filas del panel ultimas alertas reportadas
-function clickRowLastAlerts(trackId,trackerId,alertRowLat,alertRowLong,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl) {
-	$("#alertRow" + trackId).on(
+function clickRowLastAlerts(i, alertRowLat, alertRowLong, finalUserFirstName,
+		finalUserLastName, trackerAni, finalUserPhones, finalUserPictureUrl) {
+	$("#alertRow" + i).on(
 			"click",
 			function() {
-				console.log("working");
-				showMap(trackerId,alertRowLat, alertRowLong, finalUserFirstName,
+				showMap(i, alertRowLat, alertRowLong, finalUserFirstName,
 						finalUserLastName, trackerAni, finalUserPhones,
 						finalUserPictureUrl);
 				$("#lastAlerts > tr").removeClass("bg-info");
@@ -354,11 +331,11 @@ function clickRowLastAlerts(trackId,trackerId,alertRowLat,alertRowLong,finalUser
 
 var currentMapMyLatlng, currentMapFinalUserFirstName, currentMapFinalUserLastName, currentMapTrackerAni, currentMapFinalUserPhones, currentMapFinalUserPictureUrl;
 
-function showMap(trackerId,alertLat,alertLong,finalUserFirstName,finalUserLastName,trackerAni, finalUserPhones, finalUserPictureUrl) {
+function showMap(i, alertLat, alertLong, finalUserFirstName, finalUserLastName,
+		trackerAni, finalUserPhones, finalUserPictureUrl) {
 
 	myLatlng = new google.maps.LatLng(alertLat, alertLong);
 
-	currentMapTrackerId = trackerId;
 	currentMapMyLatlng = myLatlng;
 	currentMapFinalUserFirstName = finalUserFirstName;
 	currentMapFinalUserLastName = finalUserLastName;
@@ -366,7 +343,7 @@ function showMap(trackerId,alertLat,alertLong,finalUserFirstName,finalUserLastNa
 	currentMapFinalUserPhones = finalUserPhones;
 	currentMapFinalUserPictureUrl = finalUserPictureUrl;
 
-	getAddressNew(alertLat, alertLong);
+	getAddressNew(i, alertLat, alertLong);
 
 	// google.setOnLoadCallback(initialize);
 }
@@ -379,21 +356,51 @@ function showMap(trackerId,alertLat,alertLong,finalUserFirstName,finalUserLastNa
  * initialize(myLatlng,finalUserFirstName,finalUserLastName,trackerAni,finalUserPhones,finalUserPictureUrl);
  * //google.setOnLoadCallback(initialize); }
  */
-// function initialShowMap() {
-// 	if (mapFlag === true) {
-// 			showMap(alertItems[lastAlert].id,
-// 				alertItems[lastAlert].trackerId,
-// 				alertItems[lastAlert].latitude,
-// 				alertItems[lastAlert].longitude,
-// 				alertItems[lastAlert].finalUserFirstName,
-// 				alertItems[lastAlert].finalUserLastName,
-// 				alertItems[lastAlert].trackerAni,
-// 				alertItems[lastAlert].finalUserPhones,
-// 				alertItems[lastAlert].finalUserPictureUrl);
-// 	}
-// }
+function initialShowMap() {
+	if (mapFlag === true) {
+		var lastAlert = 0;
+		trackerId = alertItems[lastAlert].trackerId;
+		showMap(lastAlert, alertItems[lastAlert].latitude,
+				alertItems[lastAlert].longitude,
+				alertItems[lastAlert].finalUserFirstName,
+				alertItems[lastAlert].finalUserLastName,
+				alertItems[lastAlert].trackerAni,
+				alertItems[lastAlert].finalUserPhones,
+				alertItems[lastAlert].finalUserPictureUrl);
+	}
+}
 
+function showAlertType(alertType) {
+	if (alertType == 1) {
+		return "<span class='label label-danger'>P&aacute;nico</span>";
+	} else if (alertType == 2) {
+		return "<span class='label label-warning'>Emergencia</span>";
+	} else if (alertType == 3) {
+		return "<span class='label label-info'>Ca&iacute;da Libre</span>";
+	}
+}
+function parseDate(currentField) {
+	var myNewDate = new Date(currentField);
+	var date = myNewDate.getDate();
+	var month = myNewDate.getMonth() + 1;
+	var hours = myNewDate.getHours();
+	var minutes = myNewDate.getMinutes();
 
+	if (minutes < 10)
+		minutes = "0" + minutes;
+
+	return date + "-" + month + " " + hours + ":" + minutes;
+}
+function parseTime(trackTimestamp) {
+	var myNewTime = new Date(trackTimestamp);
+	var hours = myNewTime.getHours();
+	var minutes = myNewTime.getMinutes();
+
+	if (minutes < 10)
+		minutes = "0" + minutes;
+
+	return hours + ":" + minutes;
+}
 
 function getAlertCityName(result) {
 	var fa = result.results[0].formatted_address;
@@ -430,7 +437,7 @@ function getAlertAddressName(result) {
 	return stringA + " " + stringB;
 }
 
-function getAddressNew(latitude, longitude) {
+function getAddressNew(i, latitude, longitude) {
 	var file = "https://maps.googleapis.com/maps/api/geocode/json?latlng="
 			+ latitude + "," + longitude
 			+ "&AIzaSyCLrK2IeysyliNYn655pINuagMXLqRNVjU&sensor=false";
@@ -441,7 +448,7 @@ function getAddressNew(latitude, longitude) {
 			alertCity = getAlertCityName(result);
 			alertAddress = getAlertAddressName(result);
 		}
-		initialize(currentMapTrackerId, currentMapMyLatlng, currentMapFinalUserFirstName,
+		initialize(i, currentMapMyLatlng, currentMapFinalUserFirstName,
 				currentMapFinalUserLastName, currentMapTrackerAni,
 				currentMapFinalUserPhones, currentMapFinalUserPictureUrl);
 	});
@@ -469,26 +476,21 @@ function getAddress(latitude, longitude) {
 	});
 }
 // Google Maps Query main map - START
-function initialize(finalUserTrackerId, mapLatyLong, finalUserFirstName, finalUserLastName,
+function initialize(i, mapLatyLong, finalUserFirstName, finalUserLastName,
 		trackerAni, finalUserPhones, finalUserPictureUrl) {
 
-	// if (i !== undefined) {
-	// 	var mapOptions = {
-	// 		center : mapLatyLong,
-	// 		zoom : 12
-	// 	};
-	// } else {
-	// 	var mapOptions = {
-	// 		center : new google.maps.LatLng(-32.945712, -64.698066),
-	// 		zoom : 3
-	// 	};
-	// }
-	// ;
-
-	var mapOptions = {
+	if (i !== undefined) {
+		var mapOptions = {
 			center : mapLatyLong,
 			zoom : 12
 		};
+	} else {
+		var mapOptions = {
+			center : new google.maps.LatLng(-32.945712, -64.698066),
+			zoom : 3
+		};
+	}
+	;
 
 	var map = new google.maps.Map(document.getElementById("map-canvas"),
 			mapOptions);
@@ -520,11 +522,11 @@ function initialize(finalUserTrackerId, mapLatyLong, finalUserFirstName, finalUs
 
 	var infowindow = new google.maps.InfoWindow({
 		content : contentString,
-		maxWidth : 300
+		maxWidth : 275
 	});
 	google.maps.event.addListener(infowindow, 'domready', function() {
 		$("#infoWindowRouteBtn").on("click", function(e) {
-			buildMapTrackerRoute(finalUserTrackerId);
+			buildMapTrackerRoute(i);
 		});
 		$("#infoWindowZoomBtn").on("click", function(e) {
 			map.setZoom(16);
@@ -540,14 +542,11 @@ function initialize(finalUserTrackerId, mapLatyLong, finalUserFirstName, finalUs
 	});
 	// To add the marker to the map, call setMap();
 	marker.setMap(map);
-	// if (i !== undefined) {
-	// 	setTimeout(function() {
-	// 		infowindow.open(map, marker);
-	// 	}, 1000);
-	// }
-	setTimeout(function() {
+	if (i !== undefined) {
+		setTimeout(function() {
 			infowindow.open(map, marker);
 		}, 1000);
+	}
 }
 
 // Google Maps Query main map - END
@@ -587,46 +586,6 @@ function deleteOlderAlert() {
 			$("#lastAlerts tr:nth-child(" + index + ")").remove();
 		}
 	});
-}
-function resetRouteModal(){
-	$("#map-canvas-route").empty();
-	$("#filterContainer").hide();
-	$('#dateFilterForm').each (function(){
-  this.reset();
-});
-
-}
-
-function showAlertType(alertType) {
-	if (alertType == 1) {
-		return "<span class='label label-danger'>P&aacute;nico</span>";
-	} else if (alertType == 2) {
-		return "<span class='label label-warning'>Emergencia</span>";
-	} else if (alertType == 3) {
-		return "<span class='label label-info'>Ca&iacute;da Libre</span>";
-	}
-}
-function parseDate(currentField) {
-	var myNewDate = new Date(currentField);
-	var date = myNewDate.getDate();
-	var month = myNewDate.getMonth() + 1;
-	var hours = myNewDate.getHours();
-	var minutes = myNewDate.getMinutes();
-
-	if (minutes < 10)
-		minutes = "0" + minutes;
-
-	return date + "-" + month + " " + hours + ":" + minutes;
-}
-function parseTime(trackTimestamp) {
-	var myNewTime = new Date(trackTimestamp);
-	var hours = myNewTime.getHours();
-	var minutes = myNewTime.getMinutes();
-
-	if (minutes < 10)
-		minutes = "0" + minutes;
-
-	return hours + ":" + minutes;
 }
 function getJsonString(jsonObject) {
 	// implement JSON.stringify serialization
