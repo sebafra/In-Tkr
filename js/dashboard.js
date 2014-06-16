@@ -39,6 +39,7 @@ function initializeEvents() {
 }
 
 function showTrackersWithoutReport() {
+	$("#noTrackersMessage").remove();
 	var trackersFile = SERVER_URL
 			+ "/api/tracker/getUnreported?json={entityId%3A" + entityIdUrl
 			+ "}";
@@ -48,6 +49,7 @@ function showTrackersWithoutReport() {
 					function(msg) {
 						if (msg.status == "ok") {
 							if (msg.data.trackers.length !== 0) {
+								$(".bodyTop10Trackers table").css("display","block");
 								trackersWithoutReport = msg.data.trackers;
 								$("#trackersWithoutReport").empty();
 								for (var i = 0, len = msg.data.trackers.length; i < len; i++) {
@@ -66,9 +68,10 @@ function showTrackersWithoutReport() {
 									trackersWithoutReportClickEvent(msg.data.trackers[i].id);
 								}
 							} else {
+								$(".bodyTop10Trackers table").css("display","none");
 								$(".bodyTop10Trackers")
-										.html(
-												"<div style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+										.append(
+												"<div id='noTrackersMessage' style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
 							}
 							$("#operatorsLoader").remove();
 						}
@@ -182,6 +185,7 @@ function showReportSummary() {
 	});
 }
 function showTopAlerts() {
+	$("#noDataMessage").remove();
 	var alertsFile = SERVER_URL + "/api/track/getLastAlerts?json={entityId%3A"
 			+ entityIdUrl + "}";
 			$.getJSON(
@@ -189,6 +193,7 @@ function showTopAlerts() {
 					function(msg) {
 						if (msg.status == "ok") {
 							if (msg.data.tracks.length !== 0) {
+								$(".bodyTop10Alerts table").css("display","block");
 								var myLatlng;
 								alertItems = msg.data.tracks;
 								alertItems.sort(function(a, b) {
@@ -233,6 +238,7 @@ function showTopAlerts() {
 								$("#operatorsLoader").remove();
 								$("#lastAlerts > tr:first-child").addClass(
 										"bg-info");
+								// Ex-initialShowMap
 								if (mapFlag === true) {
 									showMap(msg.data.tracks[0].trackerId,
 											msg.data.tracks[0].latitude,
@@ -254,28 +260,31 @@ function showTopAlerts() {
 								// 			msg.data.tracks[0].finalUserPictureUrl);
 								oldItems = msg.data.tracks;
 							} else {
+								$("#map-canvas").empty();
+								$("#map-canvas").html("<div style='width:100%;text-align:center;margin:0 auto;padding-top:100px'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+								$(".bodyTop10Alerts table").css("display","none");
 								$(".bodyTop10Alerts")
-										.html(
-												"<div style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+										.append(
+												"<div id='noDataMessage' style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
 							}
 						}
 					});
 }
 
 function reloadTopAlerts() {
-	var alertsFile = SERVER_URL + "/api/track/getLastAlerts?json={entityId%3A"
-			+ entityIdUrl + "}";
-	$
-			.getJSON(
-					alertsFile,
-					function(msg) {
+	$("#noDataMessage").remove();
+	var alertsFile = SERVER_URL + "/api/track/getLastAlerts?json={entityId%3A" + entityIdUrl + "}";
+	$.getJSON(alertsFile,
+		function(msg) {
 						if (msg.status == "ok") {
 							if (msg.data.tracks.length !== 0) {
+								$(".bodyTop10Alerts table").css("display","block");
 								var myLatlng;
 								for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
 									alertItem = msg.data.tracks[i];
 									var exists = false;
 									if (oldItems !== undefined) {
+									//if (reloadFlag == true) {
 										for (var n = 0, leng = oldItems.length; n < leng; n++) {
 											// console.log(alertItem.id +" - "+
 											// oldItems[n].id);
@@ -285,22 +294,21 @@ function reloadTopAlerts() {
 											}
 										}
 										if (exists == false) {
+											console.log("Entro en falso");
 											$("#alertRow" + alertItem.id).addClass("bg-danger");
 											$("#lastAlerts")
 													.prepend(
-															"<tr id='alertRow"
-																	+ alertItem.id
-																	+ "' style='cursor:pointer'><td>"
-																	+ i
-																	+ "</td><td>"
-																	+ parseDate(msg.data.tracks[i].timestamp)
-																	+ "</td><td>"
-																	+ msg.data.tracks[i].finalUserFirstName
-																	+ " "
-																	+ msg.data.tracks[i].finalUserLastName
-																	+ "</td><td>"
-																	+ showAlertType(msg.data.tracks[i].type)
-																	+ "</td></tr>");
+															"<tr id='alertRow"+ alertItem.id
+															+ "' style='cursor:pointer'><td>"
+															+ i	+ "</td><td>"
+															+ parseDate(msg.data.tracks[i].timestamp)
+															+ "</td><td>"
+															+ msg.data.tracks[i].finalUserFirstName
+															+ " "
+															+ msg.data.tracks[i].finalUserLastName
+															+ "</td><td>"
+															+ showAlertType(msg.data.tracks[i].type)
+															+ "</td></tr>");
 											$("#alertRow" + alertItem.id).addClass(
 													"bg-danger");
 											clickRowLastAlerts(
@@ -325,13 +333,53 @@ function reloadTopAlerts() {
 											deleteOlderAlert();
 											orderAlertPosition();
 										}
+									} else {
+										$("#alertRow" + alertItem.id).addClass("bg-danger");
+											$("#lastAlerts")
+													.prepend(
+															"<tr id='alertRow"+ alertItem.id
+															+ "' style='cursor:pointer'><td>"
+															+ (i+1) +"</td><td>"
+															+ parseDate(msg.data.tracks[i].timestamp)
+															+ "</td><td>"
+															+ msg.data.tracks[i].finalUserFirstName
+															+ " "
+															+ msg.data.tracks[i].finalUserLastName
+															+ "</td><td>"
+															+ showAlertType(msg.data.tracks[i].type)
+															+ "</td></tr>");
+											$("#alertRow" + alertItem.id).addClass(
+													"bg-danger");
+											clickRowLastAlerts(
+													alertItem.id,
+													alertItem.trackerId,
+													alertItem.latitude,
+													alertItem.longitude,
+													alertItem.finalUserFirstName,
+													alertItem.finalUserLastName,
+													alertItem.trackerAni,
+													alertItem.finalUserPhones,
+													alertItem.finalUserPictureUrl);
+											showMap(
+													alertItem.trackerId,
+                          alertItem.latitude,
+													alertItem.longitude,
+													alertItem.finalUserFirstName,
+													alertItem.finalUserLastName,
+													alertItem.trackerAni,
+													alertItem.finalUserPhones,
+													alertItem.finalUserPictureUrl);
+											orderAlertPosition();
 									}
 								}
 								oldItems = msg.data.tracks;
 							} else {
+								$("#map-canvas").empty();
+								$("#map-canvas").html("<div style='width:100%;text-align:center;margin:0 auto;padding-top:100px'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+								$(".bodyTop10Alerts table").css("display","none");
 								$(".bodyTop10Alerts")
-										.html(
-												"<div style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
+										.append(
+												"<div id='noDataMessage' style='color:#555' class='well well-sm'><span class='fa fa-exclamation'></span> No hay datos disponibles</div>");
 							}
 						}
 					});
@@ -472,23 +520,23 @@ function getAddress(latitude, longitude) {
 function initialize(finalUserTrackerId, mapLatyLong, finalUserFirstName, finalUserLastName,
 		trackerAni, finalUserPhones, finalUserPictureUrl) {
 
-	// if (i !== undefined) {
-	// 	var mapOptions = {
-	// 		center : mapLatyLong,
-	// 		zoom : 12
-	// 	};
-	// } else {
-	// 	var mapOptions = {
-	// 		center : new google.maps.LatLng(-32.945712, -64.698066),
-	// 		zoom : 3
-	// 	};
-	// }
-	// ;
-
-	var mapOptions = {
+	if (finalUserTrackerId !== undefined) {
+		var mapOptions = {
 			center : mapLatyLong,
 			zoom : 12
 		};
+	} else {
+		var mapOptions = {
+			center : new google.maps.LatLng(-32.945712, -64.698066),
+			zoom : 3
+		};
+	}
+	;
+
+	// var mapOptions = {
+	// 		center : mapLatyLong,
+	// 		zoom : 12
+	// 	};
 
 	var map = new google.maps.Map(document.getElementById("map-canvas"),
 			mapOptions);
@@ -540,14 +588,11 @@ function initialize(finalUserTrackerId, mapLatyLong, finalUserFirstName, finalUs
 	});
 	// To add the marker to the map, call setMap();
 	marker.setMap(map);
-	// if (i !== undefined) {
-	// 	setTimeout(function() {
-	// 		infowindow.open(map, marker);
-	// 	}, 1000);
-	// }
-	setTimeout(function() {
+	if (finalUserTrackerId !== undefined) {
+		setTimeout(function() {
 			infowindow.open(map, marker);
 		}, 1000);
+	}
 }
 
 // Google Maps Query main map - END
@@ -561,7 +606,7 @@ function refresh() {
 		showLastRefresh();
 		refresh();
 
-	}, 30000); // Cada 2 minutos refresh
+	}, 30000); // Cada 30 segundos refresh
 }
 function showLastRefresh() {
 	var currentTime = new Date();
@@ -583,7 +628,7 @@ function orderAlertPosition() {
 function deleteOlderAlert() {
 	// var size = $("#lastAlerts tr").length();
 	$("#lastAlerts tr").each(function(index) {
-		if (index > 20) {
+		if (index > 19) {
 			$("#lastAlerts tr:nth-child(" + index + ")").remove();
 		}
 	});
