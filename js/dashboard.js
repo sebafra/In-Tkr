@@ -49,7 +49,7 @@ function showTrackersWithoutReport() {
 					function(msg) {
 						if (msg.status == "ok") {
 							if (msg.data.trackers.length !== 0) {
-								$(".bodyTop10Trackers table").css("display","block");
+								$(".bodyTop10Trackers table").css("display","");
 								trackersWithoutReport = msg.data.trackers;
 								$("#trackersWithoutReport").empty();
 								for (var i = 0, len = msg.data.trackers.length; i < len; i++) {
@@ -139,7 +139,9 @@ function showTracksPrepareData(trackerId) {
 
 function googleMapsQuery() {
 
-	var lastTrack = trackerRouteCoordinates.length - 1;
+	var lastTrack = 0;
+	//var lastTrack = trackerRouteCoordinates.length - 1;
+	//console.log("lastTrack:"+lastTrack);
 
 	var mapOptions = {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
@@ -193,7 +195,7 @@ function showTopAlerts() {
 					function(msg) {
 						if (msg.status == "ok") {
 							if (msg.data.tracks.length !== 0) {
-								$(".bodyTop10Alerts table").css("display","block");
+								$(".bodyTop10Alerts table").css("display","");
 								var myLatlng;
 								alertItems = msg.data.tracks;
 								alertItems.sort(function(a, b) {
@@ -278,7 +280,7 @@ function reloadTopAlerts() {
 		function(msg) {
 						if (msg.status == "ok") {
 							if (msg.data.tracks.length !== 0) {
-								$(".bodyTop10Alerts table").css("display","block");
+								$(".bodyTop10Alerts table").css("display","");
 								var myLatlng;
 								for (var i = 0, len = msg.data.tracks.length; i < len; i++) {
 									alertItem = msg.data.tracks[i];
@@ -390,7 +392,7 @@ function clickRowLastAlerts(trackId,trackerId,alertRowLat,alertRowLong,finalUser
 	$("#alertRow" + trackId).on(
 			"click",
 			function() {
-				console.log("working");
+				//console.log("working");
 				showMap(trackerId,alertRowLat, alertRowLong, finalUserFirstName,
 						finalUserLastName, trackerAni, finalUserPhones,
 						finalUserPictureUrl);
